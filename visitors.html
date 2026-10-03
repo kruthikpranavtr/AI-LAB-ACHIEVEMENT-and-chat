@@ -752,33 +752,63 @@
       width: 124px;
       height: 124px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(0, 242, 254, 0.3) 0%, rgba(59, 130, 246, 0.22) 50%, rgba(6, 9, 19, 0.95) 85%);
+      background: radial-gradient(circle at 35% 35%, rgba(0, 242, 254, 0.35) 0%, rgba(59, 130, 246, 0.25) 50%, rgba(6, 9, 19, 0.96) 85%);
       border: 2.5px solid var(--ai-vis-cyan);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 50px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 50px rgba(0, 242, 254, 0.65), inset 0 0 25px rgba(0, 242, 254, 0.4);
       z-index: 25;
       animation: aiVisCorePulse 3s ease-in-out infinite alternate;
       overflow: hidden;
       padding: 5px;
       cursor: pointer;
       transition: transform var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+      will-change: transform, box-shadow;
     }
 
     .ai-vis-core-hub:hover {
       transform: translate(-50%, -50%) scale(1.08);
-      box-shadow: 0 0 75px rgba(0, 242, 254, 0.85), inset 0 0 30px rgba(0, 242, 254, 0.55);
+      box-shadow: 0 0 80px rgba(0, 242, 254, 0.9), inset 0 0 35px rgba(0, 242, 254, 0.6);
     }
 
     @keyframes aiVisCorePulse {
       0% {
-        box-shadow: 0 0 35px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.3);
-        border-color: rgba(0, 242, 254, 0.6);
+        box-shadow: 0 0 35px rgba(0, 242, 254, 0.45), inset 0 0 15px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.65);
       }
       100% {
-        box-shadow: 0 0 65px rgba(0, 242, 254, 0.85), 0 0 95px rgba(99, 102, 241, 0.4), inset 0 0 28px rgba(0, 242, 254, 0.5);
+        box-shadow: 0 0 70px rgba(0, 242, 254, 0.85), 0 0 100px rgba(99, 102, 241, 0.45), inset 0 0 30px rgba(0, 242, 254, 0.55);
         border-color: #00f2fe;
+      }
+    }
+
+    /* Radiant Core Energy Halo */
+    .ai-vis-core-halo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.38) 0%, rgba(99, 102, 241, 0.22) 45%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      pointer-events: none;
+      animation: aiVisHaloPulse 3s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+
+    @keyframes aiVisHaloPulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.92);
+        opacity: 0.55;
+        filter: blur(8px);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.25);
+        opacity: 0.95;
+        filter: blur(16px);
       }
     }
 
@@ -788,15 +818,39 @@
       border-radius: 50%;
       object-fit: cover;
       display: block;
-      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
-      transition: transform var(--ai-vis-transition-fast);
+      filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.7));
+      transition: transform var(--ai-vis-transition-fast), filter var(--ai-vis-transition-fast);
     }
 
     .ai-vis-core-hub:hover .ai-vis-core-logo-img {
       transform: scale(1.08) rotate(3deg);
+      filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.95)) brightness(1.1);
     }
 
-    /* Rotating Orbit System: Outside elements rotate continuously around the logo */
+    /* Holographic Radar / Scanner Sweep Beam */
+    .ai-vis-radar-sweep {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 350px;
+      height: 350px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(0, 242, 254, 0.03) 310deg, rgba(0, 242, 254, 0.16) 355deg, rgba(0, 242, 254, 0.32) 360deg);
+      pointer-events: none;
+      z-index: 4;
+      animation: aiVisRadarSweep 6s linear infinite;
+      mask-image: radial-gradient(circle, transparent 24%, black 28%, black 98%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle, transparent 24%, black 28%, black 98%, transparent 100%);
+      will-change: transform;
+    }
+
+    @keyframes aiVisRadarSweep {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Rotating Orbit System: Clockwise fluid orbit at an energetic, graceful 22s */
     .ai-vis-orbit-system {
       position: absolute;
       top: 0;
@@ -804,15 +858,92 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      animation: aiVisOrbitRotate 38s linear infinite;
+      animation: aiVisOrbitRotate 22s linear infinite;
       transform-origin: center center;
       pointer-events: auto;
       z-index: 10;
+      will-change: transform;
     }
 
-    /* Pause rotation on hover so users can easily read, hover, and click nodes or cards */
+    /* Gyroscopic Reverse Middle Orbit Ring: Counter-clockwise 16s */
+    .ai-vis-ring-reverse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 245px;
+      height: 245px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px dashed rgba(168, 85, 247, 0.45);
+      animation: aiVisRingReverse 16s linear infinite;
+      pointer-events: none;
+      z-index: 6;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.18);
+      will-change: transform;
+    }
+
+    @keyframes aiVisRingReverse {
+      from { transform: translate(-50%, -50%) rotate(360deg); }
+      to { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+
+    /* Fast Inner Cybernetic Ring: Clockwise 11s */
+    .ai-vis-ring-inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 175px;
+      height: 175px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dotted rgba(0, 242, 254, 0.4);
+      animation: aiVisRingInner 11s linear infinite;
+      pointer-events: none;
+      z-index: 7;
+      will-change: transform;
+    }
+
+    @keyframes aiVisRingInner {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Outer Ring with Neon Glowing Track */
+    .ai-vis-ring-outer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 330px;
+      height: 330px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px dashed rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.12);
+      pointer-events: none;
+    }
+
+    /* Traveling Photons on Orbit Rings */
+    .ai-vis-ring-photon {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00f2fe;
+      box-shadow: 0 0 10px #00f2fe, 0 0 20px rgba(0, 242, 254, 0.8);
+      pointer-events: none;
+    }
+
+    .ai-vis-ring-photon.photon-purple {
+      background: #a855f7;
+      box-shadow: 0 0 10px #a855f7, 0 0 20px rgba(168, 85, 247, 0.8);
+    }
+
+    /* Pause all rotations smoothly on hover so user can inspect elements */
     .ai-vis-visual-container:hover .ai-vis-orbit-system,
-    .ai-vis-visual-container:hover .ai-vis-orbit-counter {
+    .ai-vis-visual-container:hover .ai-vis-orbit-counter,
+    .ai-vis-visual-container:hover .ai-vis-ring-reverse,
+    .ai-vis-visual-container:hover .ai-vis-ring-inner,
+    .ai-vis-visual-container:hover .ai-vis-radar-sweep {
       animation-play-state: paused;
     }
 
@@ -831,70 +962,49 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      animation: aiVisOrbitCounterRotate 38s linear infinite;
+      animation: aiVisOrbitCounterRotate 22s linear infinite;
       transform-origin: center center;
       will-change: transform;
-    }
-
-    /* Concentric Orbital Rings */
-    .ai-vis-orbit-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .ai-vis-ring-1 {
-      width: 330px;
-      height: 330px;
-      border: 1px dashed rgba(0, 242, 254, 0.28);
-    }
-
-    .ai-vis-ring-2 {
-      width: 240px;
-      height: 240px;
-      border: 1px dotted rgba(99, 102, 241, 0.32);
-    }
-
-    .ai-vis-ring-3 {
-      width: 170px;
-      height: 170px;
-      border: 1px solid rgba(168, 85, 247, 0.18);
     }
 
     /* Satellite Nodes around Hub */
     .ai-vis-orbit-node {
       position: absolute;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: var(--ai-vis-radius-full);
       background: var(--ai-vis-bg-card);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--ai-vis-border-glow);
       font-family: var(--ai-vis-font-mono);
       font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      letter-spacing: 0.06em;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 242, 254, 0.15);
       z-index: 12;
-      transition: all var(--ai-vis-transition-fast);
+      transition: transform var(--ai-vis-transition-fast), border-color var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
       user-select: none;
-      cursor: default;
+      cursor: pointer;
     }
 
     .ai-vis-orbit-node:hover {
-      transform: scale(1.1);
+      transform: scale(1.15);
       border-color: var(--ai-vis-cyan);
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.7), 0 6px 20px rgba(0, 0, 0, 0.6);
     }
 
     .ai-vis-node-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--ai-vis-cyan);
-      box-shadow: 0 0 6px var(--ai-vis-cyan);
+      box-shadow: 0 0 8px var(--ai-vis-cyan), 0 0 14px var(--ai-vis-cyan);
+      animation: aiVisDotPulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes aiVisDotPulse {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.3); opacity: 1; }
     }
 
     .ai-vis-node-industry { top: 16px; left: 50%; transform: translateX(-50%); }
@@ -907,22 +1017,24 @@
     /* Floating Visitor Preview Badges in Orbit */
     .ai-vis-float-card {
       position: absolute;
-      padding: 8px 14px;
+      padding: 9px 15px;
       border-radius: var(--ai-vis-radius-md);
       background: var(--ai-vis-bg-card);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--ai-vis-border-glow);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.15);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 242, 254, 0.2);
       z-index: 15;
       font-size: 0.8rem;
-      transition: border-color var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+      transition: border-color var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast), transform var(--ai-vis-transition-fast);
       cursor: pointer;
       user-select: none;
     }
 
     .ai-vis-float-card:hover {
       border-color: var(--ai-vis-cyan);
-      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
+      box-shadow: 0 12px 35px rgba(0, 242, 254, 0.45);
+      transform: scale(1.08);
     }
 
     .ai-vis-float-card-1 {
@@ -2534,19 +2646,35 @@
             <div class="ai-vis-hero-visual-wrapper">
               <div class="ai-vis-visual-container" id="ai-vis-hero-visual">
 
+                <!-- Radiant Energy Core Halo behind Hub -->
+                <div class="ai-vis-core-halo"></div>
+
                 <!-- Central AI Core Hub with Official AI Lab Logo (Anchored in Center) -->
                 <div class="ai-vis-core-hub" title="AI Club Central Network Hub">
                   <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-vis-core-logo-img"
                     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
                 </div>
 
+                <!-- Holographic Radar Scanner Sweep -->
+                <div class="ai-vis-radar-sweep"></div>
+
+                <!-- Gyroscopic Counter-Clockwise Middle Ring -->
+                <div class="ai-vis-ring-reverse">
+                  <div class="ai-vis-ring-photon photon-purple" style="top: -4px; left: 50%; transform: translateX(-50%);"></div>
+                  <div class="ai-vis-ring-photon photon-purple" style="bottom: -4px; left: 50%; transform: translateX(-50%);"></div>
+                </div>
+
+                <!-- Fast Inner Reticle Ring -->
+                <div class="ai-vis-ring-inner"></div>
+
                 <!-- Rotating Orbit System: Outside elements continuously rotate around the logo -->
                 <div class="ai-vis-orbit-system" aria-label="Rotating Visitor Network Orbit">
 
-                  <!-- Concentric dashed orbital rings revolving with system -->
-                  <div class="ai-vis-orbit-ring ai-vis-ring-1"></div>
-                  <div class="ai-vis-orbit-ring ai-vis-ring-2"></div>
-                  <div class="ai-vis-orbit-ring ai-vis-ring-3"></div>
+                  <!-- Outer Dashed Ring with Glowing Photons -->
+                  <div class="ai-vis-ring-outer">
+                    <div class="ai-vis-ring-photon" style="top: 50%; right: -4px; transform: translateY(-50%);"></div>
+                    <div class="ai-vis-ring-photon" style="top: 50%; left: -4px; transform: translateY(-50%);"></div>
+                  </div>
 
                   <!-- Orbiting domain nodes (counter-rotated to stay upright and readable) -->
                   <div class="ai-vis-orbit-node ai-vis-node-industry">
