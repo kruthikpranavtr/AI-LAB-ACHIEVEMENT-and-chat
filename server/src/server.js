@@ -23,6 +23,8 @@ const startServer = async () => {
       console.log(`   - POST /api/v1/auth/login`);
       console.log(`   - GET  /api/v1/auth/me`);
       console.log(`   - POST /api/v1/auth/logout`);
+      console.log(`📬 Contact Endpoint: http://localhost:${PORT}/api/v1/contact`);
+      console.log(`   - POST /api/v1/contact`);
       console.log(`🌍 Mode: ${process.env.NODE_ENV || 'development'}`);
       console.log('===========================================================');
     });

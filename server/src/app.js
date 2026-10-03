@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const authRoutes = require('./routes/authRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(
       ) {
         return callback(null, true);
       }
-      return callback(null, true); // Permissive in development to support various student test servers
+      return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -47,7 +48,10 @@ app.get('/api/health', (req, res) => {
 // 5. Auth API Routes
 app.use('/api/v1/auth', authRoutes);
 
-// 6. 404 Not Found Handler
+// 6. Contact API Routes
+app.use('/api/v1/contact', contactRoutes);
+
+// 7. 404 Not Found Handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,

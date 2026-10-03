@@ -4979,34 +4979,98 @@ agent.<span class="ai-term-func">compile_neural_engine</span>(precision=<span cl
       },
 
       /**
-       * Contact Form Submission Handler (Frontend Mock)
+       * Contact Form Submission Handler (Real Backend API Integration)
        */
-      handleContactSubmit(e) {
+      async handleContactSubmit(e) {
+        if (e && e.preventDefault) e.preventDefault();
+
         const btn = document.getElementById('ai-form-submit-btn');
         const feedback = document.getElementById('ai-form-feedback');
         const form = document.getElementById('ai-quick-contact-form');
 
+        const nameInput = document.getElementById('contact-name');
+        const emailInput = document.getElementById('contact-email');
+        const interestInput = document.getElementById('contact-interest');
+        const msgInput = document.getElementById('contact-msg');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+        const interest = interestInput ? interestInput.value.trim() : '';
+        const message = msgInput ? msgInput.value.trim() : '';
+
+        // Basic client validation check before submission
+        if (!name || !email || !interest || !message) {
+          if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '⚠️ Please fill out all required fields (Name, Email, Interest, Message).';
+          }
+          return;
+        }
+
+        // Determine endpoint: relative /api/v1/contact or localhost:5000 for Live Server / standalone file
+        const endpoint = (window.location.origin && (window.location.origin.includes(':5500') || window.location.protocol === 'file:'))
+          ? 'http://localhost:5000/api/v1/contact'
+          : '/api/v1/contact';
+
+        // Set loading state
         if (btn) {
           btn.disabled = true;
           btn.innerHTML = `<span>TRANSMITTING...</span>`;
         }
+        if (feedback) {
+          feedback.style.display = 'none';
+        }
 
-        setTimeout(() => {
-          if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = `<span>MESSAGE TRANSMITTED ✓</span>`;
-          }
-          if (feedback) {
-            feedback.style.display = 'block';
-            feedback.style.color = 'var(--ai-emerald)';
-            feedback.textContent = '✓ Message received! A student coordinator from the AI Lab will contact you shortly.';
-          }
-          if (form) {
-            form.reset();
-          }
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              interest,
+              message
+            })
+          });
 
-          setTimeout(() => {
+          const data = await response.json().catch(() => null);
+
+          if (response.ok && data && data.success) {
+            // Success state
             if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = `<span>MESSAGE TRANSMITTED ✓</span>`;
+            }
+            if (feedback) {
+              feedback.style.display = 'block';
+              feedback.style.color = 'var(--ai-emerald)';
+              feedback.textContent = `✓ ${data.message || 'Message received! A student coordinator from the AI Lab will contact you shortly.'}`;
+            }
+            if (form) {
+              form.reset();
+            }
+
+            // Restore button after 3.5 seconds
+            setTimeout(() => {
+              if (btn) {
+                btn.innerHTML = `
+                  <span>SEND MESSAGE</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                `;
+              }
+            }, 3500);
+
+          } else {
+            // Backend validation error or rate limit message
+            const errorMsg = (data && data.message) ? data.message : 'Unable to transmit message. Please verify your information and try again.';
+            if (btn) {
+              btn.disabled = false;
               btn.innerHTML = `
                 <span>SEND MESSAGE</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -5015,8 +5079,30 @@ agent.<span class="ai-term-func">compile_neural_engine</span>(precision=<span cl
                 </svg>
               `;
             }
-          }, 3500);
-        }, 800);
+            if (feedback) {
+              feedback.style.display = 'block';
+              feedback.style.color = '#ef4444';
+              feedback.textContent = `⚠️ ${errorMsg}`;
+            }
+          }
+        } catch (err) {
+          // Network error / connection refused
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = `
+              <span>SEND MESSAGE</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            `;
+          }
+          if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '⚠️ Communication offline. Please verify the AI Club backend service is running and try again.';
+          }
+        }
       }
     };
 

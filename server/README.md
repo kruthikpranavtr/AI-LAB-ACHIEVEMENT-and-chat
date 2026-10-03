@@ -38,11 +38,14 @@ server/
 │   ├── config/
 │   │   └── db.js                 # Mongoose connection & error recovery
 │   ├── models/
-│   │   └── User.js               # Mongoose User schema, bcrypt hooks, sanitization
+│   │   ├── User.js               # Mongoose User schema, bcrypt hooks, sanitization
+│   │   └── ContactMessage.js     # Mongoose Contact Message schema, status enum
 │   ├── controllers/
-│   │   └── authController.js     # Register, Login, GetMe, Logout handlers
+│   │   ├── authController.js     # Register, Login, GetMe, Logout handlers
+│   │   └── contactController.js  # Create contact message handler with validation
 │   ├── routes/
-│   │   └── authRoutes.js         # Express router with rate limiting
+│   │   ├── authRoutes.js         # Auth routes with brute-force rate limiter
+│   │   └── contactRoutes.js      # Contact routes with submission rate limiter
 │   ├── middleware/
 │   │   └── authMiddleware.js     # JWT Bearer token authentication & protection
 │   ├── utils/
@@ -356,3 +359,65 @@ curl -X POST http://localhost:5000/api/v1/auth/login `
 curl -X GET http://localhost:5000/api/v1/auth/me `
   -H "Authorization: Bearer <PASTE_TOKEN_HERE>"
 ```
+
+---
+
+## Contact API & Quick Message Inquiries
+
+### 1. Endpoint: `POST /api/v1/contact`
+Receives inquiries submitted through the Quick Contact form on `home.html`.
+
+- **Access**: Public
+- **Rate Limit**: 20 requests per 15 minutes per IP address
+- **Request Body (JSON)**:
+```json
+{
+  "name": "Alex Johnson",
+  "email": "alex.johnson@example.com",
+  "interest": "AI Lab Research & Hackathons",
+  "message": "I am interested in joining the robotics and deep learning sub-team."
+}
+```
+
+- **Validation Rules**:
+  - `name`: Required, string, trimmed, 2 to 100 characters.
+  - `email`: Required, valid email format regex, trimmed, max 150 characters.
+  - `interest`: Required, string, trimmed, max 100 characters.
+  - `message`: Required, string, trimmed, 5 to 3000 characters.
+  - Reject invalid requests with HTTP `400 Bad Request`.
+
+- **Success Response (`201 Created`)**:
+```json
+{
+  "success": true,
+  "message": "Message received successfully",
+  "data": {
+    "id": "674efbc901a9b23c4d5e6f7a"
+  }
+}
+```
+
+- **Database Model (`src/models/ContactMessage.js`)**:
+  - `name` (String, required, trimmed, 2-100 chars)
+  - `email` (String, required, trimmed, lowercase, valid email)
+  - `interest` (String, required, trimmed, max 100 chars)
+  - `message` (String, required, trimmed, 5-3000 chars)
+  - `status` (Enum: `['new', 'read', 'replied', 'archived']`, default: `'new'`)
+  - `createdAt` & `updatedAt` (Timestamps automatically managed by Mongoose)
+
+### 2. Testing Contact API via cURL:
+
+#### Valid Contact Submission:
+```powershell
+curl -X POST http://localhost:5000/api/v1/contact `
+  -H "Content-Type: application/json" `
+  -d '{"name":"Alex Johnson","email":"alex@example.com","interest":"Hackathons","message":"Looking forward to collaborating with AI Lab!"}'
+```
+
+#### Test Missing Field Rejection (400 Bad Request):
+```powershell
+curl -X POST http://localhost:5000/api/v1/contact `
+  -H "Content-Type: application/json" `
+  -d '{"email":"alex@example.com","interest":"Hackathons","message":"Missing name field test"}'
+```
+
