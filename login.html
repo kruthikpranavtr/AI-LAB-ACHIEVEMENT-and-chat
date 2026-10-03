@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('aiClubLoginTheme') || localStorage.getItem('aiClubVisitorsTheme') || localStorage.getItem('ai-club-theme') || localStorage.getItem('aiClubHomeTheme');
+        if (!saved) {
+          saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Member Portal • AI LAB | Sri Shakthi Institute of Engineering & Technology</title>
+  <meta name="description"
+    content="Sign in to the AI Club & AI Lab Member Portal. Explore artificial intelligence research, projects, hackathons, and collaborative student initiatives.">
+  <meta name="keywords" content="AI Club Login, AI Lab Member Portal, Artificial Intelligence Club, SIET, Student Chapter, Research Lab">
+  <link rel="icon" type="image/png" href="assets/ai-lab-logo.png">
+  <link rel="apple-touch-icon" href="assets/ai-lab-logo.png">
+
+  <!-- Google Fonts: Outfit (Headings), Plus Jakarta Sans (Body), JetBrains Mono (Accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       AI CLUB LOGIN PAGE - DESIGN SYSTEM & SCOPED STYLES
+       All styling is strictly scoped under #ai-login-page
+       ========================================================================== */
+
+    :root {
+      /* Dark Theme (Default) */
+      --ai-log-bg-body: #050811;
+      --ai-log-bg-surface: #0a0f1f;
+      --ai-log-bg-card: rgba(13, 20, 38, 0.76);
+      --ai-log-bg-card-hover: rgba(18, 27, 52, 0.9);
+      --ai-log-bg-glass: rgba(10, 16, 32, 0.82);
+      --ai-log-bg-input: rgba(6, 10, 22, 0.75);
+
+      --ai-log-border-subtle: rgba(255, 255, 255, 0.08);
+      --ai-log-border-glow: rgba(0, 242, 254, 0.35);
+      --ai-log-border-focus: rgba(0, 242, 254, 0.7);
+
+      --ai-log-text-main: #f8fafc;
+      --ai-log-text-muted: #94a3b8;
+      --ai-log-text-dim: #64748b;
+
+      /* Neon Colors */
+      --ai-log-cyan: #00f2fe;
+      --ai-log-blue: #3b82f6;
+      --ai-log-indigo: #6366f1;
+      --ai-log-purple: #a855f7;
+      --ai-log-pink: #ec4899;
+      --ai-log-emerald: #10b981;
+      --ai-log-amber: #f59e0b;
+      --ai-log-rose: #f43f5e;
+
+      /* Gradients & Shadows */
+      --ai-log-gradient-brand: linear-gradient(135deg, #00f2fe 0%, #3b82f6 50%, #8b5cf6 100%);
+      --ai-log-gradient-card: linear-gradient(150deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+      --ai-log-gradient-glow: radial-gradient(circle, rgba(0, 242, 254, 0.16) 0%, rgba(168, 85, 247, 0.06) 50%, transparent 70%);
+
+      --ai-log-shadow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 242, 254, 0.15);
+      --ai-log-shadow-button: 0 8px 24px -4px rgba(0, 242, 254, 0.35);
+
+      --ai-log-radius-sm: 8px;
+      --ai-log-radius-md: 14px;
+      --ai-log-radius-lg: 22px;
+      --ai-log-radius-full: 9999px;
+
+      --ai-log-font-display: 'Outfit', sans-serif;
+      --ai-log-font-body: 'Plus Jakarta Sans', sans-serif;
+      --ai-log-font-mono: 'JetBrains Mono', monospace;
+
+      --ai-log-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --ai-log-transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --ai-log-bg-body: #f8fafc;
+      --ai-log-bg-surface: #f1f5f9;
+      --ai-log-bg-card: rgba(255, 255, 255, 0.92);
+      --ai-log-bg-card-hover: rgba(255, 255, 255, 0.98);
+      --ai-log-bg-glass: rgba(255, 255, 255, 0.9);
+      --ai-log-bg-input: rgba(248, 250, 252, 0.95);
+
+      --ai-log-border-subtle: rgba(148, 163, 184, 0.3);
+      --ai-log-border-glow: rgba(2, 132, 199, 0.25);
+      --ai-log-border-focus: rgba(2, 132, 199, 0.7);
+
+      --ai-log-text-main: #0f172a;
+      --ai-log-text-muted: #475569;
+      --ai-log-text-dim: #64748b;
+
+      --ai-log-cyan: #0284c7;
+      --ai-log-blue: #2563eb;
+      --ai-log-indigo: #4f46e5;
+      --ai-log-purple: #7c3aed;
+      --ai-log-pink: #db2777;
+      --ai-log-emerald: #059669;
+      --ai-log-amber: #d97706;
+      --ai-log-rose: #e11d48;
+
+      --ai-log-gradient-brand: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #7c3aed 100%);
+      --ai-log-gradient-card: linear-gradient(150deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.88) 100%);
+      --ai-log-gradient-glow: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(124, 58, 237, 0.05) 50%, transparent 70%);
+
+      --ai-log-shadow-card: 0 20px 50px -10px rgba(15, 23, 42, 0.12), 0 0 25px rgba(2, 132, 199, 0.12);
+      --ai-log-shadow-button: 0 8px 24px -4px rgba(2, 132, 199, 0.35);
+    }
+
+    /* Base Reset within document */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--ai-log-bg-body);
+      color: var(--ai-log-text-main);
+      font-family: var(--ai-log-font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Scoped container */
+    #ai-login-page {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      background-color: var(--ai-log-bg-body);
+    }
+
+    #ai-login-page * {
+      box-sizing: border-box;
+    }
+
+    /* Ambient Canvas and Background Effects */
+    #ai-login-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    .ai-login-ambient-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 50%;
+      filter: blur(120px);
+      transition: transform 0.2s ease-out;
+    }
+
+    .ai-login-glow-1 {
+      top: -150px;
+      left: -150px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, transparent 70%);
+    }
+
+    .ai-login-glow-2 {
+      bottom: -150px;
+      right: -150px;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+    }
+
+    .ai-login-grid-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(to right, var(--ai-log-border-subtle) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--ai-log-border-subtle) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 1;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+    }
+
+    /* Mouse Glow Follower */
+    .ai-login-cursor-glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      margin-left: -225px;
+      margin-top: -225px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, rgba(99, 102, 241, 0.05) 40%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.8;
+      transition: transform 0.08s ease-out, opacity 0.3s;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION BAR
+       ========================================================================== */
+    .ai-login-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .ai-login-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .ai-login-brand-logo {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--ai-log-border-subtle);
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-login-brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .ai-login-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-login-brand-title {
+      font-family: var(--ai-log-font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: var(--ai-log-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .ai-login-brand-sub {
+      font-family: var(--ai-log-font-mono);
+      font-size: 0.72rem;
+      color: var(--ai-log-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .ai-login-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .ai-login-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.15rem;
+      border-radius: var(--ai-log-radius-full);
+      background: var(--ai-log-bg-glass);
+      border: 1px solid var(--ai-log-border-subtle);
+      color: var(--ai-log-text-main);
+      font-family: var(--ai-log-font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+      transition: all var(--ai-log-transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-login-back-btn:hover {
+      border-color: var(--ai-log-cyan);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+      transform: translateY(-2px);
+      color: var(--ai-log-cyan);
+    }
+
+    .ai-login-back-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--ai-log-transition-fast);
+    }
+
+    .ai-login-back-btn:hover svg {
+      transform: translateX(-3px);
+    }
+
+    .ai-login-theme-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--ai-log-bg-glass);
+      border: 1px solid var(--ai-log-border-subtle);
+      color: var(--ai-log-text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(12px);
+      transition: all var(--ai-log-transition-fast);
+    }
+
+    .ai-login-theme-btn:hover {
+      border-color: var(--ai-log-cyan);
+      transform: rotate(20deg) scale(1.05);
+      color: var(--ai-log-cyan);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-login-theme-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Icon toggling */
+    .ai-login-icon-sun { display: none; }
+    .ai-login-icon-moon { display: block; }
+    [data-theme="light"] .ai-login-icon-sun { display: block; }
+    [data-theme="light"] .ai-login-icon-moon { display: none; }
+
+    /* ==========================================================================
+       MAIN CONTAINER (TWO-COLUMN DESKTOP / SINGLE-COLUMN MOBILE)
+       ========================================================================== */
+    .ai-login-main {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 2rem 3rem 2rem;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .ai-login-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 3.5rem;
+      width: 100%;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       LEFT SIDE: HERO & FUTURISTIC ORBITAL AI VISUAL
+       ========================================================================== */
+    .ai-login-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      padding: 1rem 0;
+    }
+
+    .ai-login-demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      align-self: flex-start;
+      padding: 0.4rem 1rem;
+      border-radius: var(--ai-log-radius-full);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      font-family: var(--ai-log-font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ai-log-cyan);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .ai-login-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ai-log-cyan);
+      box-shadow: 0 0 10px var(--ai-log-cyan);
+      animation: aiPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes aiPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .ai-login-hero-title {
+      font-family: var(--ai-log-font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: var(--ai-log-text-main);
+    }
+
+    .ai-login-hero-title .ai-gradient-text {
+      background: var(--ai-log-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .ai-login-hero-desc {
+      font-size: 1.05rem;
+      color: var(--ai-log-text-muted);
+      line-height: 1.65;
+      margin: 0;
+      max-width: 520px;
+    }
+
+    /* Orbital Interactive AI Hub */
+    .ai-login-visual-hub {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .ai-login-orbital-container {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease-out;
+    }
+
+    /* Central AI Core */
+    .ai-login-core {
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00f2fe 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 50px rgba(0, 242, 254, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      z-index: 5;
+      animation: coreBreath 4s ease-in-out infinite alternate;
+      cursor: default;
+    }
+
+    .ai-login-core-logo {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+    }
+
+    .ai-login-core-label {
+      font-family: var(--ai-log-font-display);
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes coreBreath {
+      0% { transform: scale(0.97); box-shadow: 0 0 35px rgba(0, 242, 254, 0.5); }
+      100% { transform: scale(1.05); box-shadow: 0 0 65px rgba(0, 242, 254, 0.8), 0 0 100px rgba(99, 102, 241, 0.4); }
+    }
+
+    /* Orbital Rings */
+    .ai-login-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 242, 254, 0.25);
+      pointer-events: none;
+    }
+
+    .ai-login-ring-1 {
+      width: 190px;
+      height: 190px;
+      animation: spinClockwise 32s linear infinite;
+    }
+
+    .ai-login-ring-2 {
+      width: 290px;
+      height: 290px;
+      border-style: solid;
+      border-color: rgba(99, 102, 241, 0.18);
+      animation: spinCounter 40s linear infinite;
+    }
+
+    .ai-login-ring-3 {
+      width: 360px;
+      height: 360px;
+      border: 1px dotted rgba(168, 85, 247, 0.2);
+      animation: spinClockwise 50s linear infinite;
+    }
+
+    @keyframes spinClockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spinCounter {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Orbiting Nodes: AI, ML, NLP, VISION, ROBOTICS, DATA, INNOVATION */
+    .ai-login-node {
+      position: absolute;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--ai-log-radius-full);
+      background: var(--ai-log-bg-card);
+      border: 1px solid var(--ai-log-border-glow);
+      font-family: var(--ai-log-font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--ai-log-cyan);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 12px rgba(0, 242, 254, 0.2);
+      backdrop-filter: blur(8px);
+      z-index: 6;
+      transition: all var(--ai-log-transition-fast);
+      user-select: none;
+    }
+
+    .ai-login-node:hover {
+      transform: scale(1.15);
+      border-color: var(--ai-log-cyan);
+      box-shadow: 0 0 20px var(--ai-log-cyan);
+      color: #ffffff;
+    }
+
+    /* Node Positioning around circle */
+    .ai-node-1 { top: 12px; left: 50%; transform: translateX(-50%); }
+    .ai-node-2 { top: 65px; right: 0; }
+    .ai-node-3 { bottom: 85px; right: -15px; }
+    .ai-node-4 { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .ai-node-5 { bottom: 85px; left: -15px; }
+    .ai-node-6 { top: 65px; left: -5px; }
+    .ai-node-7 { top: -20px; right: 40px; }
+
+    /* Highlights & Quick Stats */
+    .ai-login-quick-stats {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .ai-login-stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--ai-log-text-muted);
+    }
+
+    .ai-login-stat-pill strong {
+      color: var(--ai-log-text-main);
+      font-weight: 700;
+    }
+
+    .ai-login-stat-icon {
+      color: var(--ai-log-cyan);
+    }
+
+    /* ==========================================================================
+       RIGHT SIDE: AUTHENTICATION CARD & FLIP/SWITCH INTERFACE
+       ========================================================================== */
+    .ai-login-card-container {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    /* Prototype Notice Strip */
+    .ai-login-prototype-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1rem;
+      margin-bottom: 1.25rem;
+      border-radius: var(--ai-log-radius-md);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--ai-log-amber);
+      font-size: 0.8rem;
+      line-height: 1.4;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08);
+    }
+
+    .ai-login-prototype-strip svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Glass Login Card */
+    .ai-login-card {
+      position: relative;
+      background: var(--ai-log-bg-card);
+      border: 1px solid var(--ai-log-border-subtle);
+      border-radius: var(--ai-log-radius-lg);
+      padding: 2.25rem 2.5rem;
+      box-shadow: var(--ai-log-shadow-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      transition: border-color var(--ai-log-transition-smooth), box-shadow var(--ai-log-transition-smooth);
+    }
+
+    .ai-login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--ai-log-gradient-brand);
+      opacity: 0.9;
+    }
+
+    .ai-login-card:hover {
+      border-color: var(--ai-log-border-glow);
+    }
+
+    /* Card Header */
+    .ai-login-card-header {
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .ai-login-header-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      color: var(--ai-log-cyan);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-login-header-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .ai-login-card-title {
+      font-family: var(--ai-log-font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--ai-log-text-main);
+      margin: 0 0 0.4rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .ai-login-card-desc {
+      font-size: 0.9rem;
+      color: var(--ai-log-text-muted);
+      margin: 0;
+    }
+
+    /* Forms & Views Switcher */
+    .ai-login-view-wrapper {
+      position: relative;
+    }
+
+    .ai-login-view {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .ai-login-view.hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+      pointer-events: none;
+    }
+
+    .ai-login-view.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Form Fields */
+    .ai-login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .ai-login-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      position: relative;
+    }
+
+    .ai-login-label {
+      font-family: var(--ai-log-font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ai-log-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-login-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .ai-login-input-icon {
+      position: absolute;
+      left: 1rem;
+      color: var(--ai-log-text-dim);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--ai-log-transition-fast);
+    }
+
+    .ai-login-input-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .ai-login-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 1rem 0 2.85rem;
+      border-radius: var(--ai-log-radius-md);
+      background: var(--ai-log-bg-input);
+      border: 1px solid var(--ai-log-border-subtle);
+      color: var(--ai-log-text-main);
+      font-family: var(--ai-log-font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all var(--ai-log-transition-fast);
+    }
+
+    .ai-login-input::placeholder {
+      color: var(--ai-log-text-dim);
+      opacity: 0.75;
+    }
+
+    .ai-login-input:focus {
+      border-color: var(--ai-log-border-focus);
+      background: var(--ai-log-bg-surface);
+      box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15), 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .ai-login-input:focus ~ .ai-login-input-icon {
+      color: var(--ai-log-cyan);
+    }
+
+    /* Error input state */
+    .ai-login-input.error {
+      border-color: var(--ai-log-rose);
+      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+      animation: fieldShake 0.4s ease;
+    }
+
+    @keyframes fieldShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+
+    .ai-login-error-msg {
+      font-size: 0.78rem;
+      color: var(--ai-log-rose);
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+
+    .ai-login-error-msg.visible {
+      display: flex;
+    }
+
+    /* Password visibility toggle button */
+    .ai-login-pwd-toggle {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: var(--ai-log-text-dim);
+      cursor: pointer;
+      padding: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--ai-log-radius-sm);
+      transition: color var(--ai-log-transition-fast);
+    }
+
+    .ai-login-pwd-toggle:hover {
+      color: var(--ai-log-cyan);
+    }
+
+    .ai-login-pwd-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Form Utilities Row (Remember me & Forgot Password) */
+    .ai-login-util-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .ai-login-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--ai-log-text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ai-login-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: var(--ai-log-bg-input);
+      border: 1px solid var(--ai-log-border-subtle);
+      cursor: pointer;
+      outline: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--ai-log-transition-fast);
+    }
+
+    .ai-login-checkbox:checked {
+      background: var(--ai-log-cyan);
+      border-color: var(--ai-log-cyan);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+    }
+
+    .ai-login-checkbox:checked::after {
+      content: '';
+      width: 4px;
+      height: 8px;
+      border: solid #050811;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      margin-top: -2px;
+    }
+
+    .ai-login-checkbox:focus-visible {
+      box-shadow: 0 0 0 2px var(--ai-log-cyan);
+    }
+
+    .ai-login-link-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ai-log-cyan);
+      cursor: pointer;
+      text-decoration: none;
+      transition: color var(--ai-log-transition-fast), text-shadow var(--ai-log-transition-fast);
+    }
+
+    .ai-login-link-btn:hover {
+      color: #38bdf8;
+      text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+      text-decoration: underline;
+    }
+
+    /* Password Strength Meter */
+    .ai-login-pwd-strength {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-top: -0.25rem;
+    }
+
+    .ai-login-strength-bars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      height: 4px;
+      width: 100%;
+    }
+
+    .ai-login-strength-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--ai-log-border-subtle);
+      transition: background var(--ai-log-transition-fast);
+    }
+
+    .ai-login-strength-text {
+      font-family: var(--ai-log-font-mono);
+      font-size: 0.72rem;
+      color: var(--ai-log-text-dim);
+    }
+
+    /* Primary Submit Button */
+    .ai-login-submit-btn {
+      position: relative;
+      height: 50px;
+      border-radius: var(--ai-log-radius-md);
+      background: var(--ai-log-gradient-brand);
+      border: none;
+      color: #ffffff;
+      font-family: var(--ai-log-font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--ai-log-shadow-button);
+      transition: all var(--ai-log-transition-fast);
+      margin-top: 0.5rem;
+    }
+
+    .ai-login-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -4px rgba(0, 242, 254, 0.5);
+    }
+
+    .ai-login-submit-btn:active {
+      transform: translateY(0);
+      transform: scale(0.98);
+    }
+
+    /* Button Ripple Animation */
+    .ai-login-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Loading Spinner */
+    .ai-login-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spinClockwise 0.8s linear infinite;
+      display: none;
+    }
+
+    .ai-login-submit-btn.loading .ai-login-spinner {
+      display: block;
+    }
+
+    .ai-login-submit-btn.loading .ai-login-btn-text {
+      display: none;
+    }
+
+    /* Success State Banner */
+    .ai-login-success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      text-align: center;
+      padding: 1.75rem 1rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--ai-log-radius-md);
+      color: var(--ai-log-emerald);
+      animation: fadeInScale 0.4s ease;
+    }
+
+    .ai-login-success-state.visible {
+      display: flex;
+    }
+
+    .ai-login-success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+    }
+
+    .ai-login-success-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .ai-login-success-title {
+      font-family: var(--ai-log-font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .ai-login-success-title {
+      color: #0f172a;
+    }
+
+    .ai-login-success-text {
+      font-size: 0.88rem;
+      color: var(--ai-log-text-muted);
+      margin: 0;
+    }
+
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.94); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Divider */
+    .ai-login-divider {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.25rem 0 0.85rem 0;
+    }
+
+    .ai-login-divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ai-log-border-subtle);
+    }
+
+    .ai-login-divider span {
+      position: relative;
+      padding: 0 0.75rem;
+      background: var(--ai-log-bg-card);
+      font-family: var(--ai-log-font-mono);
+      font-size: 0.72rem;
+      color: var(--ai-log-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Google Button (Demo) */
+    .ai-login-google-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: var(--ai-log-radius-md);
+      background: var(--ai-log-bg-input);
+      border: 1px solid var(--ai-log-border-subtle);
+      color: var(--ai-log-text-main);
+      font-family: var(--ai-log-font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      transition: all var(--ai-log-transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-login-google-btn:hover {
+      background: var(--ai-log-bg-surface);
+      border-color: var(--ai-log-border-glow);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .ai-login-google-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Switch between Login and Register */
+    .ai-login-footer-switch {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--ai-log-text-muted);
+    }
+
+    .ai-login-footer-switch button {
+      background: none;
+      border: none;
+      color: var(--ai-log-cyan);
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 0.25rem;
+      margin-left: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: color var(--ai-log-transition-fast);
+    }
+
+    .ai-login-footer-switch button:hover {
+      color: #38bdf8;
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       MODAL & TOAST COMPONENT FOR DEMO POPUPS
+       ========================================================================== */
+    .ai-login-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(4, 7, 18, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--ai-log-transition-fast);
+    }
+
+    .ai-login-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ai-login-modal {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background: var(--ai-log-bg-card);
+      border: 1px solid var(--ai-log-border-glow);
+      border-radius: var(--ai-log-radius-lg);
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.2);
+      transform: scale(0.95) translateY(10px);
+      transition: transform var(--ai-log-transition-smooth);
+    }
+
+    .ai-login-modal-backdrop.active .ai-login-modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .ai-login-modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--ai-log-border-subtle);
+      color: var(--ai-log-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--ai-log-transition-fast);
+    }
+
+    .ai-login-modal-close:hover {
+      color: #ffffff;
+      border-color: var(--ai-log-cyan);
+      transform: rotate(90deg);
+    }
+
+    .ai-login-modal-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--ai-log-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .ai-login-modal-title {
+      font-family: var(--ai-log-font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: var(--ai-log-text-main);
+    }
+
+    .ai-login-modal-body {
+      font-size: 0.95rem;
+      color: var(--ai-log-text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .ai-login-modal-action-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: var(--ai-log-radius-md);
+      background: var(--ai-log-gradient-brand);
+      border: none;
+      color: #ffffff;
+      font-family: var(--ai-log-font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--ai-log-shadow-button);
+      transition: all var(--ai-log-transition-fast);
+    }
+
+    .ai-login-modal-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -2px rgba(0, 242, 254, 0.5);
+    }
+
+    /* Toast Notifications */
+    .ai-login-toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .ai-login-toast {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--ai-log-radius-md);
+      background: var(--ai-log-bg-glass);
+      border: 1px solid var(--ai-log-border-glow);
+      color: var(--ai-log-text-main);
+      font-size: 0.88rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.2);
+      backdrop-filter: blur(16px);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ai-login-toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .ai-login-toast-icon {
+      color: var(--ai-log-cyan);
+      display: flex;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       MINIMAL PROFESSIONAL FOOTER
+       ========================================================================== */
+    .ai-login-footer {
+      position: relative;
+      z-index: 10;
+      padding: 2rem 2.5rem;
+      border-top: 1px solid var(--ai-log-border-subtle);
+      background: rgba(5, 8, 17, 0.5);
+      backdrop-filter: blur(10px);
+      width: 100%;
+    }
+
+    [data-theme="light"] .ai-login-footer {
+      background: rgba(248, 250, 252, 0.7);
+    }
+
+    .ai-login-footer-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--ai-log-text-dim);
+    }
+
+    .ai-login-footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .ai-login-footer-brand strong {
+      color: var(--ai-log-text-main);
+    }
+
+    .ai-login-footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .ai-login-footer-links a {
+      color: var(--ai-log-text-muted);
+      text-decoration: none;
+      transition: color var(--ai-log-transition-fast);
+    }
+
+    .ai-login-footer-links a:hover {
+      color: var(--ai-log-cyan);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .ai-login-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .ai-login-hero {
+        align-items: center;
+        text-align: center;
+      }
+
+      .ai-login-demo-badge {
+        align-self: center;
+      }
+
+      .ai-login-hero-desc {
+        max-width: 600px;
+      }
+
+      .ai-login-visual-hub {
+        height: 300px;
+      }
+
+      .ai-login-orbital-container {
+        transform: scale(0.9);
+      }
+
+      .ai-login-quick-stats {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .ai-login-header {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .ai-login-main {
+        padding: 1rem 1.25rem 2.5rem 1.25rem;
+      }
+
+      .ai-login-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .ai-login-visual-hub {
+        display: none; /* Hide heavy orbital graph on small mobile to prioritize focus on login */
+      }
+
+      .ai-login-quick-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .ai-login-footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .ai-login-footer-links {
+        justify-content: center;
+      }
+    }
+
+    /* Accessibility: Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      #ai-login-canvas {
+        display: none;
+      }
+      .ai-login-ring-1, .ai-login-ring-2, .ai-login-ring-3 {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="ai-login-page">
+
+    <!-- Interactive Canvas & Atmospheric Glow Layers (pointer-events: none) -->
+    <canvas id="ai-login-canvas"></canvas>
+    <div class="ai-login-grid-pattern"></div>
+    <div class="ai-login-ambient-glow ai-login-glow-1"></div>
+    <div class="ai-login-ambient-glow ai-login-glow-2"></div>
+    <div class="ai-login-cursor-glow" id="ai-login-cursor-glow"></div>
+
+    <!-- Header & Brand Bar -->
+    <header class="ai-login-header">
+      <a href="home.html" class="ai-login-brand" title="AI Club • Artificial Intelligence Lab">
+        <div class="ai-login-brand-logo">
+          <img src="assets/ai-lab-logo.png" alt="AI Lab Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%2300f2fe\'/></svg>'">
+        </div>
+        <div class="ai-login-brand-text">
+          <span class="ai-login-brand-title">AI LAB</span>
+          <span class="ai-login-brand-sub">Artificial Intelligence Club</span>
+        </div>
+      </a>
+
+      <div class="ai-login-header-actions">
+        <a href="home.html" class="ai-login-back-btn" id="ai-login-back-home" title="Return to Home Page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>BACK TO HOME</span>
+        </a>
+
+        <button type="button" class="ai-login-theme-btn" id="ai-login-theme-toggle" aria-label="Toggle Light or Dark Theme" title="Toggle Theme">
+          <svg class="ai-login-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="ai-login-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="ai-login-main">
+      <div class="ai-login-grid">
+
+        <!-- LEFT COLUMN: BRANDING & ORBITAL AI VISUAL -->
+        <section class="ai-login-hero">
+          <div class="ai-login-demo-badge">
+            <span class="ai-login-badge-dot"></span>
+            <span>FRONTEND DEMO • MEMBER PORTAL</span>
+          </div>
+
+          <h1 class="ai-login-hero-title">
+            Welcome to the <br>
+            <span class="ai-gradient-text">AI Club Experience</span>
+          </h1>
+
+          <p class="ai-login-hero-desc">
+            Continue your journey with our student artificial intelligence community. Explore hands-on machine learning projects, national hackathons, and research initiatives.
+          </p>
+
+          <!-- Futuristic AI Orbital Visualization -->
+          <div class="ai-login-visual-hub" aria-hidden="true">
+            <div class="ai-login-orbital-container" id="ai-login-orbital-container">
+              <!-- Concentric Rings -->
+              <div class="ai-login-ring ai-login-ring-1"></div>
+              <div class="ai-login-ring ai-login-ring-2"></div>
+              <div class="ai-login-ring ai-login-ring-3"></div>
+
+              <!-- Glowing Center AI Core -->
+              <div class="ai-login-core" title="AI Club Central Node">
+                <img src="assets/ai-lab-logo.png" alt="AI Core" class="ai-login-core-logo" onerror="this.style.display='none'">
+                <span class="ai-login-core-label">AI CORE</span>
+              </div>
+
+              <!-- Orbiting Technology Nodes -->
+              <div class="ai-login-node ai-node-1">AI</div>
+              <div class="ai-login-node ai-node-2">ML</div>
+              <div class="ai-login-node ai-node-3">NLP</div>
+              <div class="ai-login-node ai-node-4">VISION</div>
+              <div class="ai-login-node ai-node-5">ROBOTICS</div>
+              <div class="ai-login-node ai-node-6">DATA</div>
+              <div class="ai-login-node ai-node-7">INNOVATION</div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Pills -->
+          <div class="ai-login-quick-stats">
+            <div class="ai-login-stat-pill">
+              <svg class="ai-login-stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span><strong>35+</strong> AI Projects</span>
+            </div>
+            <div class="ai-login-stat-pill">
+              <svg class="ai-login-stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span><strong>120+</strong> Active Members</span>
+            </div>
+            <div class="ai-login-stat-pill">
+              <svg class="ai-login-stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span><strong>24+</strong> Lab Guests</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT COLUMN: LOGIN / REGISTER CARD -->
+        <section class="ai-login-card-container">
+
+          <!-- Prototype Disclaimer Strip -->
+          <div class="ai-login-prototype-strip" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span><strong>Frontend Prototype:</strong> Simulated interface. No passwords or sensitive data are stored or transmitted.</span>
+          </div>
+
+          <!-- Glassmorphic Auth Card -->
+          <div class="ai-login-card">
+
+            <!-- Card Header -->
+            <div class="ai-login-card-header">
+              <div class="ai-login-header-icon" id="ai-login-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <h2 class="ai-login-card-title" id="ai-login-card-title">Welcome Back</h2>
+              <p class="ai-login-card-desc" id="ai-login-card-desc">Sign in to continue to AI Club</p>
+            </div>
+
+            <!-- Views Wrapper -->
+            <div class="ai-login-view-wrapper">
+
+              <!-- ==============================================
+                   VIEW 1: LOGIN FORM
+                   ============================================== -->
+              <div class="ai-login-view active" id="ai-login-view-login">
+                <form class="ai-login-form" id="ai-login-form-element" novalidate>
+                  
+                  <!-- Email Address -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-login-email">Email Address</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </span>
+                      <input type="email" id="ai-login-email" class="ai-login-input" placeholder="Enter your email address" autocomplete="email" required>
+                    </div>
+                    <div class="ai-login-error-msg" id="ai-login-email-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Please enter a valid email address.</span>
+                    </div>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-login-password">Password</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                      </span>
+                      <input type="password" id="ai-login-password" class="ai-login-input" placeholder="Enter your password" autocomplete="current-password" required>
+                      <button type="button" class="ai-login-pwd-toggle" id="ai-login-pwd-toggle" aria-label="Toggle password visibility">
+                        <svg class="ai-eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg class="ai-eye-closed" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                          <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="ai-login-error-msg" id="ai-login-pwd-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Password is required.</span>
+                    </div>
+                  </div>
+
+                  <!-- Remember Me & Forgot Password -->
+                  <div class="ai-login-util-row">
+                    <label class="ai-login-checkbox-label">
+                      <input type="checkbox" id="ai-login-remember" class="ai-login-checkbox">
+                      <span>Remember email</span>
+                    </label>
+
+                    <button type="button" class="ai-login-link-btn" id="ai-login-forgot-btn">
+                      Forgot Password?
+                    </button>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <button type="submit" class="ai-login-submit-btn" id="ai-login-btn">
+                    <span class="ai-login-spinner"></span>
+                    <span class="ai-login-btn-text">LOGIN</span>
+                  </button>
+
+                  <!-- Success Animation Card -->
+                  <div class="ai-login-success-state" id="ai-login-success">
+                    <div class="ai-login-success-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <h3 class="ai-login-success-title">Demo Login Successful</h3>
+                    <p class="ai-login-success-text">Redirecting to AI Club Portal...</p>
+                  </div>
+
+                  <!-- Social Authentication Divider -->
+                  <div class="ai-login-divider">
+                    <span>OR CONTINUE WITH</span>
+                  </div>
+
+                  <!-- Google Demo Button -->
+                  <button type="button" class="ai-login-google-btn" id="ai-login-google-btn">
+                    <svg viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3.05h3.9c2.28-2.1 3.64-5.2 3.64-9.14z"/>
+                      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.9-3.05c-1.08.72-2.45 1.16-4.03 1.16-3.1 0-5.72-2.1-6.66-4.92H1.27v3.13C3.26 21.36 7.34 24 12 24z"/>
+                      <path fill="#FBBC05" d="M5.34 14.28c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.59H1.27C.46 8.2 0 10.04 0 12s.46 3.8 1.27 5.41l4.07-3.13z"/>
+                      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.27 6.59l4.07 3.13c.94-2.82 3.56-4.97 6.66-4.97z"/>
+                    </svg>
+                    <span>Continue with Google</span>
+                  </button>
+
+                  <!-- Switch to Register -->
+                  <div class="ai-login-footer-switch">
+                    <span>Don't have an account?</span>
+                    <button type="button" id="ai-login-switch-to-register">CREATE ACCOUNT</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- ==============================================
+                   VIEW 2: REGISTRATION FORM
+                   ============================================== -->
+              <div class="ai-login-view hidden" id="ai-login-view-register">
+                <form class="ai-login-form" id="ai-register-form-element" novalidate>
+                  
+                  <!-- Full Name -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-reg-name">Full Name</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                      </span>
+                      <input type="text" id="ai-reg-name" class="ai-login-input" placeholder="e.g. Alex Rivera" autocomplete="name" required>
+                    </div>
+                    <div class="ai-login-error-msg" id="ai-reg-name-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Full name is required.</span>
+                    </div>
+                  </div>
+
+                  <!-- Email Address -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-reg-email">Email Address</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </span>
+                      <input type="email" id="ai-reg-email" class="ai-login-input" placeholder="student@siet.ac.in" autocomplete="email" required>
+                    </div>
+                    <div class="ai-login-error-msg" id="ai-reg-email-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Please enter a valid email address.</span>
+                    </div>
+                  </div>
+
+                  <!-- Create Password & Strength -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-reg-password">Password</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                      </span>
+                      <input type="password" id="ai-reg-password" class="ai-login-input" placeholder="Create a password" autocomplete="new-password" required>
+                      <button type="button" class="ai-login-pwd-toggle" id="ai-reg-pwd-toggle" aria-label="Toggle password visibility">
+                        <svg class="ai-eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg class="ai-eye-closed" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                          <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Visual Password Strength Indicator -->
+                    <div class="ai-login-pwd-strength">
+                      <div class="ai-login-strength-bars">
+                        <div class="ai-login-strength-bar" id="ai-strength-bar-1"></div>
+                        <div class="ai-login-strength-bar" id="ai-strength-bar-2"></div>
+                        <div class="ai-login-strength-bar" id="ai-strength-bar-3"></div>
+                      </div>
+                      <span class="ai-login-strength-text" id="ai-strength-text">Password strength: None</span>
+                    </div>
+
+                    <div class="ai-login-error-msg" id="ai-reg-pwd-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Password is required.</span>
+                    </div>
+                  </div>
+
+                  <!-- Confirm Password -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-label" for="ai-reg-confirm">Confirm Password</label>
+                    <div class="ai-login-input-box">
+                      <span class="ai-login-input-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                      </span>
+                      <input type="password" id="ai-reg-confirm" class="ai-login-input" placeholder="Repeat your password" autocomplete="new-password" required>
+                    </div>
+                    <div class="ai-login-error-msg" id="ai-reg-confirm-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>Passwords do not match.</span>
+                    </div>
+                  </div>
+
+                  <!-- Terms & Conditions Checkbox -->
+                  <div class="ai-login-input-group">
+                    <label class="ai-login-checkbox-label">
+                      <input type="checkbox" id="ai-reg-terms" class="ai-login-checkbox" required>
+                      <span>I agree to the AI Club Guidelines & Demo Terms</span>
+                    </label>
+                    <div class="ai-login-error-msg" id="ai-reg-terms-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      <span>You must accept the guidelines.</span>
+                    </div>
+                  </div>
+
+                  <!-- Create Account Button -->
+                  <button type="submit" class="ai-login-submit-btn" id="ai-register-btn">
+                    <span class="ai-login-spinner"></span>
+                    <span class="ai-login-btn-text">CREATE ACCOUNT</span>
+                  </button>
+
+                  <!-- Switch back to Login -->
+                  <div class="ai-login-footer-switch">
+                    <span>Already have an account?</span>
+                    <button type="button" id="ai-login-switch-to-login">LOGIN</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Interactive Glass Modal for Demo Alerts -->
+    <div class="ai-login-modal-backdrop" id="ai-login-modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="ai-login-modal">
+        <button type="button" class="ai-login-modal-close" id="ai-login-modal-close" aria-label="Close dialog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="ai-login-modal-icon" id="ai-login-modal-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h3 class="ai-login-modal-title" id="ai-login-modal-title">Demo Notice</h3>
+        <p class="ai-login-modal-body" id="ai-login-modal-body">
+          Notice details...
+        </p>
+        <button type="button" class="ai-login-modal-action-btn" id="ai-login-modal-action-btn">
+          UNDERSTOOD
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="ai-login-toast-container" id="ai-login-toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="ai-login-footer">
+      <div class="ai-login-footer-content">
+        <div class="ai-login-footer-brand">
+          <strong>AI Club &bull; Artificial Intelligence Research Lab</strong>
+          <span>Sri Shakthi Institute of Engineering & Technology (SIET)</span>
+        </div>
+
+        <div class="ai-login-footer-links">
+          <a href="home.html">Home</a>
+          <a href="projects.html">Projects</a>
+          <a href="achievement.html">Achievements</a>
+          <a href="visitors.html">Visitors</a>
+          <a href="chat.html">AI Chat</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="ai-login-footer-copy">
+          &copy; 2026 AI Club / AI Lab. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT MODULE (AIClubLoginApp)
+       Strictly Vanilla JS, completely isolated, frontend-demo only
+       ========================================================================== -->
+  <script>
+    const AIClubLoginApp = (() => {
+      'use strict';
+
+      // Internal State
+      const state = {
+        mode: 'login', // 'login' or 'register'
+        isLoading: false,
+        theme: 'dark'
+      };
+
+      // Cached DOM Elements
+      const dom = {};
+
+      function cacheDom() {
+        dom.page = document.getElementById('ai-login-page');
+        dom.canvas = document.getElementById('ai-login-canvas');
+        dom.cursorGlow = document.getElementById('ai-login-cursor-glow');
+        dom.orbital = document.getElementById('ai-login-orbital-container');
+        dom.themeToggle = document.getElementById('ai-login-theme-toggle');
+
+        // Card header
+        dom.cardTitle = document.getElementById('ai-login-card-title');
+        dom.cardDesc = document.getElementById('ai-login-card-desc');
+        dom.cardIcon = document.getElementById('ai-login-card-icon');
+
+        // Views
+        dom.viewLogin = document.getElementById('ai-login-view-login');
+        dom.viewRegister = document.getElementById('ai-login-view-register');
+        dom.switchToRegister = document.getElementById('ai-login-switch-to-register');
+        dom.switchToLogin = document.getElementById('ai-login-switch-to-login');
+
+        // Login Form elements
+        dom.formLogin = document.getElementById('ai-login-form-element');
+        dom.loginEmail = document.getElementById('ai-login-email');
+        dom.loginEmailError = document.getElementById('ai-login-email-error');
+        dom.loginPassword = document.getElementById('ai-login-password');
+        dom.loginPasswordError = document.getElementById('ai-login-pwd-error');
+        dom.loginRemember = document.getElementById('ai-login-remember');
+        dom.loginForgotBtn = document.getElementById('ai-login-forgot-btn');
+        dom.loginSubmitBtn = document.getElementById('ai-login-btn');
+        dom.loginSuccess = document.getElementById('ai-login-success');
+        dom.googleBtn = document.getElementById('ai-login-google-btn');
+        dom.pwdToggleLogin = document.getElementById('ai-login-pwd-toggle');
+
+        // Register Form elements
+        dom.formRegister = document.getElementById('ai-register-form-element');
+        dom.regName = document.getElementById('ai-reg-name');
+        dom.regNameError = document.getElementById('ai-reg-name-error');
+        dom.regEmail = document.getElementById('ai-reg-email');
+        dom.regEmailError = document.getElementById('ai-reg-email-error');
+        dom.regPassword = document.getElementById('ai-reg-password');
+        dom.regPasswordError = document.getElementById('ai-reg-pwd-error');
+        dom.regConfirm = document.getElementById('ai-reg-confirm');
+        dom.regConfirmError = document.getElementById('ai-reg-confirm-error');
+        dom.regTerms = document.getElementById('ai-reg-terms');
+        dom.regTermsError = document.getElementById('ai-reg-terms-error');
+        dom.regSubmitBtn = document.getElementById('ai-register-btn');
+        dom.pwdToggleReg = document.getElementById('ai-reg-pwd-toggle');
+        dom.strengthBars = [
+          document.getElementById('ai-strength-bar-1'),
+          document.getElementById('ai-strength-bar-2'),
+          document.getElementById('ai-strength-bar-3')
+        ];
+        dom.strengthText = document.getElementById('ai-strength-text');
+
+        // Modal elements
+        dom.modalBackdrop = document.getElementById('ai-login-modal-backdrop');
+        dom.modalClose = document.getElementById('ai-login-modal-close');
+        dom.modalTitle = document.getElementById('ai-login-modal-title');
+        dom.modalBody = document.getElementById('ai-login-modal-body');
+        dom.modalActionBtn = document.getElementById('ai-login-modal-action-btn');
+        dom.toastContainer = document.getElementById('ai-login-toast-container');
+      }
+
+      /* ==========================================================================
+         THEME TOGGLE & PERSISTENCE
+         ========================================================================== */
+      function initTheme() {
+        try {
+          const saved = localStorage.getItem('aiClubLoginTheme') ||
+                        localStorage.getItem('aiClubVisitorsTheme') ||
+                        localStorage.getItem('ai-club-theme') ||
+                        localStorage.getItem('aiClubHomeTheme');
+          state.theme = saved || 'dark';
+        } catch (e) {
+          state.theme = 'dark';
+        }
+        applyTheme(state.theme);
+      }
+
+      function applyTheme(theme) {
+        state.theme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        try {
+          localStorage.setItem('aiClubLoginTheme', theme);
+        } catch (e) {}
+      }
+
+      function toggleTheme() {
+        const newTheme = state.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        showToast(newTheme === 'dark' ? '🌙 Dark mode enabled' : '☀️ Light mode enabled');
+      }
+
+      /* ==========================================================================
+         REMEMBER EMAIL (NON-SENSITIVE)
+         ========================================================================== */
+      function loadRememberedEmail() {
+        try {
+          const savedEmail = localStorage.getItem('aiClubLoginEmail');
+          if (savedEmail && dom.loginEmail) {
+            dom.loginEmail.value = savedEmail;
+            if (dom.loginRemember) dom.loginRemember.checked = true;
+          }
+        } catch (e) {}
+      }
+
+      function saveRememberedEmail(email, shouldRemember) {
+        try {
+          if (shouldRemember && email) {
+            localStorage.setItem('aiClubLoginEmail', email.trim());
+          } else {
+            localStorage.removeItem('aiClubLoginEmail');
+          }
+        } catch (e) {}
+      }
+
+      /* ==========================================================================
+         VIEW SWITCHING (LOGIN <-> REGISTER)
+         ========================================================================== */
+      function switchView(targetMode) {
+        state.mode = targetMode;
+
+        if (targetMode === 'register') {
+          dom.viewLogin.classList.remove('active');
+          dom.viewLogin.classList.add('hidden');
+          dom.viewRegister.classList.remove('hidden');
+          dom.viewRegister.classList.add('active');
+
+          dom.cardTitle.textContent = 'Join the AI Lab';
+          dom.cardDesc.textContent = 'Create your student researcher profile';
+          dom.cardIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          `;
+        } else {
+          dom.viewRegister.classList.remove('active');
+          dom.viewRegister.classList.add('hidden');
+          dom.viewLogin.classList.remove('hidden');
+          dom.viewLogin.classList.add('active');
+
+          dom.cardTitle.textContent = 'Welcome Back';
+          dom.cardDesc.textContent = 'Sign in to continue to AI Club';
+          dom.cardIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          `;
+        }
+      }
+
+      /* ==========================================================================
+         PASSWORD VISIBILITY TOGGLE
+         ========================================================================== */
+      function setupPasswordToggle(inputElem, toggleBtn) {
+        if (!inputElem || !toggleBtn) return;
+
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = inputElem.getAttribute('type') === 'password';
+          inputElem.setAttribute('type', isPassword ? 'text' : 'password');
+
+          const eyeOpen = toggleBtn.querySelector('.ai-eye-open');
+          const eyeClosed = toggleBtn.querySelector('.ai-eye-closed');
+
+          if (eyeOpen && eyeClosed) {
+            eyeOpen.style.display = isPassword ? 'none' : 'block';
+            eyeClosed.style.display = isPassword ? 'block' : 'none';
+          }
+        });
+      }
+
+      /* ==========================================================================
+         PASSWORD STRENGTH CALCULATION
+         ========================================================================== */
+      function checkPasswordStrength(val) {
+        if (!val || val.length === 0) {
+          return { score: 0, label: 'Password strength: None', color: 'var(--ai-log-border-subtle)' };
+        }
+
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+        if (val.length >= 10 && /[^A-Za-z0-9]/.test(val)) score++;
+
+        if (score === 1) {
+          return { score: 1, label: 'Password strength: Weak', color: 'var(--ai-log-rose)' };
+        } else if (score === 2) {
+          return { score: 2, label: 'Password strength: Medium', color: 'var(--ai-log-amber)' };
+        } else {
+          return { score: 3, label: 'Password strength: Strong', color: 'var(--ai-log-emerald)' };
+        }
+      }
+
+      function updateStrengthMeter(val) {
+        const result = checkPasswordStrength(val);
+
+        dom.strengthBars.forEach((bar, idx) => {
+          if (idx < result.score) {
+            bar.style.background = result.color;
+          } else {
+            bar.style.background = 'var(--ai-log-border-subtle)';
+          }
+        });
+
+        dom.strengthText.textContent = result.label;
+        dom.strengthText.style.color = result.score > 0 ? result.color : 'var(--ai-log-text-dim)';
+      }
+
+      /* ==========================================================================
+         VALIDATION UTILITIES
+         ========================================================================== */
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      }
+
+      function setFieldError(input, errorElem, hasError, customMsg) {
+        if (hasError) {
+          input.classList.add('error');
+          if (customMsg) errorElem.querySelector('span').textContent = customMsg;
+          errorElem.classList.add('visible');
+          input.setAttribute('aria-invalid', 'true');
+        } else {
+          input.classList.remove('error');
+          errorElem.classList.remove('visible');
+          input.removeAttribute('aria-invalid');
+        }
+      }
+
+      /* ==========================================================================
+         LOGIN SUBMISSION HANDLER
+         ========================================================================== */
+      function handleLoginSubmit(e) {
+        e.preventDefault();
+        if (state.isLoading) return;
+
+        const email = dom.loginEmail.value.trim();
+        const pwd = dom.loginPassword.value;
+
+        let hasError = false;
+
+        // Validate Email
+        if (!email) {
+          setFieldError(dom.loginEmail, dom.loginEmailError, true, 'Email address is required.');
+          hasError = true;
+        } else if (!isValidEmail(email)) {
+          setFieldError(dom.loginEmail, dom.loginEmailError, true, 'Please enter a valid email address.');
+          hasError = true;
+        } else {
+          setFieldError(dom.loginEmail, dom.loginEmailError, false);
+        }
+
+        // Validate Password
+        if (!pwd) {
+          setFieldError(dom.loginPassword, dom.loginPasswordError, true, 'Password is required.');
+          hasError = true;
+        } else {
+          setFieldError(dom.loginPassword, dom.loginPasswordError, false);
+        }
+
+        if (hasError) return;
+
+        // Simulate Loading and Demo Success
+        state.isLoading = true;
+        dom.loginSubmitBtn.classList.add('loading');
+
+        // Remember Email if requested
+        saveRememberedEmail(email, dom.loginRemember.checked);
+
+        setTimeout(() => {
+          dom.loginSubmitBtn.classList.remove('loading');
+          dom.loginSubmitBtn.style.display = 'none';
+          dom.loginSuccess.classList.add('visible');
+
+          showToast('✓ Demo Login Validated! Redirecting...');
+
+          // Redirect to home.html after demo animation
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 1800);
+        }, 900);
+      }
+
+      /* ==========================================================================
+         REGISTER SUBMISSION HANDLER
+         ========================================================================== */
+      function handleRegisterSubmit(e) {
+        e.preventDefault();
+        if (state.isLoading) return;
+
+        const name = dom.regName.value.trim();
+        const email = dom.regEmail.value.trim();
+        const pwd = dom.regPassword.value;
+        const confirm = dom.regConfirm.value;
+        const terms = dom.regTerms.checked;
+
+        let hasError = false;
+
+        // Name
+        if (!name) {
+          setFieldError(dom.regName, dom.regNameError, true, 'Full name is required.');
+          hasError = true;
+        } else {
+          setFieldError(dom.regName, dom.regNameError, false);
+        }
+
+        // Email
+        if (!email || !isValidEmail(email)) {
+          setFieldError(dom.regEmail, dom.regEmailError, true, 'Please provide a valid email address.');
+          hasError = true;
+        } else {
+          setFieldError(dom.regEmail, dom.regEmailError, false);
+        }
+
+        // Password
+        if (!pwd) {
+          setFieldError(dom.regPassword, dom.regPasswordError, true, 'Password is required.');
+          hasError = true;
+        } else {
+          setFieldError(dom.regPassword, dom.regPasswordError, false);
+        }
+
+        // Confirm Password
+        if (!confirm || confirm !== pwd) {
+          setFieldError(dom.regConfirm, dom.regConfirmError, true, 'Passwords do not match.');
+          hasError = true;
+        } else {
+          setFieldError(dom.regConfirm, dom.regConfirmError, false);
+        }
+
+        // Terms
+        if (!terms) {
+          dom.regTermsError.classList.add('visible');
+          hasError = true;
+        } else {
+          dom.regTermsError.classList.remove('visible');
+        }
+
+        if (hasError) return;
+
+        state.isLoading = true;
+        dom.regSubmitBtn.classList.add('loading');
+
+        setTimeout(() => {
+          state.isLoading = false;
+          dom.regSubmitBtn.classList.remove('loading');
+
+          openModal({
+            title: 'Account Creation (Demo)',
+            body: `Hello ${name}! In this frontend demonstration, accounts are not stored in any external database. You can return to the login screen and explore the portal interface.`,
+            buttonText: 'GO TO LOGIN',
+            onAction: () => {
+              closeModal();
+              switchView('login');
+              dom.loginEmail.value = email;
+              dom.loginPassword.focus();
+            }
+          });
+        }, 800);
+      }
+
+      /* ==========================================================================
+         MODAL & TOAST NOTIFICATION HELPERS
+         ========================================================================== */
+      let currentModalAction = null;
+
+      function openModal({ title, body, buttonText, onAction }) {
+        dom.modalTitle.textContent = title || 'Notice';
+        dom.modalBody.textContent = body || '';
+        dom.modalActionBtn.textContent = buttonText || 'UNDERSTOOD';
+        currentModalAction = onAction || null;
+
+        dom.modalBackdrop.classList.add('active');
+        dom.modalBackdrop.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeModal() {
+        dom.modalBackdrop.classList.remove('active');
+        dom.modalBackdrop.setAttribute('aria-hidden', 'true');
+        currentModalAction = null;
+      }
+
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'ai-login-toast';
+        toast.innerHTML = `
+          <span class="ai-login-toast-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </span>
+          <span>${message}</span>
+        `;
+        dom.toastContainer.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add('visible');
+        });
+
+        setTimeout(() => {
+          toast.classList.remove('visible');
+          setTimeout(() => toast.remove(), 350);
+        }, 3200);
+      }
+
+      /* ==========================================================================
+         BUTTON RIPPLE EFFECT
+         ========================================================================== */
+      function createRipple(e) {
+        const btn = e.currentTarget;
+        const rect = btn.getBoundingClientRect();
+        const circle = document.createElement('span');
+        const diameter = Math.max(rect.width, rect.height);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${e.clientX - rect.left - radius}px`;
+        circle.style.top = `${e.clientY - rect.top - radius}px`;
+        circle.classList.add('ai-login-ripple');
+
+        const existingRipple = btn.querySelector('.ai-login-ripple');
+        if (existingRipple) existingRipple.remove();
+
+        btn.appendChild(circle);
+      }
+
+      /* ==========================================================================
+         CANVAS BACKGROUND & NEURAL PARTICLE NETWORK
+         ========================================================================== */
+      function initCanvasAnimation() {
+        if (!dom.canvas) return;
+
+        // Respect reduced motion
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          dom.canvas.style.display = 'none';
+          return;
+        }
+
+        const ctx = dom.canvas.getContext('2d');
+        let width = dom.canvas.width = window.innerWidth;
+        let height = dom.canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = Math.min(Math.floor((width * height) / 22000), 55);
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45,
+            radius: Math.random() * 1.8 + 0.8,
+            color: Math.random() > 0.4 ? 'rgba(0, 242, 254, ' : 'rgba(168, 85, 247, '
+          });
+        }
+
+        function resize() {
+          width = dom.canvas.width = window.innerWidth;
+          height = dom.canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize, { passive: true });
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+
+          // Update and draw particles
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color + '0.7)';
+            ctx.fill();
+
+            // Connect nearby nodes
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dx = p.x - p2.x;
+              const dy = p.y - p2.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist < 130) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = `rgba(0, 242, 254, ${0.18 * (1 - dist / 130)})`;
+                ctx.lineWidth = 0.75;
+                ctx.stroke();
+              }
+            }
+          }
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      /* ==========================================================================
+         EVENT BINDINGS
+         ========================================================================== */
+      function bindEvents() {
+        // Theme toggle
+        dom.themeToggle.addEventListener('click', toggleTheme);
+
+        // View switches
+        dom.switchToRegister.addEventListener('click', () => switchView('register'));
+        dom.switchToLogin.addEventListener('click', () => switchView('login'));
+
+        // Password toggles
+        setupPasswordToggle(dom.loginPassword, dom.pwdToggleLogin);
+        setupPasswordToggle(dom.regPassword, dom.pwdToggleReg);
+
+        // Password Strength Real-time Tracking
+        dom.regPassword.addEventListener('input', (e) => {
+          updateStrengthMeter(e.target.value);
+        });
+
+        // Form Submissions
+        dom.formLogin.addEventListener('submit', handleLoginSubmit);
+        dom.formRegister.addEventListener('submit', handleRegisterSubmit);
+
+        // Ripple clicks on action buttons
+        [dom.loginSubmitBtn, dom.regSubmitBtn, dom.googleBtn, dom.modalActionBtn].forEach(btn => {
+          if (btn) btn.addEventListener('click', createRipple);
+        });
+
+        // Forgot Password Trigger
+        dom.loginForgotBtn.addEventListener('click', () => {
+          openModal({
+            title: 'Password Recovery (Demo)',
+            body: 'Password recovery and automated email resets are disabled in this standalone frontend demo. For account inquiries, please reach out to the AI Club coordinators at the AI Lab.',
+            buttonText: 'GOT IT'
+          });
+        });
+
+        // Google Login Trigger (Demo notice)
+        dom.googleBtn.addEventListener('click', () => {
+          openModal({
+            title: 'Google Authentication (Demo)',
+            body: 'Google OAuth integration is not connected in this frontend prototype. Please use the simulated member login form to test portal navigation.',
+            buttonText: 'UNDERSTOOD'
+          });
+        });
+
+        // Modal Action and Close
+        dom.modalClose.addEventListener('click', closeModal);
+        dom.modalBackdrop.addEventListener('click', (e) => {
+          if (e.target === dom.modalBackdrop) closeModal();
+        });
+        dom.modalActionBtn.addEventListener('click', () => {
+          if (typeof currentModalAction === 'function') {
+            currentModalAction();
+          } else {
+            closeModal();
+          }
+        });
+
+        // Keyboard navigation (Escape closes modal)
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && dom.modalBackdrop.classList.contains('active')) {
+            closeModal();
+          }
+        });
+
+        // Ambient Mouse Tracking for Parallax and Cursor Glow
+        window.addEventListener('mousemove', (e) => {
+          if (dom.cursorGlow) {
+            dom.cursorGlow.style.left = `${e.clientX}px`;
+            dom.cursorGlow.style.top = `${e.clientY}px`;
+          }
+
+          if (dom.orbital && window.innerWidth > 992) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 14;
+            const y = (e.clientY / window.innerHeight - 0.5) * 14;
+            dom.orbital.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          }
+        }, { passive: true });
+
+        // Cross-tab theme sync
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'aiClubLoginTheme' || e.key === 'aiClubVisitorsTheme' || e.key === 'ai-club-theme' || e.key === 'aiClubHomeTheme') {
+            applyTheme(e.newValue || 'dark');
+          }
+        });
+      }
+
+      /* ==========================================================================
+         PUBLIC INIT
+         ========================================================================== */
+      function init() {
+        cacheDom();
+        initTheme();
+        loadRememberedEmail();
+        initCanvasAnimation();
+        bindEvents();
+      }
+
+      return {
+        init,
+        switchView,
+        openModal
+      };
+
+    })();
+
+    // Initialize application once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      AIClubLoginApp.init();
+    });
+  </script>
+</body>
+
+</html>
