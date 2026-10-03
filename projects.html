@@ -718,48 +718,19 @@
 
     .ai-proj-visual-container {
       position: relative;
-      width: 380px;
-      height: 380px;
+      width: 400px;
+      height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Rotating Rings */
-    .ai-proj-orbit-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px dashed rgba(0, 242, 254, 0.25);
-      pointer-events: none;
-    }
-
-    .ai-proj-orbit-ring-1 {
-      width: 320px;
-      height: 320px;
-      animation: aiProjRotate 32s linear infinite;
-    }
-
-    .ai-proj-orbit-ring-2 {
-      width: 240px;
-      height: 240px;
-      border-color: rgba(168, 85, 247, 0.3);
-      border-style: dotted;
-      animation: aiProjRotateReverse 24s linear infinite;
-    }
-
-    @keyframes aiProjRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes aiProjRotateReverse {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
-    }
-
-    /* Central AI Core Hub - Featuring Official AI Lab Logo */
+    /* Central AI Core Hub - Featuring Official AI Lab Logo (Stays in Center) */
     .ai-proj-core-hub {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 124px;
       height: 124px;
       border-radius: 50%;
@@ -769,7 +740,7 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 0 50px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.35);
-      z-index: 10;
+      z-index: 25;
       animation: aiProjCorePulse 3s ease-in-out infinite alternate;
       overflow: hidden;
       padding: 5px;
@@ -778,7 +749,7 @@
     }
 
     .ai-proj-core-hub:hover {
-      transform: scale(1.08);
+      transform: translate(-50%, -50%) scale(1.08);
       box-shadow: 0 0 75px rgba(0, 242, 254, 0.85), inset 0 0 30px rgba(0, 242, 254, 0.55);
     }
 
@@ -808,6 +779,75 @@
       filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.95)) brightness(1.1);
     }
 
+    /* Rotating Orbit System: Outside content smoothly orbits around the central logo */
+    .ai-proj-orbit-system {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      animation: aiProjOrbitRotate 36s linear infinite;
+      transform-origin: center center;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    /* Pause rotation on hover so users can easily read, hover, and click nodes or cards */
+    .ai-proj-visual-container:hover .ai-proj-orbit-system,
+    .ai-proj-visual-container:hover .ai-proj-orbit-counter {
+      animation-play-state: paused;
+    }
+
+    @keyframes aiProjOrbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes aiProjOrbitCounterRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* Counter-rotate items so text badges and cards always stay upright and legible */
+    .ai-proj-orbit-counter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: aiProjOrbitCounterRotate 36s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Concentric Orbital Rings */
+    .ai-proj-orbit-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .ai-proj-orbit-ring-1 {
+      width: 330px;
+      height: 330px;
+      border: 1px dashed rgba(0, 242, 254, 0.28);
+    }
+
+    .ai-proj-orbit-ring-2 {
+      width: 240px;
+      height: 240px;
+      border-color: rgba(168, 85, 247, 0.32);
+      border-style: dotted;
+    }
+
+    .ai-proj-orbit-ring-3 {
+      width: 170px;
+      height: 170px;
+      border: 1px solid rgba(59, 130, 246, 0.16);
+    }
+
     /* Orbital Nodes */
     .ai-proj-orbit-node {
       position: absolute;
@@ -820,18 +860,16 @@
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
       cursor: default;
+      user-select: none;
+      z-index: 12;
     }
 
     .ai-proj-orbit-node:hover {
-      transform: scale(1.15);
       border-color: var(--ai-proj-cyan);
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
     }
 
     .ai-proj-node-dot {
@@ -840,55 +878,59 @@
       border-radius: 50%;
     }
 
-    .ai-proj-node-ai { top: 12px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-cyan); }
+    /* Node Positioning Along Orbit */
+    .ai-proj-node-ai { top: 16px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-cyan); }
     .ai-proj-node-ai .ai-proj-node-dot { background: var(--ai-proj-cyan); box-shadow: 0 0 8px var(--ai-proj-cyan); }
 
-    .ai-proj-node-ml { top: 70px; right: 10px; color: var(--ai-proj-blue); }
+    .ai-proj-node-ml { top: 80px; right: 18px; color: var(--ai-proj-blue); }
     .ai-proj-node-ml .ai-proj-node-dot { background: var(--ai-proj-blue); box-shadow: 0 0 8px var(--ai-proj-blue); }
 
-    .ai-proj-node-vision { bottom: 80px; right: 15px; color: var(--ai-proj-pink); }
+    .ai-proj-node-vision { bottom: 80px; right: 18px; color: var(--ai-proj-pink); }
     .ai-proj-node-vision .ai-proj-node-dot { background: var(--ai-proj-pink); box-shadow: 0 0 8px var(--ai-proj-pink); }
 
-    .ai-proj-node-nlp { bottom: 15px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-purple); }
+    .ai-proj-node-nlp { bottom: 16px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-purple); }
     .ai-proj-node-nlp .ai-proj-node-dot { background: var(--ai-proj-purple); box-shadow: 0 0 8px var(--ai-proj-purple); }
 
-    .ai-proj-node-robotics { bottom: 80px; left: 15px; color: var(--ai-proj-emerald); }
+    .ai-proj-node-robotics { bottom: 80px; left: 18px; color: var(--ai-proj-emerald); }
     .ai-proj-node-robotics .ai-proj-node-dot { background: var(--ai-proj-emerald); box-shadow: 0 0 8px var(--ai-proj-emerald); }
 
-    .ai-proj-node-data { top: 70px; left: 10px; color: var(--ai-proj-amber); }
+    .ai-proj-node-data { top: 80px; left: 18px; color: var(--ai-proj-amber); }
     .ai-proj-node-data .ai-proj-node-dot { background: var(--ai-proj-amber); box-shadow: 0 0 8px var(--ai-proj-amber); }
 
-    /* Floating Micro Cards */
+    /* Floating Micro Cards in Orbit */
     .ai-proj-float-card {
       position: absolute;
       background: var(--ai-proj-bg-card);
-      border: 1px solid var(--ai-proj-border-subtle);
+      border: 1px solid var(--ai-proj-border-glow);
       border-radius: var(--ai-proj-radius-md);
-      padding: 10px 14px;
+      padding: 8px 14px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: aiProjFloat 4s ease-in-out infinite alternate;
-      z-index: 12;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(0, 242, 254, 0.15);
+      z-index: 15;
+      cursor: pointer;
+      transition: border-color var(--ai-proj-transition-fast), box-shadow var(--ai-proj-transition-fast);
+      user-select: none;
+    }
+
+    .ai-proj-float-card:hover {
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
     }
 
     .ai-proj-float-card-1 {
-      top: -15px;
+      top: -10px;
       right: -25px;
-      animation-delay: 0.4s;
     }
 
     .ai-proj-float-card-2 {
-      bottom: -15px;
+      bottom: -10px;
       left: -25px;
-      animation-delay: 1.2s;
     }
 
-    @keyframes aiProjFloat {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-10px); }
+    .ai-proj-float-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .ai-proj-float-card-icon {
@@ -900,17 +942,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .ai-proj-float-card-title {
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--ai-proj-text-main);
+      white-space: nowrap;
     }
 
     .ai-proj-float-card-sub {
       font-size: 0.68rem;
       color: var(--ai-proj-text-muted);
+      white-space: nowrap;
     }
 
     /* ==========================================================================
@@ -2217,6 +2262,14 @@
     }
 
     @media (max-width: 480px) {
+      .ai-proj-hero-visual-wrapper {
+        height: 330px;
+      }
+
+      .ai-proj-visual-container {
+        transform: scale(0.78);
+      }
+
       .ai-proj-stats-grid {
         grid-template-columns: 1fr;
       }
@@ -2400,68 +2453,89 @@
             <div class="ai-proj-hero-visual-wrapper">
               <div class="ai-proj-visual-container" id="ai-proj-hero-visual">
 
-                <!-- Concentric dashed orbital rings -->
-                <div class="ai-proj-orbit-ring ai-proj-orbit-ring-1"></div>
-                <div class="ai-proj-orbit-ring ai-proj-orbit-ring-2"></div>
-
-                <!-- Central AI Core Hub with Official AI Lab Logo -->
+                <!-- Central AI Core Hub with Official AI Lab Logo (Anchored in Center) -->
                 <div class="ai-proj-core-hub" title="AI Lab Official Emblem">
                   <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-proj-core-logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
                 </div>
 
-                <!-- Connected domain nodes -->
-                <div class="ai-proj-orbit-node ai-proj-node-ai">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>AI</span>
-                </div>
-                <div class="ai-proj-orbit-node ai-proj-node-ml">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>ML</span>
-                </div>
-                <div class="ai-proj-orbit-node ai-proj-node-vision">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>VISION</span>
-                </div>
-                <div class="ai-proj-orbit-node ai-proj-node-nlp">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>NLP</span>
-                </div>
-                <div class="ai-proj-orbit-node ai-proj-node-robotics">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>ROBOTICS</span>
-                </div>
-                <div class="ai-proj-orbit-node ai-proj-node-data">
-                  <span class="ai-proj-node-dot"></span>
-                  <span>DATA</span>
-                </div>
+                <!-- Rotating Orbit System: Outside elements continuously rotate around the logo -->
+                <div class="ai-proj-orbit-system" aria-label="Rotating Technology & Project Orbit">
 
-                <!-- Floating micro preview badges -->
-                <div class="ai-proj-float-card ai-proj-float-card-1">
-                  <div class="ai-proj-float-card-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                      <polyline points="2 17 12 22 22 17"></polyline>
-                      <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="ai-proj-float-card-title">YOLOv10 Edge Vision</div>
-                    <div class="ai-proj-float-card-sub">Sub-25ms Latency</div>
-                  </div>
-                </div>
+                  <!-- Concentric orbital rings revolving with system -->
+                  <div class="ai-proj-orbit-ring ai-proj-orbit-ring-1"></div>
+                  <div class="ai-proj-orbit-ring ai-proj-orbit-ring-2"></div>
+                  <div class="ai-proj-orbit-ring ai-proj-orbit-ring-3"></div>
 
-                <div class="ai-proj-float-card ai-proj-float-card-2">
-                  <div class="ai-proj-float-card-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    </svg>
+                  <!-- Orbiting domain nodes (counter-rotated to stay upright and readable) -->
+                  <div class="ai-proj-orbit-node ai-proj-node-ai">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>AI</span>
+                    </div>
                   </div>
-                  <div>
-                    <div class="ai-proj-float-card-title">MedPulse-GenAI</div>
-                    <div class="ai-proj-float-card-sub">Clinical Note Co-Pilot</div>
+                  <div class="ai-proj-orbit-node ai-proj-node-ml">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>ML</span>
+                    </div>
                   </div>
-                </div>
+                  <div class="ai-proj-orbit-node ai-proj-node-vision">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>VISION</span>
+                    </div>
+                  </div>
+                  <div class="ai-proj-orbit-node ai-proj-node-nlp">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>NLP</span>
+                    </div>
+                  </div>
+                  <div class="ai-proj-orbit-node ai-proj-node-robotics">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>ROBOTICS</span>
+                    </div>
+                  </div>
+                  <div class="ai-proj-orbit-node ai-proj-node-data">
+                    <div class="ai-proj-orbit-counter">
+                      <span class="ai-proj-node-dot"></span>
+                      <span>DATA</span>
+                    </div>
+                  </div>
 
+                  <!-- Floating micro project preview badges in orbit -->
+                  <div class="ai-proj-float-card ai-proj-float-card-1" title="Edge Vision Project">
+                    <div class="ai-proj-orbit-counter ai-proj-float-card-inner">
+                      <div class="ai-proj-float-card-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                          <polyline points="2 17 12 22 22 17"></polyline>
+                          <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="ai-proj-float-card-title">YOLOv10 Edge Vision</div>
+                        <div class="ai-proj-float-card-sub">Sub-25ms Latency</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ai-proj-float-card ai-proj-float-card-2" title="Healthcare GenAI Project">
+                    <div class="ai-proj-orbit-counter ai-proj-float-card-inner">
+                      <div class="ai-proj-float-card-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="ai-proj-float-card-title">MedPulse-GenAI</div>
+                        <div class="ai-proj-float-card-sub">Clinical Note Co-Pilot</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
 
