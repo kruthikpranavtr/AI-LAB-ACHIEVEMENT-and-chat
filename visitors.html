@@ -736,54 +736,19 @@
 
     .ai-vis-visual-container {
       position: relative;
-      width: 440px;
-      height: 440px;
+      width: 400px;
+      height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Concentric Orbital Rings */
-    .ai-vis-orbit-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px dashed rgba(0, 242, 254, 0.22);
-      pointer-events: none;
-    }
-
-    .ai-vis-ring-1 {
-      width: 250px;
-      height: 250px;
-      border-color: rgba(0, 242, 254, 0.35);
-      animation: aiVisRotate 35s linear infinite;
-    }
-
-    .ai-vis-ring-2 {
-      width: 370px;
-      height: 370px;
-      border-color: rgba(99, 102, 241, 0.28);
-      animation: aiVisRotateReverse 50s linear infinite;
-    }
-
-    .ai-vis-ring-3 {
-      width: 440px;
-      height: 440px;
-      border-color: rgba(168, 85, 247, 0.2);
-    }
-
-    @keyframes aiVisRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes aiVisRotateReverse {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
-    }
-
-    /* Central AI Hub with Official Emblem */
+    /* Central AI Hub with Official Emblem (Anchored in Center) */
     .ai-vis-core-hub {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 124px;
       height: 124px;
       border-radius: 50%;
@@ -793,7 +758,7 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 0 50px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.35);
-      z-index: 10;
+      z-index: 25;
       animation: aiVisCorePulse 3s ease-in-out infinite alternate;
       overflow: hidden;
       padding: 5px;
@@ -802,7 +767,7 @@
     }
 
     .ai-vis-core-hub:hover {
-      transform: scale(1.08);
+      transform: translate(-50%, -50%) scale(1.08);
       box-shadow: 0 0 75px rgba(0, 242, 254, 0.85), inset 0 0 30px rgba(0, 242, 254, 0.55);
     }
 
@@ -831,6 +796,74 @@
       transform: scale(1.08) rotate(3deg);
     }
 
+    /* Rotating Orbit System: Outside elements rotate continuously around the logo */
+    .ai-vis-orbit-system {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      animation: aiVisOrbitRotate 38s linear infinite;
+      transform-origin: center center;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    /* Pause rotation on hover so users can easily read, hover, and click nodes or cards */
+    .ai-vis-visual-container:hover .ai-vis-orbit-system,
+    .ai-vis-visual-container:hover .ai-vis-orbit-counter {
+      animation-play-state: paused;
+    }
+
+    @keyframes aiVisOrbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes aiVisOrbitCounterRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* Counter-rotate items so text badges and cards always stay upright and legible */
+    .ai-vis-orbit-counter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: aiVisOrbitCounterRotate 38s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Concentric Orbital Rings */
+    .ai-vis-orbit-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .ai-vis-ring-1 {
+      width: 330px;
+      height: 330px;
+      border: 1px dashed rgba(0, 242, 254, 0.28);
+    }
+
+    .ai-vis-ring-2 {
+      width: 240px;
+      height: 240px;
+      border: 1px dotted rgba(99, 102, 241, 0.32);
+    }
+
+    .ai-vis-ring-3 {
+      width: 170px;
+      height: 170px;
+      border: 1px solid rgba(168, 85, 247, 0.18);
+    }
+
     /* Satellite Nodes around Hub */
     .ai-vis-orbit-node {
       position: absolute;
@@ -843,18 +876,17 @@
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      z-index: 5;
+      z-index: 12;
       transition: all var(--ai-vis-transition-fast);
+      user-select: none;
+      cursor: default;
     }
 
     .ai-vis-orbit-node:hover {
       transform: scale(1.1);
       border-color: var(--ai-vis-cyan);
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
     }
 
     .ai-vis-node-dot {
@@ -865,51 +897,53 @@
       box-shadow: 0 0 6px var(--ai-vis-cyan);
     }
 
-    .ai-vis-node-industry { top: 18px; left: 50%; transform: translateX(-50%); }
-    .ai-vis-node-research { top: 85px; right: -12px; }
-    .ai-vis-node-academia { bottom: 85px; right: -10px; }
-    .ai-vis-node-innovation { bottom: 15px; left: 50%; transform: translateX(-50%); }
-    .ai-vis-node-community { bottom: 85px; left: -14px; }
-    .ai-vis-node-students { top: 85px; left: -12px; }
+    .ai-vis-node-industry { top: 16px; left: 50%; transform: translateX(-50%); }
+    .ai-vis-node-research { top: 80px; right: 18px; }
+    .ai-vis-node-academia { bottom: 80px; right: 18px; }
+    .ai-vis-node-innovation { bottom: 16px; left: 50%; transform: translateX(-50%); }
+    .ai-vis-node-community { bottom: 80px; left: 18px; }
+    .ai-vis-node-students { top: 80px; left: 18px; }
 
-    /* Floating Visitor Preview Badges */
+    /* Floating Visitor Preview Badges in Orbit */
     .ai-vis-float-card {
       position: absolute;
-      padding: 10px 14px;
+      padding: 8px 14px;
       border-radius: var(--ai-vis-radius-md);
       background: var(--ai-vis-bg-card);
       backdrop-filter: blur(16px);
-      border: 1px solid var(--ai-vis-border-subtle);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      z-index: 8;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      border: 1px solid var(--ai-vis-border-glow);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.15);
+      z-index: 15;
       font-size: 0.8rem;
-      transition: transform 0.3s ease;
-      animation: aiVisFloat 4s ease-in-out infinite alternate;
+      transition: border-color var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ai-vis-float-card:hover {
+      border-color: var(--ai-vis-cyan);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35);
     }
 
     .ai-vis-float-card-1 {
-      top: 35px;
-      right: -30px;
-      animation-delay: 0s;
+      top: -10px;
+      right: -25px;
     }
 
     .ai-vis-float-card-2 {
-      bottom: 40px;
-      left: -35px;
-      animation-delay: -2s;
+      bottom: -10px;
+      left: -25px;
     }
 
-    @keyframes aiVisFloat {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-8px); }
+    .ai-vis-float-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .ai-vis-float-avatar {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: var(--ai-vis-gradient-brand);
       display: flex;
@@ -925,11 +959,13 @@
       font-weight: 700;
       color: var(--ai-vis-text-main);
       line-height: 1.2;
+      white-space: nowrap;
     }
 
     .ai-vis-float-sub {
-      font-size: 0.7rem;
-      color: var(--ai-vis-cyan);
+      font-size: 0.68rem;
+      color: var(--ai-vis-text-muted);
+      white-space: nowrap;
     }
 
     /* ==========================================================================
@@ -2299,14 +2335,8 @@
         grid-template-columns: 1fr;
       }
       .ai-vis-visual-container {
-        width: 320px;
-        height: 320px;
+        transform: scale(0.8);
       }
-      .ai-vis-ring-1 { width: 190px; height: 190px; }
-      .ai-vis-ring-2 { width: 280px; height: 280px; }
-      .ai-vis-ring-3 { width: 330px; height: 330px; }
-      .ai-vis-float-card-1 { right: -10px; top: 10px; }
-      .ai-vis-float-card-2 { left: -10px; bottom: 10px; }
       .ai-vis-featured-card { padding: 20px; }
       .ai-vis-modal { padding: 24px; }
       .ai-vis-modal-header { flex-direction: column; text-align: center; }
@@ -2504,58 +2534,79 @@
             <div class="ai-vis-hero-visual-wrapper">
               <div class="ai-vis-visual-container" id="ai-vis-hero-visual">
 
-                <!-- Concentric dashed orbital rings -->
-                <div class="ai-vis-orbit-ring ai-vis-ring-1"></div>
-                <div class="ai-vis-orbit-ring ai-vis-ring-2"></div>
-                <div class="ai-vis-orbit-ring ai-vis-ring-3"></div>
-
-                <!-- Central AI Core Hub with Official AI Lab Logo -->
+                <!-- Central AI Core Hub with Official AI Lab Logo (Anchored in Center) -->
                 <div class="ai-vis-core-hub" title="AI Club Central Network Hub">
                   <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-vis-core-logo-img"
                     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
                 </div>
 
-                <!-- Connected domain nodes -->
-                <div class="ai-vis-orbit-node ai-vis-node-industry">
-                  <span class="ai-vis-node-dot"></span>
-                  <span>INDUSTRY</span>
-                </div>
-                <div class="ai-vis-orbit-node ai-vis-node-research">
-                  <span class="ai-vis-node-dot" style="background:#a855f7; box-shadow:0 0 8px #a855f7;"></span>
-                  <span>RESEARCH</span>
-                </div>
-                <div class="ai-vis-orbit-node ai-vis-node-academia">
-                  <span class="ai-vis-node-dot" style="background:#3b82f6; box-shadow:0 0 8px #3b82f6;"></span>
-                  <span>ACADEMIA</span>
-                </div>
-                <div class="ai-vis-orbit-node ai-vis-node-innovation">
-                  <span class="ai-vis-node-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>
-                  <span>INNOVATION</span>
-                </div>
-                <div class="ai-vis-orbit-node ai-vis-node-community">
-                  <span class="ai-vis-node-dot" style="background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span>
-                  <span>COMMUNITY</span>
-                </div>
-                <div class="ai-vis-orbit-node ai-vis-node-students">
-                  <span class="ai-vis-node-dot" style="background:#ec4899; box-shadow:0 0 8px #ec4899;"></span>
-                  <span>STUDENTS</span>
-                </div>
+                <!-- Rotating Orbit System: Outside elements continuously rotate around the logo -->
+                <div class="ai-vis-orbit-system" aria-label="Rotating Visitor Network Orbit">
 
-                <!-- Floating micro preview badges -->
-                <div class="ai-vis-float-card ai-vis-float-card-1">
-                  <div class="ai-vis-float-avatar">AS</div>
-                  <div>
-                    <div class="ai-vis-float-title">Dr. Arvind S.</div>
-                    <div class="ai-vis-float-sub">Quantum AI • Google</div>
-                  </div>
-                </div>
+                  <!-- Concentric dashed orbital rings revolving with system -->
+                  <div class="ai-vis-orbit-ring ai-vis-ring-1"></div>
+                  <div class="ai-vis-orbit-ring ai-vis-ring-2"></div>
+                  <div class="ai-vis-orbit-ring ai-vis-ring-3"></div>
 
-                <div class="ai-vis-float-card ai-vis-float-card-2">
-                  <div class="ai-vis-float-avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">ER</div>
-                  <div>
-                    <div class="ai-vis-float-title">Elena Rostova</div>
-                    <div class="ai-vis-float-sub">Cloud Architecture • NVIDIA</div>
+                  <!-- Orbiting domain nodes (counter-rotated to stay upright and readable) -->
+                  <div class="ai-vis-orbit-node ai-vis-node-industry">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot"></span>
+                      <span>INDUSTRY</span>
+                    </div>
                   </div>
+                  <div class="ai-vis-orbit-node ai-vis-node-research">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot" style="background:#a855f7; box-shadow:0 0 8px #a855f7;"></span>
+                      <span>RESEARCH</span>
+                    </div>
+                  </div>
+                  <div class="ai-vis-orbit-node ai-vis-node-academia">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot" style="background:#3b82f6; box-shadow:0 0 8px #3b82f6;"></span>
+                      <span>ACADEMIA</span>
+                    </div>
+                  </div>
+                  <div class="ai-vis-orbit-node ai-vis-node-innovation">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>
+                      <span>INNOVATION</span>
+                    </div>
+                  </div>
+                  <div class="ai-vis-orbit-node ai-vis-node-community">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot" style="background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span>
+                      <span>COMMUNITY</span>
+                    </div>
+                  </div>
+                  <div class="ai-vis-orbit-node ai-vis-node-students">
+                    <div class="ai-vis-orbit-counter">
+                      <span class="ai-vis-node-dot" style="background:#ec4899; box-shadow:0 0 8px #ec4899;"></span>
+                      <span>STUDENTS</span>
+                    </div>
+                  </div>
+
+                  <!-- Floating micro visitor preview badges in orbit -->
+                  <div class="ai-vis-float-card ai-vis-float-card-1" title="Google Research Guest">
+                    <div class="ai-vis-orbit-counter ai-vis-float-card-inner">
+                      <div class="ai-vis-float-avatar">AS</div>
+                      <div>
+                        <div class="ai-vis-float-title">Dr. Arvind S.</div>
+                        <div class="ai-vis-float-sub">Quantum AI • Google</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ai-vis-float-card ai-vis-float-card-2" title="NVIDIA Cloud Architecture Guest">
+                    <div class="ai-vis-orbit-counter ai-vis-float-card-inner">
+                      <div class="ai-vis-float-avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">ER</div>
+                      <div>
+                        <div class="ai-vis-float-title">Elena Rostova</div>
+                        <div class="ai-vis-float-sub">Cloud Architecture • NVIDIA</div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
