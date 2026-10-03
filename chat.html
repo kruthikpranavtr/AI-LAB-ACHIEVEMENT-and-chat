@@ -2,6 +2,17 @@
 <html lang="en" data-theme="dark">
 
 <head>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('ai-club-theme') || localStorage.getItem('aiClubHomeTheme');
+        if (!saved) {
+          saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Lab Assistant | Sri Shakthi AI Lab</title>
@@ -243,27 +254,11 @@
       box-shadow: 0 0 16px var(--achieve-cyan), 0 0 30px var(--achieve-purple);
     }
 
-    /* Mobile & Touch Particle/Glow Support */
-    #achieve-cursor-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9998;
-    }
-
     @media (hover: none) or (pointer: coarse) {
-      .achieve-cursor-dot {
-        opacity: 0;
-        transition: opacity 0.25s ease, transform 0.15s ease;
-        pointer-events: none;
-      }
 
-      .achieve-cursor-dot.touch-active {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.6);
+      .achieve-cursor-dot,
+      #achieve-cursor-canvas {
+        display: none !important;
       }
     }
 
@@ -1083,28 +1078,27 @@
     }
 
     .ai-chat-avatar-wrap {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: rgba(11, 15, 25, 0.85);
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(168, 85, 247, 0.3));
       border: 1.5px solid var(--achieve-border-focus);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 16px rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
       position: relative;
       flex-shrink: 0;
-      padding: 1.5px;
+      padding: 2px;
     }
 
     .ai-chat-avatar-wrap::before {
       content: '';
       position: absolute;
-      inset: -4px;
+      inset: -3px;
       border-radius: 50%;
-      border: 1.5px dashed rgba(0, 242, 254, 0.45);
+      border: 1px dashed rgba(0, 242, 254, 0.4);
       animation: aiChatSpin 12s linear infinite;
-      pointer-events: none;
     }
 
     .ai-chat-avatar-wrap.thinking {
@@ -1121,12 +1115,19 @@
       50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.8); }
     }
 
-    .ai-chat-avatar-img {
+    .ai-chat-logo-img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
       display: block;
+      pointer-events: none;
+    }
+
+    .ai-chat-avatar-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--achieve-cyan);
     }
 
     .ai-chat-header-info {
@@ -1222,37 +1223,30 @@
     }
 
     .ai-chat-welcome-icon-box {
-      width: 88px;
-      height: 88px;
+      width: 74px;
+      height: 74px;
       border-radius: 50%;
-      background: rgba(11, 15, 25, 0.85);
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, rgba(99, 102, 241, 0.2) 60%, rgba(6, 9, 19, 0.95) 100%);
       border: 2px solid var(--achieve-border-focus);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 30px rgba(0, 242, 254, 0.4), 0 0 60px rgba(99, 102, 241, 0.25);
-      margin-bottom: 18px;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.45), inset 0 0 15px rgba(168, 85, 247, 0.35);
+      margin-bottom: 16px;
       position: relative;
       padding: 3px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
     }
 
-    .ai-chat-welcome-icon-box::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      border: 1.5px dashed rgba(0, 242, 254, 0.45);
-      animation: aiChatSpin 16s linear infinite;
-      pointer-events: none;
+    .ai-chat-welcome-icon-box:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 45px rgba(0, 242, 254, 0.7), inset 0 0 20px rgba(0, 242, 254, 0.5);
     }
 
-    .ai-chat-welcome-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    .ai-chat-welcome-icon-box svg {
+      width: 36px;
+      height: 36px;
+      color: var(--achieve-cyan);
     }
 
     .ai-chat-welcome-title {
@@ -1354,24 +1348,21 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: rgba(11, 15, 25, 0.85);
-      border: 1.2px solid var(--achieve-border-focus);
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(99, 102, 241, 0.3));
+      border: 1.5px solid var(--achieve-border-focus);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       margin-top: 2px;
-      box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
-      overflow: hidden;
-      padding: 1px;
+      padding: 1.5px;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
     }
 
-    .ai-chat-msg-avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
+    .ai-chat-msg-avatar svg {
+      width: 16px;
+      height: 16px;
+      color: var(--achieve-cyan);
     }
 
     .ai-chat-msg-ai-wrapper {
@@ -1866,7 +1857,7 @@
       <div class="achieve-nav-content">
 
         <!-- Logo / Name -->
-        <a href="achievement.html" class="achieve-brand" aria-label="AI Lab Home">
+        <a href="index.html" class="achieve-brand" aria-label="AI Lab Home">
           <div class="achieve-brand-logo-icon">
             <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="achieve-brand-logo-img" width="46" height="46" loading="eager" />
           </div>
@@ -1879,10 +1870,10 @@
         <!-- Desktop Navigation Links -->
         <nav aria-label="Main Navigation">
           <ul class="achieve-nav-links">
-            <li class="achieve-nav-item"><a href="achievement.html#home" class="achieve-nav-link">Home</a></li>
-            <li class="achieve-nav-item"><a href="achievement.html#projects" class="achieve-nav-link">Project</a></li>
+            <li class="achieve-nav-item"><a href="index.html" class="achieve-nav-link">Home</a></li>
+            <li class="achieve-nav-item"><a href="projects.html" class="achieve-nav-link">Project</a></li>
             <li class="achieve-nav-item"><a href="achievement.html" class="achieve-nav-link">Achievements</a></li>
-            <li class="achieve-nav-item"><a href="achievement.html#visitors" class="achieve-nav-link">Visitors</a></li>
+            <li class="achieve-nav-item"><a href="visitors.html" class="achieve-nav-link">Visitors</a></li>
             <li class="achieve-nav-item"><a href="chat.html" class="achieve-nav-link active" id="achieve-chat-link" aria-current="page">Chat</a></li>
           </ul>
         </nav>
@@ -1899,7 +1890,7 @@
               <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
               <line x1="1" y1="12" x2="3" y2="12"></line>
               <line x1="21" y1="12" x2="23" y2="12"></line>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="18.36"></line>
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
           </button>
@@ -1937,10 +1928,10 @@
       </div>
     </div>
     <ul class="achieve-mobile-nav-list">
-      <li><a href="achievement.html#home" class="achieve-mobile-nav-link">Home</a></li>
-      <li><a href="achievement.html#projects" class="achieve-mobile-nav-link">Project</a></li>
+      <li><a href="index.html" class="achieve-mobile-nav-link">Home</a></li>
+      <li><a href="projects.html" class="achieve-mobile-nav-link">Project</a></li>
       <li><a href="achievement.html" class="achieve-mobile-nav-link">Achievements</a></li>
-      <li><a href="achievement.html#visitors" class="achieve-mobile-nav-link">Visitors</a></li>
+      <li><a href="visitors.html" class="achieve-mobile-nav-link">Visitors</a></li>
       <li><a href="chat.html" class="achieve-mobile-nav-link active" id="achieve-mobile-chat-link">Chat (Active)</a></li>
     </ul>
     <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
@@ -2020,8 +2011,9 @@
             <!-- Chat Header -->
             <div class="ai-chat-header">
               <div class="ai-chat-header-left">
-                <div class="ai-chat-avatar-wrap" id="ai-chat-header-avatar">
-                  <img src="assets/ai-lab-logo.png" alt="AI Lab Official Logo" class="ai-chat-avatar-img" width="44" height="44" loading="eager" />
+                <div class="ai-chat-avatar-wrap" id="ai-chat-header-avatar" title="AI Lab Assistant">
+                  <img src="assets/ai-lab-logo.png" alt="AI Lab Assistant" class="ai-chat-logo-img"
+                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'">
                 </div>
                 <div class="ai-chat-header-info">
                   <h2 class="ai-chat-header-title">
@@ -2164,10 +2156,10 @@
         <div>
           <h4 class="achieve-footer-title">Pages</h4>
           <ul class="achieve-footer-links">
-            <li><a href="achievement.html#home" class="achieve-footer-link">Home</a></li>
-            <li><a href="achievement.html#projects" class="achieve-footer-link">Project</a></li>
+            <li><a href="index.html" class="achieve-footer-link">Home</a></li>
+            <li><a href="projects.html" class="achieve-footer-link">Project</a></li>
             <li><a href="achievement.html" class="achieve-footer-link">Achievements</a></li>
-            <li><a href="achievement.html#visitors" class="achieve-footer-link">Visitors</a></li>
+            <li><a href="visitors.html" class="achieve-footer-link">Visitors</a></li>
             <li><a href="chat.html" class="achieve-footer-link" style="color:var(--achieve-cyan); font-weight: 600;">Chat</a></li>
           </ul>
         </div>
@@ -2244,7 +2236,7 @@
         const themeBtn = document.getElementById('achieve-theme-toggle-btn');
         const themeIcon = document.getElementById('achieve-theme-icon');
 
-        const savedTheme = localStorage.getItem('ai-club-theme') || 'dark';
+        const savedTheme = localStorage.getItem('ai-club-theme') || localStorage.getItem('aiClubHomeTheme') || 'dark';
         html.setAttribute('data-theme', savedTheme);
         updateThemeIcon(savedTheme);
 
@@ -2253,11 +2245,23 @@
             const currentTheme = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
             const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', nextTheme);
-            localStorage.setItem('ai-club-theme', nextTheme);
+            try {
+              localStorage.setItem('ai-club-theme', nextTheme);
+              localStorage.setItem('aiClubHomeTheme', nextTheme);
+            } catch (e) {}
             updateThemeIcon(nextTheme);
             showToast(`Switched to ${nextTheme.toUpperCase()} theme`);
           });
         }
+
+        // Real-time cross-tab & multi-window theme synchronization
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'ai-club-theme' || e.key === 'aiClubHomeTheme') {
+            const newTheme = e.newValue || 'dark';
+            html.setAttribute('data-theme', newTheme);
+            updateThemeIcon(newTheme);
+          }
+        });
 
         function updateThemeIcon(t) {
           if (!themeIcon) return;
@@ -2477,96 +2481,6 @@
           lastX = mouseX;
           lastY = mouseY;
         });
-
-        // Mobile Touch Support: Stardust Trail, Quantum Tap Burst, and Ambient Glow
-        let touchActive = false;
-
-        window.addEventListener('touchstart', (e) => {
-          if (!e.touches || e.touches.length === 0) return;
-          const touch = e.touches[0];
-          mouseX = touch.clientX;
-          mouseY = touch.clientY;
-          lastX = mouseX;
-          lastY = mouseY;
-          touchActive = true;
-
-          if (dot) {
-            dot.style.left = `${mouseX}px`;
-            dot.style.top = `${mouseY}px`;
-            dot.classList.add('touch-active');
-          }
-
-          if (glow) {
-            glow.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-          }
-
-          // Mobile Tap Burst
-          for (let i = 0; i < 10; i++) {
-            const angle = (Math.PI * 2 * i) / 10 + (Math.random() - 0.5) * 0.4;
-            const speed = Math.random() * 3 + 1.5;
-            addParticle(
-              touch.clientX,
-              touch.clientY,
-              Math.cos(angle) * speed,
-              Math.sin(angle) * speed,
-              true
-            );
-          }
-        }, { passive: true });
-
-        window.addEventListener('touchmove', (e) => {
-          if (!e.touches || e.touches.length === 0) return;
-          const touch = e.touches[0];
-          mouseX = touch.clientX;
-          mouseY = touch.clientY;
-
-          if (dot) {
-            dot.style.left = `${mouseX}px`;
-            dot.style.top = `${mouseY}px`;
-          }
-
-          if (glow) {
-            glow.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-          }
-
-          if (lastX > 0 && lastY > 0) {
-            const dx = mouseX - lastX;
-            const dy = mouseY - lastY;
-            const dist = Math.hypot(dx, dy);
-
-            if (dist > 3) {
-              const steps = Math.min(Math.floor(dist / 6), 6);
-              for (let i = 0; i < steps; i++) {
-                const px = lastX + (dx * i) / steps;
-                const py = lastY + (dy * i) / steps;
-                addParticle(
-                  px + (Math.random() - 0.5) * 4,
-                  py + (Math.random() - 0.5) * 4,
-                  -dx * 0.04 + (Math.random() - 0.5) * 0.4,
-                  -dy * 0.04 + (Math.random() - 0.5) * 0.4
-                );
-              }
-            }
-          }
-
-          lastX = mouseX;
-          lastY = mouseY;
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => {
-          touchActive = false;
-          if (dot) {
-            dot.classList.remove('touch-active');
-          }
-        }, { passive: true });
-
-        window.addEventListener('touchcancel', () => {
-          touchActive = false;
-          if (dot) {
-            dot.classList.remove('touch-active');
-          }
-        }, { passive: true });
-
 
         // Click Quantum Pulse Burst
         window.addEventListener('click', (e) => {
@@ -2923,8 +2837,9 @@
           // Welcome / Empty State
           area.innerHTML = `
             <div class="ai-chat-welcome-state">
-              <div class="ai-chat-welcome-icon-box">
-                <img src="assets/ai-lab-logo.png" alt="AI Lab Official Logo" class="ai-chat-welcome-img" width="88" height="88" loading="eager" />
+              <div class="ai-chat-welcome-icon-box" title="AI Lab Official Emblem">
+                <img src="assets/ai-lab-logo.png" alt="AI Lab Official Logo" class="ai-chat-logo-img"
+                  onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'">
               </div>
               <h3 class="ai-chat-welcome-title">AI Lab Assistant</h3>
               <p class="ai-chat-welcome-desc">
@@ -2975,8 +2890,9 @@
           } else {
             return `
               <div class="ai-chat-message-row ai-row" data-msg-idx="${idx}">
-                <div class="ai-chat-msg-avatar">
-                  <img src="assets/ai-lab-logo.png" alt="AI Lab" class="ai-chat-msg-avatar-img" width="34" height="34" />
+                <div class="ai-chat-msg-avatar" title="AI Lab Assistant">
+                  <img src="assets/ai-lab-logo.png" alt="AI Lab" class="ai-chat-logo-img"
+                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'">
                 </div>
                 <div class="ai-chat-msg-ai-wrapper">
                   <div class="ai-chat-msg-ai-bubble" id="ai-chat-bubble-${idx}">
@@ -3149,9 +3065,10 @@
         typingEl.className = 'ai-chat-message-row ai-row';
         typingEl.id = 'ai-chat-temp-typing';
         typingEl.innerHTML = `
-          <div class="ai-chat-msg-avatar">
-                  <img src="assets/ai-lab-logo.png" alt="AI Lab" class="ai-chat-msg-avatar-img" width="34" height="34" />
-                </div>
+          <div class="ai-chat-msg-avatar" title="AI Lab Assistant">
+            <img src="assets/ai-lab-logo.png" alt="AI Lab" class="ai-chat-logo-img"
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'">
+          </div>
           <div class="ai-chat-msg-ai-wrapper">
             <div class="ai-chat-msg-ai-bubble ai-chat-typing-dots">
               <span class="ai-chat-dot"></span>
