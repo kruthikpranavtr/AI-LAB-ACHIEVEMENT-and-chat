@@ -1,0 +1,4454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('aiClubProjectsTheme') || localStorage.getItem('ai-club-theme') || localStorage.getItem('aiClubHomeTheme');
+        if (!saved) {
+          saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects Showcase & AI Lab Innovation | AI Club</title>
+  <meta name="description"
+    content="Discover groundbreaking student projects, open-source AI frameworks, computer vision systems, generative models, and robotics created by the AI Club / AI Research Lab.">
+  <meta name="keywords"
+    content="AI Projects, Artificial Intelligence, Machine Learning, Computer Vision, Generative AI, Robotics, NLP, Data Science, AI Club, Student Research">
+  <link rel="icon" type="image/png" href="assets/ai-lab-logo.png">
+  <link rel="apple-touch-icon" href="assets/ai-lab-logo.png">
+
+  <!-- Google Fonts: Outfit, JetBrains Mono & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       AI CLUB PROJECTS SHOWCASE - DESIGN SYSTEM & SCOPED STYLES
+       All styling is cleanly scoped with #ai-projects-page and .ai-proj-
+       to guarantee zero style collisions with other college club pages.
+       ========================================================================== */
+
+    :root {
+      /* Dark Theme (Default) */
+      --ai-proj-bg-body: #060913;
+      --ai-proj-bg-surface: #0a0f1d;
+      --ai-proj-bg-surface-elevated: #10172c;
+      --ai-proj-bg-card: rgba(16, 24, 44, 0.72);
+      --ai-proj-bg-card-hover: rgba(22, 33, 62, 0.92);
+      --ai-proj-bg-glass: rgba(10, 15, 29, 0.78);
+      --ai-proj-bg-glass-heavy: rgba(8, 12, 24, 0.94);
+
+      --ai-proj-border-subtle: rgba(255, 255, 255, 0.08);
+      --ai-proj-border-focus: rgba(0, 242, 254, 0.55);
+      --ai-proj-border-glow: rgba(99, 102, 241, 0.4);
+
+      --ai-proj-text-main: #f8fafc;
+      --ai-proj-text-muted: #94a3b8;
+      --ai-proj-text-dim: #64748b;
+
+      /* Cyber AI Neon Accents */
+      --ai-proj-cyan: #00f2fe;
+      --ai-proj-blue: #3b82f6;
+      --ai-proj-indigo: #6366f1;
+      --ai-proj-purple: #a855f7;
+      --ai-proj-pink: #ec4899;
+      --ai-proj-emerald: #10b981;
+      --ai-proj-amber: #f59e0b;
+      --ai-proj-rose: #f43f5e;
+
+      /* Gradients & Shadows */
+      --ai-proj-gradient-brand: linear-gradient(135deg, #00f2fe 0%, #3b82f6 50%, #8b5cf6 100%);
+      --ai-proj-gradient-gold: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      --ai-proj-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+      --ai-proj-gradient-glow: radial-gradient(circle, rgba(0, 242, 254, 0.16) 0%, rgba(168, 85, 247, 0.08) 45%, transparent 70%);
+
+      --ai-proj-shadow-card: 0 12px 36px -8px rgba(0, 0, 0, 0.65);
+      --ai-proj-shadow-glow: 0 0 30px rgba(0, 242, 254, 0.25);
+      --ai-proj-shadow-badge: 0 0 15px rgba(99, 102, 241, 0.35);
+
+      --ai-proj-radius-sm: 8px;
+      --ai-proj-radius-md: 14px;
+      --ai-proj-radius-lg: 20px;
+      --ai-proj-radius-xl: 28px;
+      --ai-proj-radius-full: 9999px;
+
+      --ai-proj-font-display: 'Outfit', sans-serif;
+      --ai-proj-font-body: 'Plus Jakarta Sans', sans-serif;
+      --ai-proj-font-mono: 'JetBrains Mono', monospace;
+
+      --ai-proj-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --ai-proj-transition-medium: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --ai-proj-transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Light Theme */
+    [data-theme="light"] {
+      --ai-proj-bg-body: #f8fafc;
+      --ai-proj-bg-surface: #f1f5f9;
+      --ai-proj-bg-surface-elevated: #e2e8f0;
+      --ai-proj-bg-card: rgba(255, 255, 255, 0.9);
+      --ai-proj-bg-card-hover: rgba(255, 255, 255, 0.98);
+      --ai-proj-bg-glass: rgba(255, 255, 255, 0.85);
+      --ai-proj-bg-glass-heavy: rgba(255, 255, 255, 0.95);
+
+      --ai-proj-border-subtle: rgba(148, 163, 184, 0.28);
+      --ai-proj-border-focus: rgba(2, 132, 199, 0.6);
+      --ai-proj-border-glow: rgba(99, 102, 241, 0.25);
+
+      --ai-proj-text-main: #0f172a;
+      --ai-proj-text-muted: #475569;
+      --ai-proj-text-dim: #64748b;
+
+      --ai-proj-cyan: #0284c7;
+      --ai-proj-blue: #2563eb;
+      --ai-proj-indigo: #4f46e5;
+      --ai-proj-purple: #7c3aed;
+      --ai-proj-pink: #db2777;
+      --ai-proj-emerald: #059669;
+      --ai-proj-amber: #d97706;
+      --ai-proj-rose: #e11d48;
+
+      --ai-proj-gradient-brand: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #7c3aed 100%);
+      --ai-proj-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.96) 0%, rgba(241, 245, 249, 0.8) 100%);
+      --ai-proj-gradient-glow: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(126, 34, 206, 0.05) 45%, transparent 70%);
+
+      --ai-proj-shadow-card: 0 12px 32px -8px rgba(15, 23, 42, 0.08);
+      --ai-proj-shadow-glow: 0 0 25px rgba(37, 99, 235, 0.15);
+      --ai-proj-shadow-badge: 0 0 12px rgba(79, 70, 229, 0.15);
+    }
+
+    /* Global Base Reset Scoped to projects document */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--ai-proj-bg-body);
+      color: var(--ai-proj-text-main);
+      font-family: var(--ai-proj-font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      transition: background-color var(--ai-proj-transition-medium), color var(--ai-proj-transition-medium);
+    }
+
+    #ai-projects-page {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Background Animation Canvas */
+    #ai-proj-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    [data-theme="light"] #ai-proj-bg-canvas {
+      opacity: 0.35;
+    }
+
+    /* Subtle Grid Overlay */
+    .ai-proj-grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image:
+        linear-gradient(to right, var(--ai-proj-border-subtle) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--ai-proj-border-subtle) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+      mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 80%);
+    }
+
+    /* Cursor Glow Follower */
+    .ai-proj-cursor-glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, rgba(168, 85, 247, 0.05) 45%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: opacity 0.3s ease;
+      filter: blur(24px);
+    }
+
+    @media (hover: none) or (pointer: coarse) {
+      .ai-proj-cursor-glow {
+        display: none !important;
+      }
+    }
+
+    /* Container */
+    .ai-proj-container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography & Utilities */
+    .ai-proj-gradient-text {
+      background: var(--ai-proj-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+
+    .ai-proj-gold-text {
+      background: var(--ai-proj-gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ==========================================================================
+       1. NAVIGATION HEADER (UNIFIED ACROSS ALL PAGES)
+       ========================================================================== */
+    .achieve-container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .achieve-navbar-wrapper {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: background-color var(--ai-proj-transition-medium), backdrop-filter var(--ai-proj-transition-medium), border-color var(--ai-proj-transition-medium), box-shadow var(--ai-proj-transition-medium);
+      border-bottom: 1px solid transparent;
+    }
+
+    .achieve-navbar-wrapper.scrolled {
+      background-color: var(--ai-proj-bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--ai-proj-border-subtle);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] .achieve-navbar-wrapper.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .achieve-nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .achieve-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--ai-proj-font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .achieve-brand-logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 15, 29, 0.8);
+      border: 2px solid rgba(0, 242, 254, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.35);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform var(--ai-proj-transition-fast), border-color var(--ai-proj-transition-fast), box-shadow var(--ai-proj-transition-fast);
+    }
+
+    .achieve-brand:hover .achieve-brand-logo-icon {
+      transform: scale(1.08) rotate(3deg);
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 24px rgba(0, 242, 254, 0.6), 0 0 40px rgba(99, 102, 241, 0.35);
+    }
+
+    .achieve-brand-logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      transition: filter var(--ai-proj-transition-fast);
+    }
+
+    .achieve-brand:hover .achieve-brand-logo-img {
+      filter: brightness(1.12);
+    }
+
+    .achieve-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .achieve-brand-name {
+      background: var(--ai-proj-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .achieve-brand-sub {
+      font-size: 0.65rem;
+      font-family: var(--ai-proj-font-mono);
+      color: var(--ai-proj-text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .achieve-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .achieve-nav-item {
+      position: relative;
+    }
+
+    .achieve-nav-link {
+      padding: 8px 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ai-proj-text-muted);
+      border-radius: var(--ai-proj-radius-sm);
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      text-decoration: none;
+      transition: color var(--ai-proj-transition-fast), background-color var(--ai-proj-transition-fast), transform var(--ai-proj-transition-fast);
+    }
+
+    .achieve-nav-link:hover {
+      color: var(--ai-proj-text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] .achieve-nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .achieve-nav-link.active {
+      color: var(--ai-proj-cyan);
+      font-weight: 600;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+    }
+
+    .achieve-nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 2px;
+      background: var(--ai-proj-cyan);
+      border-radius: var(--ai-proj-radius-full);
+      box-shadow: 0 0 8px var(--ai-proj-cyan);
+    }
+
+    .achieve-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .achieve-theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--ai-proj-radius-md);
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color var(--ai-proj-transition-fast), transform var(--ai-proj-transition-fast), box-shadow var(--ai-proj-transition-fast);
+    }
+
+    .achieve-theme-toggle:hover {
+      border-color: var(--ai-proj-border-focus);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .achieve-theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform var(--ai-proj-transition-medium);
+    }
+
+    .achieve-theme-toggle:active svg {
+      transform: rotate(45deg) scale(0.9);
+    }
+
+    .achieve-login-btn {
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--ai-proj-gradient-brand);
+      border-radius: var(--ai-proj-radius-md);
+      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.25);
+      transition: transform var(--ai-proj-transition-fast), box-shadow var(--ai-proj-transition-fast), filter var(--ai-proj-transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .achieve-login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 242, 254, 0.4);
+      filter: brightness(1.08);
+    }
+
+    .achieve-hamburger {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--ai-proj-radius-md);
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .achieve-hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform var(--ai-proj-transition-fast), opacity var(--ai-proj-transition-fast);
+    }
+
+    .achieve-hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .achieve-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .achieve-hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .achieve-mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 76px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 76px);
+      background: var(--ai-proj-bg-glass-heavy);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 24px;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+      z-index: 999;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      border-bottom: 1px solid var(--ai-proj-border-subtle);
+    }
+
+    .achieve-mobile-drawer.active {
+      transform: translateY(0);
+      opacity: 1;
+      display: flex;
+    }
+
+    .achieve-mobile-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .achieve-mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: var(--ai-proj-radius-md);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ai-proj-text-main);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--ai-proj-border-subtle);
+      text-decoration: none;
+    }
+
+    .achieve-mobile-nav-link.active {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: var(--ai-proj-cyan);
+      color: var(--ai-proj-cyan);
+      font-weight: 700;
+    }
+
+    .achieve-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      border-radius: var(--ai-proj-radius-md);
+      text-decoration: none;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .achieve-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--ai-proj-border-focus);
+    }
+
+    @media (max-width: 860px) {
+      .achieve-nav-links,
+      .achieve-login-btn {
+        display: none !important;
+      }
+      .achieve-hamburger {
+        display: flex !important;
+      }
+    }
+
+    /* ==========================================================================
+       2. HERO SECTION
+       ========================================================================== */
+    .ai-proj-hero {
+      padding: 64px 0 48px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-proj-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .ai-proj-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--ai-proj-radius-full);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      color: var(--ai-proj-cyan);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .ai-proj-badge-beacon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ai-proj-cyan);
+      box-shadow: 0 0 10px var(--ai-proj-cyan);
+      animation: aiProjPulse 2s infinite;
+    }
+
+    @keyframes aiProjPulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .ai-proj-hero-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--ai-proj-text-main);
+      margin-bottom: 20px;
+    }
+
+    .ai-proj-hero-desc {
+      font-size: 1.05rem;
+      color: var(--ai-proj-text-muted);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 32px;
+    }
+
+    .ai-proj-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ai-proj-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--ai-proj-gradient-brand);
+      color: #060913;
+      font-family: var(--ai-proj-font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: var(--ai-proj-radius-md);
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0, 242, 254, 0.35);
+      border: none;
+      cursor: pointer;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 242, 254, 0.5);
+    }
+
+    .ai-proj-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      background: var(--ai-proj-bg-surface-elevated);
+      color: var(--ai-proj-text-main);
+      font-family: var(--ai-proj-font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: var(--ai-proj-radius-md);
+      text-decoration: none;
+      border: 1px solid var(--ai-proj-border-subtle);
+      cursor: pointer;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-btn-secondary:hover {
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       HERO VISUAL: FUTURISTIC AI CORE & NEURAL NETWORK
+       ========================================================================== */
+    .ai-proj-hero-visual-wrapper {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ai-proj-visual-container {
+      position: relative;
+      width: 380px;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Rotating Rings */
+    .ai-proj-orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 242, 254, 0.25);
+      pointer-events: none;
+    }
+
+    .ai-proj-orbit-ring-1 {
+      width: 320px;
+      height: 320px;
+      animation: aiProjRotate 32s linear infinite;
+    }
+
+    .ai-proj-orbit-ring-2 {
+      width: 240px;
+      height: 240px;
+      border-color: rgba(168, 85, 247, 0.3);
+      border-style: dotted;
+      animation: aiProjRotateReverse 24s linear infinite;
+    }
+
+    @keyframes aiProjRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes aiProjRotateReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* Central AI Core Hub - Featuring Official AI Lab Logo */
+    .ai-proj-core-hub {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(0, 242, 254, 0.28) 0%, rgba(59, 130, 246, 0.22) 50%, rgba(6, 9, 19, 0.95) 85%);
+      border: 2.5px solid var(--ai-proj-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 50px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.35);
+      z-index: 10;
+      animation: aiProjCorePulse 3s ease-in-out infinite alternate;
+      overflow: hidden;
+      padding: 5px;
+      cursor: pointer;
+      transition: transform var(--ai-proj-transition-fast), box-shadow var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-core-hub:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 75px rgba(0, 242, 254, 0.85), inset 0 0 30px rgba(0, 242, 254, 0.55);
+    }
+
+    @keyframes aiProjCorePulse {
+      0% { 
+        box-shadow: 0 0 35px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.6);
+      }
+      100% { 
+        box-shadow: 0 0 65px rgba(0, 242, 254, 0.85), 0 0 95px rgba(99, 102, 241, 0.4), inset 0 0 28px rgba(0, 242, 254, 0.5);
+        border-color: #00f2fe;
+      }
+    }
+
+    .ai-proj-core-logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+      transition: transform var(--ai-proj-transition-fast), filter var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-core-hub:hover .ai-proj-core-logo-img {
+      transform: scale(1.08) rotate(3deg);
+      filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.95)) brightness(1.1);
+    }
+
+    /* Orbital Nodes */
+    .ai-proj-orbit-node {
+      position: absolute;
+      padding: 6px 12px;
+      border-radius: var(--ai-proj-radius-full);
+      background: var(--ai-proj-bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--ai-proj-border-glow);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .ai-proj-orbit-node:hover {
+      transform: scale(1.15);
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    }
+
+    .ai-proj-node-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .ai-proj-node-ai { top: 12px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-cyan); }
+    .ai-proj-node-ai .ai-proj-node-dot { background: var(--ai-proj-cyan); box-shadow: 0 0 8px var(--ai-proj-cyan); }
+
+    .ai-proj-node-ml { top: 70px; right: 10px; color: var(--ai-proj-blue); }
+    .ai-proj-node-ml .ai-proj-node-dot { background: var(--ai-proj-blue); box-shadow: 0 0 8px var(--ai-proj-blue); }
+
+    .ai-proj-node-vision { bottom: 80px; right: 15px; color: var(--ai-proj-pink); }
+    .ai-proj-node-vision .ai-proj-node-dot { background: var(--ai-proj-pink); box-shadow: 0 0 8px var(--ai-proj-pink); }
+
+    .ai-proj-node-nlp { bottom: 15px; left: 50%; transform: translateX(-50%); color: var(--ai-proj-purple); }
+    .ai-proj-node-nlp .ai-proj-node-dot { background: var(--ai-proj-purple); box-shadow: 0 0 8px var(--ai-proj-purple); }
+
+    .ai-proj-node-robotics { bottom: 80px; left: 15px; color: var(--ai-proj-emerald); }
+    .ai-proj-node-robotics .ai-proj-node-dot { background: var(--ai-proj-emerald); box-shadow: 0 0 8px var(--ai-proj-emerald); }
+
+    .ai-proj-node-data { top: 70px; left: 10px; color: var(--ai-proj-amber); }
+    .ai-proj-node-data .ai-proj-node-dot { background: var(--ai-proj-amber); box-shadow: 0 0 8px var(--ai-proj-amber); }
+
+    /* Floating Micro Cards */
+    .ai-proj-float-card {
+      position: absolute;
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-md);
+      padding: 10px 14px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: aiProjFloat 4s ease-in-out infinite alternate;
+      z-index: 12;
+    }
+
+    .ai-proj-float-card-1 {
+      top: -15px;
+      right: -25px;
+      animation-delay: 0.4s;
+    }
+
+    .ai-proj-float-card-2 {
+      bottom: -15px;
+      left: -25px;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes aiProjFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .ai-proj-float-card-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--ai-proj-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ai-proj-float-card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ai-proj-text-main);
+    }
+
+    .ai-proj-float-card-sub {
+      font-size: 0.68rem;
+      color: var(--ai-proj-text-muted);
+    }
+
+    /* ==========================================================================
+       3. STATISTICS STRIP
+       ========================================================================== */
+    .ai-proj-stats-section {
+      padding: 24px 0 48px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-proj-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-lg);
+      padding: 28px 36px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--ai-proj-shadow-card);
+    }
+
+    .ai-proj-stat-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .ai-proj-stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--ai-proj-border-subtle);
+    }
+
+    .ai-proj-stat-num {
+      font-family: var(--ai-proj-font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .ai-proj-stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ai-proj-text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       4. FEATURED PROJECTS SECTION
+       ========================================================================== */
+    .ai-proj-featured-section {
+      padding: 40px 0 56px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-proj-section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .ai-proj-section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ai-proj-cyan);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .ai-proj-section-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--ai-proj-text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .ai-proj-section-desc {
+      color: var(--ai-proj-text-muted);
+      font-size: 0.98rem;
+      max-width: 650px;
+    }
+
+    .ai-proj-featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* Featured Project Card */
+    .ai-proj-featured-card {
+      background: var(--ai-proj-bg-card);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      border-radius: var(--ai-proj-radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--ai-proj-transition-medium);
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .ai-proj-featured-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 18px 45px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-proj-featured-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 10;
+      background: rgba(10, 15, 29, 0.85);
+      border: 1px solid var(--ai-proj-amber);
+      color: var(--ai-proj-amber);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--ai-proj-radius-full);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ==========================================================================
+       5. SEARCH & FILTER CONTROLS
+       ========================================================================== */
+    .ai-proj-catalog-section {
+      padding: 32px 0 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-proj-search-panel {
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-lg);
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      margin-bottom: 36px;
+      box-shadow: var(--ai-proj-shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-proj-search-top {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Search Box */
+    .ai-proj-search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .ai-proj-search-input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-md);
+      color: var(--ai-proj-text-main);
+      font-family: var(--ai-proj-font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-search-input:focus {
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-proj-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--ai-proj-text-dim);
+      pointer-events: none;
+    }
+
+    .ai-proj-search-clear {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--ai-proj-text-muted);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+
+    .ai-proj-search-clear:hover {
+      color: var(--ai-proj-text-main);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Technology Select */
+    .ai-proj-tech-select-wrapper,
+    .ai-proj-sort-select-wrapper {
+      position: relative;
+      min-width: 180px;
+    }
+
+    .ai-proj-select {
+      width: 100%;
+      padding: 13px 38px 13px 16px;
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-md);
+      color: var(--ai-proj-text-main);
+      font-family: var(--ai-proj-font-body);
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-select:focus {
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 14px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-proj-select-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--ai-proj-text-muted);
+      pointer-events: none;
+    }
+
+    /* Category Filter Pills */
+    .ai-proj-category-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ai-proj-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--ai-proj-radius-full);
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-muted);
+      font-family: var(--ai-proj-font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-filter-btn:hover {
+      color: var(--ai-proj-text-main);
+      border-color: var(--ai-proj-cyan);
+      background: rgba(0, 242, 254, 0.05);
+    }
+
+    .ai-proj-filter-btn.active {
+      color: var(--ai-proj-cyan);
+      border-color: var(--ai-proj-cyan);
+      background: rgba(0, 242, 254, 0.12);
+      font-weight: 600;
+      box-shadow: 0 0 14px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-proj-filter-count {
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: var(--ai-proj-radius-full);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--ai-proj-text-dim);
+    }
+
+    .ai-proj-filter-btn.active .ai-proj-filter-count {
+      background: var(--ai-proj-cyan);
+      color: #060913;
+      font-weight: 700;
+    }
+
+    /* Results Header Bar */
+    .ai-proj-results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .ai-proj-results-count {
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.88rem;
+      color: var(--ai-proj-text-muted);
+    }
+
+    .ai-proj-results-count strong {
+      color: var(--ai-proj-cyan);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       6. MAIN PROJECT GRID & CARDS
+       ========================================================================== */
+    .ai-proj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* Project Card */
+    .ai-proj-card {
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+      box-shadow: var(--ai-proj-shadow-card);
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+
+    .ai-proj-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 242, 254, 0.4);
+      box-shadow: 0 16px 40px rgba(0, 242, 254, 0.18);
+    }
+
+    /* Controlled Image Container */
+    .ai-proj-card-img-box {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      background: var(--ai-proj-bg-surface-elevated);
+    }
+
+    .ai-proj-card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ai-proj-card:hover .ai-proj-card-img {
+      transform: scale(1.06);
+    }
+
+    /* Fallback Futuristic Placeholder */
+    .ai-proj-card-img-placeholder {
+      width: 100%;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a0f1d 0%, #1e1b4b 100%);
+      color: var(--ai-proj-cyan);
+      gap: 10px;
+    }
+
+    .ai-proj-card-img-placeholder svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.85;
+    }
+
+    /* Card Top Overlays */
+    .ai-proj-card-status-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 5;
+      padding: 4px 10px;
+      border-radius: var(--ai-proj-radius-full);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .ai-proj-status-completed {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--ai-proj-emerald);
+      color: var(--ai-proj-emerald);
+    }
+
+    .ai-proj-status-ongoing {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid var(--ai-proj-blue);
+      color: var(--ai-proj-cyan);
+    }
+
+    .ai-proj-status-prototype {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid var(--ai-proj-purple);
+      color: var(--ai-proj-purple);
+    }
+
+    .ai-proj-status-research {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--ai-proj-amber);
+      color: var(--ai-proj-amber);
+    }
+
+    .ai-proj-status-archived {
+      background: rgba(100, 116, 139, 0.2);
+      border: 1px solid var(--ai-proj-text-dim);
+      color: var(--ai-proj-text-muted);
+    }
+
+    .ai-proj-card-category-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      z-index: 5;
+      padding: 3px 10px;
+      border-radius: var(--ai-proj-radius-full);
+      background: rgba(10, 15, 29, 0.85);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      font-size: 0.72rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Card Body */
+    .ai-proj-card-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 12px;
+    }
+
+    .ai-proj-card-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--ai-proj-text-main);
+      transition: color var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-card:hover .ai-proj-card-title {
+      color: var(--ai-proj-cyan);
+    }
+
+    .ai-proj-card-desc {
+      font-size: 0.88rem;
+      color: var(--ai-proj-text-muted);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    /* Tech Tags */
+    .ai-proj-tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .ai-proj-tech-tag {
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: var(--ai-proj-radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-dim);
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-card:hover .ai-proj-tech-tag {
+      border-color: rgba(0, 242, 254, 0.25);
+      color: var(--ai-proj-text-muted);
+    }
+
+    /* Card Team */
+    .ai-proj-card-team-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--ai-proj-text-dim);
+      padding-top: 8px;
+      border-top: 1px solid var(--ai-proj-border-subtle);
+    }
+
+    .ai-proj-card-team-lead {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Card Footer Actions */
+    .ai-proj-card-footer {
+      padding: 16px 22px;
+      background: rgba(0, 0, 0, 0.15);
+      border-top: 1px solid var(--ai-proj-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ai-proj-btn-view-details {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--ai-proj-cyan);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: var(--ai-proj-radius-sm);
+      cursor: pointer;
+      transition: all var(--ai-proj-transition-fast);
+      text-decoration: none;
+    }
+
+    .ai-proj-btn-view-details:hover {
+      background: var(--ai-proj-cyan);
+      color: #060913;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    }
+
+    .ai-proj-card-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-proj-icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--ai-proj-radius-sm);
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-icon-link:hover {
+      color: var(--ai-proj-cyan);
+      border-color: var(--ai-proj-cyan);
+      transform: translateY(-2px);
+    }
+
+    .ai-proj-icon-link svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .ai-proj-compare-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: var(--ai-proj-text-dim);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ai-proj-compare-label input {
+      cursor: pointer;
+      accent-color: var(--ai-proj-cyan);
+    }
+
+    /* ==========================================================================
+       7. PAGINATION / LOAD MORE
+       ========================================================================== */
+    .ai-proj-pagination-box {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .ai-proj-btn-load-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 32px;
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      font-family: var(--ai-proj-font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: var(--ai-proj-radius-md);
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-btn-load-more:hover {
+      border-color: var(--ai-proj-cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+      transform: translateY(-2px);
+      color: var(--ai-proj-cyan);
+    }
+
+    /* ==========================================================================
+       8. EMPTY STATE
+       ========================================================================== */
+    .ai-proj-empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 24px;
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-lg);
+      gap: 16px;
+    }
+
+    .ai-proj-empty-icon {
+      width: 64px;
+      height: 64px;
+      color: var(--ai-proj-cyan);
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .ai-proj-empty-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ai-proj-text-main);
+    }
+
+    .ai-proj-empty-desc {
+      color: var(--ai-proj-text-muted);
+      font-size: 0.95rem;
+      max-width: 400px;
+    }
+
+    .ai-proj-btn-clear-filters {
+      margin-top: 8px;
+      padding: 10px 22px;
+      background: var(--ai-proj-gradient-brand);
+      color: #060913;
+      border: none;
+      font-family: var(--ai-proj-font-display);
+      font-weight: 700;
+      border-radius: var(--ai-proj-radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .ai-proj-btn-clear-filters:hover {
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       9. PROJECT DETAILS MODAL
+       ========================================================================== */
+    .ai-proj-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .ai-proj-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ai-proj-modal-dialog {
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-border-glow);
+      border-radius: var(--ai-proj-radius-xl);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 242, 254, 0.2);
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .ai-proj-modal-overlay.active .ai-proj-modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Modal Close Button */
+    .ai-proj-modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--ai-proj-border-subtle);
+      color: var(--ai-proj-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.2s ease;
+    }
+
+    .ai-proj-modal-close-btn:hover {
+      background: var(--ai-proj-rose);
+      color: #ffffff;
+      transform: rotate(90deg);
+    }
+
+    /* Modal Image Banner */
+    .ai-proj-modal-banner {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+      border-top-left-radius: var(--ai-proj-radius-xl);
+      border-top-right-radius: var(--ai-proj-radius-xl);
+    }
+
+    .ai-proj-modal-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ai-proj-modal-banner-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, var(--ai-proj-bg-surface-elevated) 0%, transparent 60%);
+    }
+
+    /* Modal Content */
+    .ai-proj-modal-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .ai-proj-modal-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ai-proj-modal-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--ai-proj-text-main);
+    }
+
+    .ai-proj-modal-desc {
+      font-size: 1rem;
+      color: var(--ai-proj-text-muted);
+      line-height: 1.7;
+    }
+
+    /* Modal Grid Details */
+    .ai-proj-modal-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .ai-proj-modal-card-box {
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-md);
+      padding: 20px;
+    }
+
+    .ai-proj-modal-box-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ai-proj-cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-proj-modal-box-text {
+      font-size: 0.9rem;
+      color: var(--ai-proj-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Features List */
+    .ai-proj-modal-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ai-proj-modal-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: var(--ai-proj-text-muted);
+    }
+
+    .ai-proj-modal-feature-item svg {
+      width: 18px;
+      height: 18px;
+      color: var(--ai-proj-emerald);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* Development Timeline */
+    .ai-proj-timeline-track {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .ai-proj-timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--ai-proj-border-subtle);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .ai-proj-timeline-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-proj-timeline-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 2px solid var(--ai-proj-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--ai-proj-text-dim);
+      transition: all 0.3s ease;
+    }
+
+    .ai-proj-timeline-step.active .ai-proj-timeline-dot {
+      border-color: var(--ai-proj-cyan);
+      background: var(--ai-proj-cyan);
+      color: #060913;
+      box-shadow: 0 0 14px var(--ai-proj-cyan);
+    }
+
+    .ai-proj-timeline-step.completed .ai-proj-timeline-dot {
+      border-color: var(--ai-proj-emerald);
+      background: var(--ai-proj-emerald);
+      color: #ffffff;
+    }
+
+    .ai-proj-timeline-label {
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.72rem;
+      color: var(--ai-proj-text-dim);
+    }
+
+    .ai-proj-timeline-step.active .ai-proj-timeline-label {
+      color: var(--ai-proj-cyan);
+      font-weight: 700;
+    }
+
+    /* Team Members Grid */
+    .ai-proj-team-members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .ai-proj-team-member-card {
+      background: var(--ai-proj-bg-card);
+      border: 1px solid var(--ai-proj-border-subtle);
+      border-radius: var(--ai-proj-radius-sm);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-proj-member-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ai-proj-text-main);
+    }
+
+    .ai-proj-member-role {
+      font-size: 0.75rem;
+      color: var(--ai-proj-cyan);
+      font-family: var(--ai-proj-font-mono);
+    }
+
+    /* Modal Footer Actions */
+    .ai-proj-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ai-proj-border-subtle);
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       10. PROJECT COMPARISON BAR & MODAL
+       ========================================================================== */
+    .ai-proj-compare-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--ai-proj-bg-glass-heavy);
+      border: 1px solid var(--ai-proj-border-glow);
+      border-radius: var(--ai-proj-radius-full);
+      padding: 12px 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.25);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 1000;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ai-proj-compare-bar.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .ai-proj-compare-preview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-proj-compare-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--ai-proj-radius-full);
+      color: var(--ai-proj-cyan);
+    }
+
+    .ai-proj-btn-compare-action {
+      padding: 8px 18px;
+      background: var(--ai-proj-gradient-brand);
+      color: #060913;
+      border: none;
+      font-family: var(--ai-proj-font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: var(--ai-proj-radius-full);
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .ai-proj-btn-compare-clear {
+      background: transparent;
+      border: none;
+      color: var(--ai-proj-text-dim);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .ai-proj-btn-compare-clear:hover {
+      color: var(--ai-proj-rose);
+    }
+
+    /* Comparison Modal Table */
+    .ai-proj-compare-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    .ai-proj-compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .ai-proj-compare-table th,
+    .ai-proj-compare-table td {
+      padding: 14px 16px;
+      border: 1px solid var(--ai-proj-border-subtle);
+      font-size: 0.88rem;
+    }
+
+    .ai-proj-compare-table th {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ai-proj-text-muted);
+      font-family: var(--ai-proj-font-mono);
+      font-size: 0.8rem;
+      width: 160px;
+    }
+
+    /* ==========================================================================
+       11. PROJECT CTA SECTION
+       ========================================================================== */
+    .ai-proj-cta-section {
+      padding: 40px 0 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-proj-cta-box {
+      background: linear-gradient(135deg, rgba(16, 24, 44, 0.85) 0%, rgba(30, 27, 75, 0.75) 100%);
+      border: 1px solid var(--ai-proj-border-glow);
+      border-radius: var(--ai-proj-radius-xl);
+      padding: 56px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.2);
+    }
+
+    [data-theme="light"] .ai-proj-cta-box {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 242, 255, 0.9) 100%);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+    }
+
+    .ai-proj-cta-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: var(--ai-proj-text-main);
+    }
+
+    .ai-proj-cta-desc {
+      font-size: 1.05rem;
+      color: var(--ai-proj-text-muted);
+      max-width: 600px;
+      margin: 0 auto 32px auto;
+    }
+
+    .ai-proj-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       12. FOOTER SECTION
+       ========================================================================== */
+    .ai-proj-footer {
+      background: var(--ai-proj-bg-surface);
+      border-top: 1px solid var(--ai-proj-border-subtle);
+      padding: 64px 0 32px 0;
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+    }
+
+    .ai-proj-footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .ai-proj-footer-brand-desc {
+      color: var(--ai-proj-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 16px;
+      max-width: 320px;
+    }
+
+    .ai-proj-footer-col-title {
+      font-family: var(--ai-proj-font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ai-proj-text-main);
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+    }
+
+    .ai-proj-footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-proj-footer-link {
+      color: var(--ai-proj-text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color var(--ai-proj-transition-fast);
+    }
+
+    .ai-proj-footer-link:hover {
+      color: var(--ai-proj-cyan);
+    }
+
+    .ai-proj-footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--ai-proj-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ai-proj-text-dim);
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Toast Notification */
+    .ai-proj-toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--ai-proj-bg-surface-elevated);
+      border: 1px solid var(--ai-proj-cyan);
+      color: var(--ai-proj-text-main);
+      padding: 14px 20px;
+      border-radius: var(--ai-proj-radius-md);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.3);
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ai-proj-toast.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .ai-proj-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .ai-proj-hero-visual-wrapper {
+        height: 380px;
+      }
+
+      .ai-proj-featured-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ai-proj-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ai-proj-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .ai-proj-stat-item:nth-child(2)::after {
+        display: none;
+      }
+
+      .ai-proj-footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .ai-proj-nav-links {
+        display: none;
+      }
+
+      .ai-proj-hamburger {
+        display: flex;
+      }
+
+      .ai-proj-search-top {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-proj-featured-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-proj-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-proj-modal-grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-proj-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 20px;
+      }
+
+      .ai-proj-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ai-proj-stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-proj-stat-item::after {
+        display: none !important;
+      }
+
+      .ai-proj-hero-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .ai-proj-btn-primary,
+      .ai-proj-btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background Canvas for Neural Particle Network -->
+  <canvas id="ai-proj-bg-canvas" aria-hidden="true"></canvas>
+  <div class="ai-proj-grid-overlay" aria-hidden="true"></div>
+  <div class="ai-proj-cursor-glow" id="ai-proj-cursor-glow" aria-hidden="true"></div>
+
+  <div id="ai-projects-page">
+
+    <!-- ==========================================================================
+         1. NAVIGATION HEADER (UNIFIED ACROSS ALL PAGES)
+         ========================================================================== -->
+    <header class="achieve-navbar-wrapper" id="achieve-navbar">
+      <div class="achieve-container">
+        <div class="achieve-nav-content">
+
+          <!-- Brand Logo -->
+          <a href="index.html" class="achieve-brand" aria-label="AI Lab Home">
+            <div class="achieve-brand-logo-icon">
+              <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="achieve-brand-logo-img" width="46" height="46" loading="eager" />
+            </div>
+            <div class="achieve-brand-text">
+              <span class="achieve-brand-name">AI LAB</span>
+              <span class="achieve-brand-sub">STUDENT CHAPTER</span>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <nav aria-label="Main Navigation">
+            <ul class="achieve-nav-links">
+              <li class="achieve-nav-item"><a href="index.html" class="achieve-nav-link">Home</a></li>
+              <li class="achieve-nav-item"><a href="projects.html" class="achieve-nav-link active" aria-current="page">Project</a></li>
+              <li class="achieve-nav-item"><a href="achievement.html" class="achieve-nav-link">Achievements</a></li>
+              <li class="achieve-nav-item"><a href="visitors.html" class="achieve-nav-link">Visitors</a></li>
+              <li class="achieve-nav-item"><a href="chat.html" class="achieve-nav-link" id="achieve-chat-link">Chat</a></li>
+            </ul>
+          </nav>
+
+          <!-- Right Side Nav Actions -->
+          <div class="achieve-nav-actions">
+            <button class="achieve-theme-toggle" id="achieve-theme-toggle-btn"
+              aria-label="Toggle dark or light theme">
+              <svg id="achieve-theme-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+
+            <a href="#login" class="achieve-login-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              <span>Login</span>
+            </a>
+
+            <button class="achieve-hamburger" id="achieve-hamburger-btn" aria-label="Toggle navigation drawer"
+              aria-expanded="false">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="achieve-mobile-drawer" id="achieve-mobile-drawer">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 4px 6px 16px 6px; border-bottom: 1px solid var(--ai-proj-border-subtle); margin-bottom: 8px;">
+        <div class="achieve-brand-logo-icon" style="width: 42px; height: 42px;">
+          <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="achieve-brand-logo-img" width="42" height="42" />
+        </div>
+        <div class="achieve-brand-text">
+          <span class="achieve-brand-name" style="font-size: 1.15rem;">AI LAB</span>
+          <span class="achieve-brand-sub">STUDENT CHAPTER</span>
+        </div>
+      </div>
+      <ul class="achieve-mobile-nav-list">
+        <li><a href="index.html" class="achieve-mobile-nav-link">Home</a></li>
+        <li><a href="projects.html" class="achieve-mobile-nav-link active">Project (Active)</a></li>
+        <li><a href="achievement.html" class="achieve-mobile-nav-link">Achievements</a></li>
+        <li><a href="visitors.html" class="achieve-mobile-nav-link">Visitors</a></li>
+        <li><a href="chat.html" class="achieve-mobile-nav-link">Chat</a></li>
+      </ul>
+      <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+        <a href="#login" class="achieve-login-btn" style="width: 100%; justify-content: center;">
+          <span>Member Portal Login</span>
+        </a>
+        <a href="https://www.linkedin.com/in/ai-lab-siet-1b1507419?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" class="achieve-btn-secondary" style="width: 100%; justify-content: center; padding: 10px 16px; font-size: 0.875rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.8v8.37h-2.8V10.9M7.86 6.55a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z" />
+          </svg>
+          <span>Connect on LinkedIn</span>
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <!-- ==========================================================================
+           2. HERO SECTION
+           ========================================================================== -->
+      <section class="ai-proj-hero">
+        <div class="ai-proj-container">
+          <div class="ai-proj-hero-grid">
+
+            <!-- Hero Left Content -->
+            <div>
+              <div class="ai-proj-hero-badge">
+                <span class="ai-proj-badge-beacon"></span>
+                <span>AI CLUB • PROJECT SHOWCASE</span>
+              </div>
+
+              <h1 class="ai-proj-hero-title">
+                Building Ideas Into <span class="ai-proj-gradient-text">Intelligent Solutions</span>
+              </h1>
+
+              <p class="ai-proj-hero-desc">
+                Explore projects created by our AI Club members across artificial intelligence, machine learning, computer vision, NLP, automation and emerging technologies.
+              </p>
+
+              <div class="ai-proj-hero-actions">
+                <a href="#ai-projects-catalog" class="ai-proj-btn-primary">
+                  <span>EXPLORE PROJECTS</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                </a>
+                <button class="ai-proj-btn-secondary" id="ai-proj-submit-btn">
+                  <span>SUBMIT A PROJECT</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Hero Right Visual: Futuristic AI Core & Neural Orbitals -->
+            <div class="ai-proj-hero-visual-wrapper">
+              <div class="ai-proj-visual-container" id="ai-proj-hero-visual">
+
+                <!-- Concentric dashed orbital rings -->
+                <div class="ai-proj-orbit-ring ai-proj-orbit-ring-1"></div>
+                <div class="ai-proj-orbit-ring ai-proj-orbit-ring-2"></div>
+
+                <!-- Central AI Core Hub with Official AI Lab Logo -->
+                <div class="ai-proj-core-hub" title="AI Lab Official Emblem">
+                  <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-proj-core-logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
+                </div>
+
+                <!-- Connected domain nodes -->
+                <div class="ai-proj-orbit-node ai-proj-node-ai">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>AI</span>
+                </div>
+                <div class="ai-proj-orbit-node ai-proj-node-ml">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>ML</span>
+                </div>
+                <div class="ai-proj-orbit-node ai-proj-node-vision">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>VISION</span>
+                </div>
+                <div class="ai-proj-orbit-node ai-proj-node-nlp">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>NLP</span>
+                </div>
+                <div class="ai-proj-orbit-node ai-proj-node-robotics">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>ROBOTICS</span>
+                </div>
+                <div class="ai-proj-orbit-node ai-proj-node-data">
+                  <span class="ai-proj-node-dot"></span>
+                  <span>DATA</span>
+                </div>
+
+                <!-- Floating micro preview badges -->
+                <div class="ai-proj-float-card ai-proj-float-card-1">
+                  <div class="ai-proj-float-card-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="ai-proj-float-card-title">YOLOv10 Edge Vision</div>
+                    <div class="ai-proj-float-card-sub">Sub-25ms Latency</div>
+                  </div>
+                </div>
+
+                <div class="ai-proj-float-card ai-proj-float-card-2">
+                  <div class="ai-proj-float-card-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="ai-proj-float-card-title">MedPulse-GenAI</div>
+                    <div class="ai-proj-float-card-sub">Clinical Note Co-Pilot</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           3. STATISTICS STRIP
+           ========================================================================== -->
+      <section class="ai-proj-stats-section" id="ai-projects-stats">
+        <div class="ai-proj-container">
+          <div class="ai-proj-stats-grid">
+            <div class="ai-proj-stat-item">
+              <div class="ai-proj-stat-num ai-proj-gradient-text" data-counter="25" data-suffix="+">0</div>
+              <div class="ai-proj-stat-label">Projects Built</div>
+            </div>
+            <div class="ai-proj-stat-item">
+              <div class="ai-proj-stat-num ai-proj-gradient-text" data-counter="10" data-suffix="+">0</div>
+              <div class="ai-proj-stat-label">AI Domains</div>
+            </div>
+            <div class="ai-proj-stat-item">
+              <div class="ai-proj-stat-num ai-proj-gradient-text" data-counter="15" data-suffix="+">0</div>
+              <div class="ai-proj-stat-label">Technologies</div>
+            </div>
+            <div class="ai-proj-stat-item">
+              <div class="ai-proj-stat-num ai-proj-gradient-text" data-counter="50" data-suffix="+">0</div>
+              <div class="ai-proj-stat-label">Contributors</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           4. FEATURED PROJECTS SECTION
+           ========================================================================== -->
+      <section class="ai-proj-featured-section" id="ai-projects-featured">
+        <div class="ai-proj-container">
+          <div class="ai-proj-section-header">
+            <span class="ai-proj-section-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span>INNOVATION HIGHLIGHTS</span>
+            </span>
+            <h2 class="ai-proj-section-title">Featured Projects</h2>
+            <p class="ai-proj-section-desc">
+              Discover premier research prototypes and high-impact engineering milestones engineered by AI Club project squads.
+            </p>
+          </div>
+
+          <div class="ai-proj-featured-grid" id="ai-proj-featured-container">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           5. MAIN PROJECT CATALOG (SEARCH, FILTERS, GRID)
+           ========================================================================== -->
+      <section class="ai-proj-catalog-section" id="ai-projects-catalog">
+        <div class="ai-proj-container">
+
+          <div class="ai-proj-section-header">
+            <span class="ai-proj-section-tag">EXPLORE DIRECTORY</span>
+            <h2 class="ai-proj-section-title">All Club Projects</h2>
+            <p class="ai-proj-section-desc">
+              Search, filter by domain or technical stack, and inspect the architecture of our student-led machine intelligence projects.
+            </p>
+          </div>
+
+          <!-- Search & Filter Controls Panel -->
+          <div class="ai-proj-search-panel">
+            <div class="ai-proj-search-top">
+              <!-- Search Input -->
+              <div class="ai-proj-search-box">
+                <svg class="ai-proj-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="ai-proj-search-input" class="ai-proj-search-input"
+                  placeholder="Search projects, technologies, domains, team members..." autocomplete="off" />
+                <button id="ai-proj-search-clear-btn" class="ai-proj-search-clear" aria-label="Clear search text">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Tech Stack Filter Dropdown -->
+              <div class="ai-proj-tech-select-wrapper">
+                <select id="ai-proj-tech-select" class="ai-proj-select" aria-label="Filter by technology">
+                  <option value="All">All Technologies</option>
+                  <!-- Populated dynamically -->
+                </select>
+                <svg class="ai-proj-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+
+              <!-- Sorting Dropdown -->
+              <div class="ai-proj-sort-select-wrapper">
+                <select id="ai-proj-sort-select" class="ai-proj-select" aria-label="Sort projects">
+                  <option value="featured">Featured First</option>
+                  <option value="newest">Newest (2026-2024)</option>
+                  <option value="oldest">Oldest (2024-2026)</option>
+                  <option value="alpha-asc">Name (A to Z)</option>
+                  <option value="alpha-desc">Name (Z to A)</option>
+                  <option value="tech-count">Most Technologies</option>
+                </select>
+                <svg class="ai-proj-select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="ai-proj-category-pills" id="ai-proj-category-pills-container">
+              <!-- Dynamically rendered category pills with live counts -->
+            </div>
+          </div>
+
+          <!-- Dynamic Counter & Controls Bar -->
+          <div class="ai-proj-results-bar">
+            <div class="ai-proj-results-count" id="ai-proj-results-count">
+              Showing <strong>0</strong> Projects
+            </div>
+          </div>
+
+          <!-- Main Grid -->
+          <div class="ai-proj-grid" id="ai-proj-cards-grid">
+            <!-- Populated via JS -->
+          </div>
+
+          <!-- Empty State -->
+          <div class="ai-proj-empty-state" id="ai-proj-empty-state">
+            <svg class="ai-proj-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <h3 class="ai-proj-empty-title">No projects found</h3>
+            <p class="ai-proj-empty-desc">
+              We couldn't find any projects matching your current search or filter combination.
+            </p>
+            <button class="ai-proj-btn-clear-filters" id="ai-proj-btn-reset-filters">CLEAR FILTERS</button>
+          </div>
+
+          <!-- Pagination / Load More -->
+          <div class="ai-proj-pagination-box" id="ai-proj-pagination-box">
+            <button class="ai-proj-btn-load-more" id="ai-proj-load-more-btn">
+              <span>LOAD MORE PROJECTS</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           6. CALL-TO-ACTION SECTION
+           ========================================================================== -->
+      <section class="ai-proj-cta-section">
+        <div class="ai-proj-container">
+          <div class="ai-proj-cta-box">
+            <h2 class="ai-proj-cta-title">
+              Turn Your Idea Into an <span class="ai-proj-gradient-text">AI Project</span>
+            </h2>
+            <p class="ai-proj-cta-desc">
+              Have an interesting idea? Explore, collaborate and build it with the AI Club. Access edge compute, GPU clusters, and peer mentors.
+            </p>
+            <div class="ai-proj-cta-actions">
+              <button class="ai-proj-btn-primary" id="ai-proj-start-project-btn">
+                <span>START A PROJECT</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+              <a href="contact.html" class="ai-proj-btn-secondary">
+                <span>CONTACT AI CLUB</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================================================
+         7. FOOTER
+         ========================================================================== -->
+    <footer class="ai-proj-footer">
+      <div class="ai-proj-container">
+        <div class="ai-proj-footer-grid">
+
+          <div>
+            <a href="home.html" class="ai-proj-brand" aria-label="AI Lab Home">
+              <div class="ai-proj-brand-logo-icon">
+                <img src="assets/ai-lab-logo.png" alt="AI LAB Logo" class="ai-proj-brand-logo-img" width="44" height="44" />
+              </div>
+              <div class="ai-proj-brand-text">
+                <span class="ai-proj-brand-name">AI LAB</span>
+                <span class="ai-proj-brand-sub">STUDENT CHAPTER</span>
+              </div>
+            </a>
+            <p class="ai-proj-footer-brand-desc">
+              Empowering student engineers, machine learning researchers, and innovators through open collaborative development and competitive excellence.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="ai-proj-footer-col-title">Navigation</h4>
+            <ul class="ai-proj-footer-links">
+              <li><a href="home.html" class="ai-proj-footer-link">Home</a></li>
+              <li><a href="projects.html" class="ai-proj-footer-link">Projects</a></li>
+              <li><a href="achievement.html" class="ai-proj-footer-link">Achievements</a></li>
+              <li><a href="hackathons.html" class="ai-proj-footer-link">Hackathons</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="ai-proj-footer-col-title">Explore</h4>
+            <ul class="ai-proj-footer-links">
+              <li><a href="events.html" class="ai-proj-footer-link">Events & Summits</a></li>
+              <li><a href="team.html" class="ai-proj-footer-link">Core Team</a></li>
+              <li><a href="chat.html" class="ai-proj-footer-link">Ask AI Assistant</a></li>
+              <li><a href="contact.html" class="ai-proj-footer-link">Contact & Membership</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="ai-proj-footer-col-title">Connect</h4>
+            <ul class="ai-proj-footer-links">
+              <li><a href="https://github.com/Siva9664/AI_Club" target="_blank" rel="noopener" class="ai-proj-footer-link">GitHub Repository</a></li>
+              <li><a href="https://www.linkedin.com" target="_blank" rel="noopener" class="ai-proj-footer-link">LinkedIn Page</a></li>
+              <li><a href="https://instagram.com" target="_blank" rel="noopener" class="ai-proj-footer-link">Instagram Community</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="ai-proj-footer-bottom">
+          <span>&copy; 2026 AI Club / AI Lab. All Rights Reserved.</span>
+          <span>Designed with Vanilla HTML, CSS & JavaScript.</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==========================================================================
+         8. DETAILS MODAL
+         ========================================================================== -->
+    <div class="ai-proj-modal-overlay" id="ai-proj-details-modal" role="dialog" aria-modal="true" aria-labelledby="ai-proj-modal-title">
+      <div class="ai-proj-modal-dialog">
+        <button class="ai-proj-modal-close-btn" id="ai-proj-modal-close-btn" aria-label="Close project modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="ai-proj-modal-banner" id="ai-proj-modal-banner">
+          <img id="ai-proj-modal-img" src="" alt="Project Preview" />
+          <div class="ai-proj-modal-banner-gradient"></div>
+        </div>
+
+        <div class="ai-proj-modal-body">
+          <div class="ai-proj-modal-meta-row">
+            <span class="ai-proj-card-category-badge" id="ai-proj-modal-cat" style="position: static;">Category</span>
+            <span class="ai-proj-card-status-badge" id="ai-proj-modal-status" style="position: static;">Status</span>
+            <span class="ai-proj-filter-count" id="ai-proj-modal-year" style="font-size: 0.8rem; padding: 4px 10px;">Year</span>
+          </div>
+
+          <h2 class="ai-proj-modal-title" id="ai-proj-modal-title">Project Name</h2>
+          <p class="ai-proj-modal-desc" id="ai-proj-modal-desc">Detailed project description goes here.</p>
+
+          <!-- Problem & Solution Box -->
+          <div class="ai-proj-modal-grid-2">
+            <div class="ai-proj-modal-card-box">
+              <h4 class="ai-proj-modal-box-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Problem Statement</span>
+              </h4>
+              <p class="ai-proj-modal-box-text" id="ai-proj-modal-problem"></p>
+            </div>
+
+            <div class="ai-proj-modal-card-box">
+              <h4 class="ai-proj-modal-box-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Engineering Solution</span>
+              </h4>
+              <p class="ai-proj-modal-box-text" id="ai-proj-modal-solution"></p>
+            </div>
+          </div>
+
+          <!-- Key Features -->
+          <div class="ai-proj-modal-card-box">
+            <h4 class="ai-proj-modal-box-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Key Technical Features</span>
+            </h4>
+            <ul class="ai-proj-modal-features-list" id="ai-proj-modal-features"></ul>
+          </div>
+
+          <!-- Development Timeline Track -->
+          <div>
+            <h4 class="ai-proj-modal-box-title" style="margin-bottom: 12px;">Development Lifecycle</h4>
+            <div class="ai-proj-timeline-track" id="ai-proj-modal-timeline">
+              <div class="ai-proj-timeline-step" data-stage="Idea">
+                <div class="ai-proj-timeline-dot">1</div>
+                <span class="ai-proj-timeline-label">Idea</span>
+              </div>
+              <div class="ai-proj-timeline-step" data-stage="Research">
+                <div class="ai-proj-timeline-dot">2</div>
+                <span class="ai-proj-timeline-label">Research</span>
+              </div>
+              <div class="ai-proj-timeline-step" data-stage="Development">
+                <div class="ai-proj-timeline-dot">3</div>
+                <span class="ai-proj-timeline-label">Dev</span>
+              </div>
+              <div class="ai-proj-timeline-step" data-stage="Testing">
+                <div class="ai-proj-timeline-dot">4</div>
+                <span class="ai-proj-timeline-label">Testing</span>
+              </div>
+              <div class="ai-proj-timeline-step" data-stage="Deployment">
+                <div class="ai-proj-timeline-dot">5</div>
+                <span class="ai-proj-timeline-label">Deploy</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Technologies Chips -->
+          <div>
+            <h4 class="ai-proj-modal-box-title" style="margin-bottom: 8px;">Technology Stack</h4>
+            <div class="ai-proj-tech-tags" id="ai-proj-modal-technologies"></div>
+          </div>
+
+          <!-- Team Members -->
+          <div>
+            <h4 class="ai-proj-modal-box-title" style="margin-bottom: 10px;">Project Contributors</h4>
+            <div class="ai-proj-team-members-grid" id="ai-proj-modal-team"></div>
+          </div>
+
+          <!-- Measured Outcome -->
+          <div class="ai-proj-modal-card-box" style="background: rgba(0, 242, 254, 0.04); border-color: rgba(0, 242, 254, 0.2);">
+            <h4 class="ai-proj-modal-box-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span>Project Outcome & Realized Metric</span>
+            </h4>
+            <p class="ai-proj-modal-box-text" id="ai-proj-modal-outcome" style="color: var(--ai-proj-text-main); font-weight: 500;"></p>
+          </div>
+
+          <!-- Modal Action Links -->
+          <div class="ai-proj-modal-footer">
+            <div style="display: flex; gap: 12px;">
+              <a href="#" target="_blank" rel="noopener" id="ai-proj-modal-github-btn" class="ai-proj-btn-primary" style="padding: 10px 20px; font-size: 0.88rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>View on GitHub</span>
+              </a>
+              <a href="#" target="_blank" rel="noopener" id="ai-proj-modal-demo-btn" class="ai-proj-btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>Live Demo</span>
+              </a>
+            </div>
+            <button class="ai-proj-btn-secondary" onclick="AIClubProjectsApp.closeModal()">Close Window</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         9. PROJECT COMPARISON BAR & MODAL
+         ========================================================================== -->
+    <div class="ai-proj-compare-bar" id="ai-proj-compare-bar">
+      <div class="ai-proj-compare-preview" id="ai-proj-compare-preview"></div>
+      <button class="ai-proj-btn-compare-action" id="ai-proj-btn-open-compare">
+        Compare Projects (<span id="ai-proj-compare-count">0</span>/3)
+      </button>
+      <button class="ai-proj-btn-compare-clear" id="ai-proj-btn-clear-compare">Clear</button>
+    </div>
+
+    <!-- Comparison Modal -->
+    <div class="ai-proj-modal-overlay" id="ai-proj-compare-modal" role="dialog" aria-modal="true" aria-labelledby="ai-proj-compare-modal-title">
+      <div class="ai-proj-modal-dialog" style="max-width: 960px;">
+        <button class="ai-proj-modal-close-btn" id="ai-proj-compare-modal-close-btn" aria-label="Close compare modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="ai-proj-modal-body" style="padding: 32px;">
+          <h2 class="ai-proj-modal-title" id="ai-proj-compare-modal-title">Project Technical Matrix Comparison</h2>
+          <p class="ai-proj-modal-desc">
+            Direct side-by-side comparison of architecture, tech stack, and execution status across selected initiatives.
+          </p>
+
+          <div class="ai-proj-compare-table-wrapper">
+            <table class="ai-proj-compare-table" id="ai-proj-compare-table">
+              <!-- Populated dynamically via JS -->
+            </table>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+            <button class="ai-proj-btn-primary" onclick="AIClubProjectsApp.closeCompareModal()">Close Comparison</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Popup Notification -->
+    <div class="ai-proj-toast" id="ai-proj-toast" role="alert" aria-live="assertive">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span id="ai-proj-toast-msg">Notification</span>
+    </div>
+
+  </div> <!-- /#ai-projects-page -->
+
+  <!-- ==========================================================================
+       VANILLA JAVASCRIPT LOGIC & NAMESPACE
+       Isolated under window.AIClubProjectsApp with zero global pollution.
+       ========================================================================== -->
+  <script>
+    const AIClubProjectsApp = (() => {
+      // Master Project Dataset (Structured Sample Initiatives)
+      const MOCK_PROJECTS = [
+  {
+    "id": 1,
+    "title": "NeuroVision-Surveillance",
+    "category": "Computer Vision",
+    "status": "Completed",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Edge-computed real-time campus safety and anomaly detection utilizing YOLOv10 and spatial temporal transformers.",
+    "description": "NeuroVision-Surveillance is an edge AI monitoring platform developed to provide sub-second incident detection across campus corridors and laboratories. It analyzes live RTSP streams to identify safety hazards, unauthorized laboratory access, and crowd bottlenecks without storing identifying biometric records.",
+    "problem": "Standard CCTV networks generate vast streams of passive footage requiring human review, causing critical safety delays and privacy oversights.",
+    "objective": "Build a zero-latency, on-premises computer vision pipeline capable of detecting anomalies with over 95% accuracy while guaranteeing privacy through edge processing.",
+    "solution": "Integrated quantized YOLOv10 with DeepSORT spatial tracking and temporal graph convolution networks running on NVIDIA Jetson Orin edge modules.",
+    "features": [
+      "Sub-25ms inference latency on multi-camera streams",
+      "Dynamic edge-side privacy masking and blur filters",
+      "Automated telemetry alerts dispatched via secure WebSockets",
+      "Zero cloud-dependency ensuring total data privacy"
+    ],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "OpenCV",
+      "YOLOv10",
+      "TensorRT",
+      "FastAPI",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Kruthik Pranav T. R.",
+        "role": "Lead Architect"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "CV Engineer"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Edge Systems"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Deployed across 8 pilot lab facilities with 98.4% anomaly recall rate and zero cloud transmission bandwidth."
+  },
+  {
+    "id": 2,
+    "title": "MedPulse-GenAI Co-Pilot",
+    "category": "Generative AI",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Multimodal clinical note synthesis and diagnostic co-pilot for healthcare triage powered by fine-tuned Bio-LLMs.",
+    "description": "MedPulse-GenAI assists healthcare practitioners by structuring physician-patient dialogues into standardized FHIR clinical summaries. It extracts medical entities, suggests differential diagnoses from laboratory panels, and cross-references PubMed knowledge graphs with source-grounded citations.",
+    "problem": "Doctors spend up to 40% of their day documenting consultations and cross-referencing pharmacological guidelines across disparate EHR systems.",
+    "objective": "Design a privacy-compliant clinical transcription and diagnostic assistant with hallucination mitigation and verified medical source retrieval.",
+    "solution": "Combined Whisper-large speech transcription, LoRA fine-tuned LLaMA-3 medical adapters, and Neo4j medical ontology RAG pipelines with semantic guardrails.",
+    "features": [
+      "Real-time medical jargon phonetic parsing in noisy clinics",
+      "Automatic HL7 and FHIR structured JSON note export",
+      "Contraindication and drug-interaction automated check",
+      "Strict citation transparency with verified medical reference links"
+    ],
+    "technologies": [
+      "Python",
+      "LLM",
+      "Transformers",
+      "LangChain",
+      "PyTorch",
+      "Neo4j",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "AI Research Lead"
+      },
+      {
+        "name": "Prithic P.",
+        "role": "NLP Specialist"
+      },
+      {
+        "name": "Nishanth K. R.",
+        "role": "Full-Stack AI"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Testing",
+    "outcome": "Reduced documentation turnaround time by 62% in institutional simulation trials with 0% unverified citations."
+  },
+  {
+    "id": 3,
+    "title": "Autonomous-Rover-SLAM",
+    "category": "Robotics",
+    "status": "Completed",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Autonomous indoor/outdoor mobile robot featuring 3D LiDAR SLAM, dynamic path-planning, and obstacle avoidance.",
+    "description": "An autonomous mobile ground rover capable of mapping unknown GPS-denied environments in real time. Designed for search-and-rescue reconnaissance, the platform navigates rough terrain using sensor fusion between 3D LiDAR, stereo cameras, and IMU filters running ROS2 Humble.",
+    "problem": "Disaster reconnaissance requires traversing structurally compromised buildings where GPS signals fail and obstacles are dynamically shifting.",
+    "objective": "Engineer an autonomous rover that generates metric 3D point-cloud maps and calculates traversable trajectory splines without human teleoperation.",
+    "solution": "Implemented FAST-LIO2 LiDAR odometry with TEB local planner and deep reinforcement learning navigation policies on an omnidirectional 4WD chassis.",
+    "features": [
+      "Sub-centimeter 3D spatial mapping in zero-visibility conditions",
+      "Dynamic obstacle avoidance reacting in under 40 milliseconds",
+      "Modular payload bay supporting gas sensors and thermal cameras",
+      "Encrypted long-range telemetry link over 5.8 GHz mesh WiFi"
+    ],
+    "technologies": [
+      "ROS",
+      "Python",
+      "C++",
+      "LiDAR",
+      "OpenCV",
+      "PyTorch",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Robotics Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Embedded Systems"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Control Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Demonstrated complete autonomy across 500m unmapped multi-story obstacle courses with zero collision instances."
+  },
+  {
+    "id": 4,
+    "title": "OmniAgent-MCP Orchestrator",
+    "category": "Artificial Intelligence",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Multi-agent autonomous framework utilizing Model Context Protocol (MCP) for complex software development pipelines.",
+    "description": "OmniAgent-MCP connects distributed AI reasoning agents to real development environments. Agents collaborate to break down feature requests into architecture blueprints, unit test suites, and continuous deployment workflows while maintaining human-in-the-loop checkpoints.",
+    "problem": "Single LLM invocations fail at long-horizon multi-step reasoning, frequently losing context or hallucinating tool invocations.",
+    "objective": "Build a deterministic multi-agent state machine that coordinates specialized subagents for code generation, auditing, and verification.",
+    "solution": "Constructed an MCP server mesh with hierarchical supervisor-worker architectures and AST-based syntax verification sandboxes.",
+    "features": [
+      "Standardized Model Context Protocol tool calling architecture",
+      "Deterministic DAG execution with automated error recovery",
+      "Sandboxed Docker execution environments for generated code",
+      "Granular token cost and latency telemetry dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "Docker",
+      "LLM",
+      "LangChain",
+      "JavaScript"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "Agentic Systems Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Core Developer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Accelerated internal repository scaffolding by 4.5x with a 94.2% test-pass rate on first compilation."
+  },
+  {
+    "id": 5,
+    "title": "BioGenome-Predictor",
+    "category": "Machine Learning",
+    "status": "Research",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Deep transformer architecture modeling non-coding genomic sequence mutations and functional disease pathogenicity.",
+    "description": "BioGenome-Predictor analyzes human chromosomal variants to evaluate transcriptional disruption. The model maps single nucleotide polymorphisms to gene expression variances across 54 human tissue phenotypes using Ensembl and GTEx benchmark repositories.",
+    "problem": "Over 90% of disease-associated genetic variations reside in non-coding regions where functional interpretation has historically required exhaustive wet-lab assays.",
+    "objective": "Train an attention-based sequence model to score nucleotide mutation impacts with clinical pathogenicity confidence bounds.",
+    "solution": "Trained bidirectional transformer models on 128k base-pair genomic windows using evolutionary conservation embeddings and chromatin accessibility tracks.",
+    "features": [
+      "128k base-pair sequence context attention window",
+      "Cross-tissue chromatin accessibility prediction matrix",
+      "Standardized ClinVar benchmark compatibility",
+      "Open-access CLI tool for variant effect scoring"
+    ],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "Machine Learning",
+      "Transformers",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Prithic P.",
+        "role": "BioML Researcher"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "Data Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Research",
+    "outcome": "Achieved 0.91 AUROC on benchmark non-coding pathogenic variant sets, exceeding baseline regression approaches."
+  },
+  {
+    "id": 6,
+    "title": "CodeSense-LLM Security Auditor",
+    "category": "Generative AI",
+    "status": "Prototype",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Self-hosted local code analysis engine detecting zero-day vulnerabilities and memory safety flaws via semantic ASTs.",
+    "description": "CodeSense-LLM pairs deep semantic language embeddings with static control-flow graphs. It detects subtle race conditions, buffer overflows, and unauthorized credential exposure in Pull Requests without sending proprietary code to commercial cloud APIs.",
+    "problem": "Commercial AI code auditors require transmitting sensitive corporate or research IP to external cloud providers.",
+    "objective": "Provide an on-premise, air-gapped code auditor that identifies OWASP Top 10 vulnerabilities with low false positive rates.",
+    "solution": "Fine-tuned CodeLlama models paired with Tree-sitter abstract syntax tree parsers and semgrep security rule engines.",
+    "features": [
+      "100% offline air-gapped execution on local consumer GPUs",
+      "Direct GitHub Actions and GitLab CI/CD integration",
+      "Interactive diff generation with safe refactored patches",
+      "Coverage across C++, Rust, Python, Go, and JavaScript"
+    ],
+    "technologies": [
+      "Python",
+      "LLM",
+      "Transformers",
+      "Docker",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nishanth K. R.",
+        "role": "Security Lead"
+      },
+      {
+        "name": "Nitish R. G.",
+        "role": "Model Optimization"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Testing",
+    "outcome": "Successfully audited 35 student open-source repositories and flagged 14 verified security flaws prior to release."
+  },
+  {
+    "id": 7,
+    "title": "AgriDrone-CropHealth",
+    "category": "Computer Vision",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Multispectral aerial drone vision analyzing NDVI vegetation indices, soil hydration, and crop pest infestation.",
+    "description": "An aerial agricultural analytics solution combining autonomous drone flight planning with multispectral imagery parsing. It produces high-resolution thermal and NDVI vegetation heatmaps to empower farmers with precision fertilizer and irrigation guidance.",
+    "problem": "Late detection of crop blight and irrigation stress causes extensive agricultural yield reduction across regional farming cooperatives.",
+    "objective": "Build an automated drone imaging pipeline providing actionable crop health reports within two hours of flight completion.",
+    "solution": "Built custom photogrammetry stitching paired with semantic segmentation U-Nets to classify early-stage foliar diseases.",
+    "features": [
+      "Normalized Difference Vegetation Index (NDVI) mapping",
+      "Pest and weed clustering with sub-centimeter ground resolution",
+      "Offline edge stitching capability on solar-powered ground stations",
+      "Mobile-friendly field summary dashboard for local farmers"
+    ],
+    "technologies": [
+      "Python",
+      "OpenCV",
+      "PyTorch",
+      "FastAPI",
+      "Computer Vision"
+    ],
+    "team": [
+      {
+        "name": "Mithunesh K.",
+        "role": "Hardware & Vision"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "Analytics"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Field-tested on 40 acres of regional farmlands, identifying nitrogen deficiencies 12 days before visible foliage yellowing."
+  },
+  {
+    "id": 8,
+    "title": "AeroVoice-NLP Assistant",
+    "category": "NLP",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Low-resource multi-dialect speech recognition and voice guidance system for aviation navigation training.",
+    "description": "AeroVoice is a robust acoustic speech recognition interface engineered for flight simulators. It interprets high-speed radio phraseology and noisy cockpit chatter across non-native English dialects with strict aeronautical phonetic compliance.",
+    "problem": "Standard commercial speech engines fail on regional accents and rapid aviation abbreviations in high-noise cockpit environments.",
+    "objective": "Achieve below 6% Word Error Rate (WER) on standard ICAO radio communications under 20dB ambient engine acoustic noise.",
+    "solution": "Fine-tuned Conformer-CTC acoustic architectures augmented with dynamic SNR cockpit noise simulation and aeronautical n-gram language models.",
+    "features": [
+      "Standard ICAO aviation phraseology validation",
+      "Real-time audio stream transcription under 180ms latency",
+      "Custom noise suppression filter mimicking aircraft headsets",
+      "Cross-platform C++ runtime wrapper with zero external dependencies"
+    ],
+    "technologies": [
+      "Python",
+      "NLP",
+      "PyTorch",
+      "Transformers",
+      "C++"
+    ],
+    "team": [
+      {
+        "name": "Prithic P.",
+        "role": "Speech Systems Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Audio Pipeline"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Attained a 4.8% WER in institutional flight training simulators, surpassing commercial speech APIs by 22%."
+  },
+  {
+    "id": 9,
+    "title": "FinRisk-Analytics Engine",
+    "category": "Data Science",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Real-time high-frequency transaction stream scoring and algorithmic fraud ring detection using temporal graph neural nets.",
+    "description": "FinRisk-Analytics continuously scans millions of simulated financial transactions to detect synthetic identity fraud and laundering cycles. By viewing transaction topologies as dynamic bipartite graphs, it pinpoints coordinated fraud rings in sub-second time windows.",
+    "problem": "Rule-based fraud engines struggle to detect distributed laundering schemes where transactions are sliced into micro-amounts across hundreds of shell accounts.",
+    "objective": "Build a streaming graph neural network pipeline that flags circular laundering and mule networks in under 50 milliseconds.",
+    "solution": "Architected streaming Kafka pipelines feeding PyTorch Geometric Temporal models with real-time Neo4j cypher graph queries.",
+    "features": [
+      "Sub-50ms transaction fraud scoring at 50,000 TPS",
+      "Dynamic community detection identifying money mule rings",
+      "Explainable AI feature attribution for regulatory audit compliance",
+      "Real-time interactive graph visualization dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "Machine Learning",
+      "Data Science",
+      "PyTorch",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Data Architect"
+      },
+      {
+        "name": "Nishanth K. R.",
+        "role": "Graph Modeler"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Detected 99.1% of simulated circular transaction rings with an ultra-low 0.04% false positive rate."
+  },
+  {
+    "id": 10,
+    "title": "AutoDoc-Summarizer",
+    "category": "NLP",
+    "status": "Prototype",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Intelligent legal and technical contract parsing platform extracting critical indemnities, deadlines, and liability risks.",
+    "description": "AutoDoc-Summarizer digests 100+ page legal agreements, technical tenders, and enterprise leases. It identifies non-standard indemnification clauses, ambiguous force-majeure provisions, and statutory compliance mismatches within seconds.",
+    "problem": "Small startups and academic labs often enter complex vendor contracts without full legal visibility on liability traps.",
+    "objective": "Engineer an automated contract reviewer that highlights anomalous clauses and summarizes risk exposures in plain English.",
+    "solution": "Integrated hierarchical attention networks with LegalBERT embeddings and vector similarity retrieval against statutory regulatory bodies.",
+    "features": [
+      "Clause-by-clause automated risk stratification (Red/Yellow/Green)",
+      "Plain English layperson translation of legal jargon",
+      "Exportable redline contract revisions with recommended phrasing",
+      "Side-by-side contract comparison view"
+    ],
+    "technologies": [
+      "Python",
+      "NLP",
+      "Transformers",
+      "FastAPI",
+      "JavaScript"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "NLP Lead"
+      },
+      {
+        "name": "Prithic P.",
+        "role": "Evaluation Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Benchmarked on 200 public commercial contracts, achieving 93% clause classification accuracy."
+  },
+  {
+    "id": 11,
+    "title": "SmartGrid-Forecaster",
+    "category": "Machine Learning",
+    "status": "Research",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Renewable solar and wind generation load forecasting using spatiotemporal graph neural networks and weather telemetry.",
+    "description": "SmartGrid-Forecaster models renewable power intermittency across campus microgrids. By fusing meteorological satellite data with historical inverter sensor metrics, it predicts grid load spikes up to 48 hours in advance, optimizing battery storage discharging.",
+    "problem": "High solar and wind variability leads to expensive peak grid strain and battery storage degradation when loads are improperly scheduled.",
+    "objective": "Deliver hour-ahead and day-ahead renewable power generation predictions with under 3.5% Mean Absolute Percentage Error (MAPE).",
+    "solution": "Formulated a spatial-temporal graph neural network (ST-GNN) capturing geographic solar irradiance correlation across clustered sensor nodes.",
+    "features": [
+      "48-hour forward rolling load and irradiance forecast",
+      "Automated battery reserve optimization dispatcher",
+      "Extreme weather degradation alert module",
+      "Interactive Grafana-based campus telemetry portal"
+    ],
+    "technologies": [
+      "Python",
+      "Machine Learning",
+      "PyTorch",
+      "Data Science",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan S.",
+        "role": "Lead Researcher"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "IoT Integration"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Research",
+    "outcome": "Reduced campus simulation battery cycle degradation by 18% while maintaining a 3.1% 24-hour load forecasting MAPE."
+  },
+  {
+    "id": 12,
+    "title": "CyberSentinel-AI Engine",
+    "category": "Automation",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Zero-day network intrusion prevention and packet anomaly detection utilizing unsupervised autoencoders and eBPF.",
+    "description": "CyberSentinel-AI monitors campus lab subnets for zero-day intrusions and port reconnaissance attacks. Running directly in Linux kernel space via eBPF filters, the AI detects malicious lateral movement in microsecond timescales without bottlenecking network throughput.",
+    "problem": "Traditional signature-based firewalls fail to stop novel zero-day attacks and polymorphic ransomware payload delivery.",
+    "objective": "Build an unsupervised network anomaly detection system capable of filtering 10 Gbps traffic with zero packet loss.",
+    "solution": "Coupled kernel-level eBPF telemetry with lightweight variational autoencoders trained on normal campus traffic baselines.",
+    "features": [
+      "eBPF kernel-level low-overhead packet inspection",
+      "Unsupervised detection of novel DDoS and exfiltration anomalies",
+      "Automated dynamic iptables firewall rule synthesis",
+      "Centralized incident triage dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "Automation",
+      "Machine Learning",
+      "Docker",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nishanth K. R.",
+        "role": "Security Engineer"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Infrastructure"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Monitored 150+ academic lab workstations with zero latency penalty and successfully thwarted simulated red-team intrusions."
+  },
+  {
+    "id": 13,
+    "title": "WebMind-RAG Enterprise",
+    "category": "Web & AI",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Contextual enterprise knowledge retrieval and question-answering system with hybrid dense-sparse vector indexing.",
+    "description": "WebMind-RAG is a full-stack enterprise search platform allowing students and faculty to converse with academic curricula, lab manuals, and research preprints. It features hybrid BM25 and dense embedding reranking to provide strictly cited responses.",
+    "problem": "University knowledge is fragmented across PDF handbooks, Google Drives, and legacy portal silos, making answers difficult to locate.",
+    "objective": "Provide an intuitive ChatGPT-like web interface grounded on institutional knowledge with 100% source verifiable citations.",
+    "solution": "Constructed hybrid Qdrant vector databases with Cohere reranking models and an ultra-responsive responsive web frontend.",
+    "features": [
+      "Hybrid dense-sparse vector retrieval with cross-encoder reranking",
+      "Instant PDF and DOCX automated parsing and semantic chunking",
+      "Interactive page-level document citation preview modal",
+      "Role-based access control protecting confidential department notes"
+    ],
+    "technologies": [
+      "Web & AI",
+      "Python",
+      "JavaScript",
+      "FastAPI",
+      "LLM",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Kruthik Pranav T. R.",
+        "role": "Full-Stack Architect"
+      },
+      {
+        "name": "Nitish R. G.",
+        "role": "RAG Specialist"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Indexed over 1,400 technical documents and delivered sub-second accurate answers for over 500 active campus queries."
+  },
+  {
+    "id": 14,
+    "title": "Swarm-Bot-Collab",
+    "category": "Robotics",
+    "status": "Prototype",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Decentralized multi-agent robot swarm communication protocol for coordinated search-and-mapping tasks.",
+    "description": "A swarm robotics protocol enabling multiple micro-rovers to map large areas collaboratively without a central master node. If any individual rover fails or loses communication, the remaining units dynamically reallocate exploration sectors through consensus algorithms.",
+    "problem": "Centralized multi-robot systems suffer single points of failure and cannot scale past a few units in radio-inhibited ruins.",
+    "objective": "Create a peer-to-peer decentralized exploration protocol where 5+ rovers collaboratively explore an arena 3x faster than a single unit.",
+    "solution": "Combined Voronoi frontier partition algorithms with peer-to-peer UWB ranging and gossip-based map merge consensus.",
+    "features": [
+      "Decentralized peer-to-peer gossip map synchronization",
+      "Resilient self-healing mesh communication",
+      "Dynamic frontier exploration partition without central server",
+      "Hardware-in-the-loop simulator testbed"
+    ],
+    "technologies": [
+      "Robotics",
+      "Python",
+      "C++",
+      "ROS",
+      "OpenCV"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Swarm Architect"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Hardware Lead"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Achieved a 280% increase in mapping velocity in 5-rover testbed trials with full resilience to 40% node loss."
+  },
+  {
+    "id": 15,
+    "title": "EcoSense-IoT Industrial Monitor",
+    "category": "Automation",
+    "status": "Archived",
+    "year": "2024",
+    "featured": false,
+    "shortDescription": "Automated smart environmental telemetry node recording particulate matter, VOCs, and greenhouse gas metrics.",
+    "description": "An early foundational IoT research project by the AI Club exploring environmental air quality telemetry. Solar-powered sensor nodes collected PM2.5, carbon concentrations, and humidity across campus zones to analyze microclimate trends.",
+    "problem": "Campus laboratories needed continuous logging of volatile organic compounds to ensure ventilation regulatory compliance.",
+    "objective": "Build self-contained, solar-powered environmental monitor nodes transmitting encrypted sensor streams to a central ledger.",
+    "solution": "Combined ESP32 microcontrollers with optical particulate sensors and an MQTT time-series database dashboard.",
+    "features": [
+      "Solar battery power management lasting 45 continuous rain days",
+      "LoRaWAN long-range telemetry transmission up to 5km",
+      "Threshold buzzer and automated email alerts for safety officers",
+      "Historical time-series analytics and trend regression"
+    ],
+    "technologies": [
+      "Automation",
+      "Python",
+      "Data Science",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan S.",
+        "role": "Hardware Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Firmware & Cloud"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Logged over 1.2 million continuous sensor data points across 18 months of reliable deployment."
+  }
+];
+
+      // App State
+      const state = {
+        projects: MOCK_PROJECTS,
+        filteredProjects: [...MOCK_PROJECTS],
+        search: "",
+        category: "All",
+        technology: "All",
+        sort: "featured",
+        page: 1,
+        itemsPerPage: 6,
+        comparedIds: new Set(),
+        theme: document.documentElement.getAttribute('data-theme') || 'dark'
+      };
+
+      // DOM Elements Cache
+      const dom = {};
+
+      function init() {
+        cacheDom();
+        bindEvents();
+        initBackgroundParticles();
+        initMouseGlow();
+        initHeroParallax();
+        initStatsCounters();
+        renderCategoryFilters();
+        renderTechSelectOptions();
+        applyFiltersAndRender();
+        renderFeaturedProjects();
+      }
+
+      function cacheDom() {
+        dom.search = document.getElementById('ai-proj-search-input');
+        dom.clearSearch = document.getElementById('ai-proj-search-clear-btn');
+        dom.techSelect = document.getElementById('ai-proj-tech-select');
+        dom.sortSelect = document.getElementById('ai-proj-sort-select');
+        dom.categoryContainer = document.getElementById('ai-proj-category-pills-container');
+        dom.resultsCount = document.getElementById('ai-proj-results-count');
+        dom.cardsGrid = document.getElementById('ai-proj-cards-grid');
+        dom.emptyState = document.getElementById('ai-proj-empty-state');
+        dom.paginationBox = document.getElementById('ai-proj-pagination-box');
+        dom.loadMoreBtn = document.getElementById('ai-proj-load-more-btn');
+        dom.resetFiltersBtn = document.getElementById('ai-proj-btn-reset-filters');
+        dom.featuredContainer = document.getElementById('ai-proj-featured-container');
+        dom.themeToggleBtn = document.getElementById('achieve-theme-toggle-btn') || document.getElementById('ai-proj-theme-toggle-btn');
+        dom.hamburgerBtn = document.getElementById('achieve-hamburger-btn') || document.getElementById('ai-proj-hamburger-btn');
+        dom.mobileDrawer = document.getElementById('achieve-mobile-drawer') || document.getElementById('ai-proj-mobile-drawer');
+        dom.drawerBackdrop = document.getElementById('ai-proj-drawer-backdrop');
+        dom.drawerCloseBtn = document.getElementById('ai-proj-drawer-close-btn');
+        dom.submitBtn = document.getElementById('ai-proj-submit-btn');
+        dom.startProjectBtn = document.getElementById('ai-proj-start-project-btn');
+        dom.toast = document.getElementById('ai-proj-toast');
+        dom.toastMsg = document.getElementById('ai-proj-toast-msg');
+
+        // Modal
+        dom.detailsModal = document.getElementById('ai-proj-details-modal');
+        dom.modalCloseBtn = document.getElementById('ai-proj-modal-close-btn');
+
+        // Compare
+        dom.compareBar = document.getElementById('ai-proj-compare-bar');
+        dom.comparePreview = document.getElementById('ai-proj-compare-preview');
+        dom.compareCount = document.getElementById('ai-proj-compare-count');
+        dom.btnOpenCompare = document.getElementById('ai-proj-btn-open-compare');
+        dom.btnClearCompare = document.getElementById('ai-proj-btn-clear-compare');
+        dom.compareModal = document.getElementById('ai-proj-compare-modal');
+        dom.compareModalClose = document.getElementById('ai-proj-compare-modal-close-btn');
+        dom.compareTable = document.getElementById('ai-proj-compare-table');
+      }
+
+      function bindEvents() {
+        // Live Instant Search
+        dom.search.addEventListener('input', (e) => {
+          state.search = e.target.value.trim().toLowerCase();
+          dom.clearSearch.style.display = state.search ? 'flex' : 'none';
+          state.page = 1;
+          applyFiltersAndRender();
+        });
+
+        dom.clearSearch.addEventListener('click', () => {
+          dom.search.value = '';
+          state.search = '';
+          dom.clearSearch.style.display = 'none';
+          state.page = 1;
+          applyFiltersAndRender();
+          dom.search.focus();
+        });
+
+        // Tech Filter
+        dom.techSelect.addEventListener('change', (e) => {
+          state.technology = e.target.value;
+          state.page = 1;
+          applyFiltersAndRender();
+        });
+
+        // Sort Filter
+        dom.sortSelect.addEventListener('change', (e) => {
+          state.sort = e.target.value;
+          applyFiltersAndRender();
+        });
+
+        // Load More
+        dom.loadMoreBtn.addEventListener('click', () => {
+          state.page++;
+          renderCards();
+        });
+
+        // Reset Filters Button
+        dom.resetFiltersBtn.addEventListener('click', resetFilters);
+
+        // Submit Project Buttons (Frontend Only Demo)
+        const showSubmitToast = () => showToast("Project submission will be available soon.");
+        if (dom.submitBtn) dom.submitBtn.addEventListener('click', showSubmitToast);
+        if (dom.startProjectBtn) dom.startProjectBtn.addEventListener('click', showSubmitToast);
+
+        // Theme Toggle
+        if (dom.themeToggleBtn) dom.themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // Mobile Drawer
+        if (dom.hamburgerBtn) dom.hamburgerBtn.addEventListener('click', toggleMobileDrawer);
+        if (dom.drawerBackdrop) dom.drawerBackdrop.addEventListener('click', closeMobileDrawer);
+        if (dom.drawerCloseBtn) dom.drawerCloseBtn.addEventListener('click', closeMobileDrawer);
+        if (dom.mobileDrawer) {
+          dom.mobileDrawer.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileDrawer);
+          });
+        }
+
+        // Navbar Sticky Scroll
+        const navbar = document.getElementById('achieve-navbar') || document.getElementById('ai-proj-navbar');
+        if (navbar) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+              navbar.classList.add('scrolled');
+            } else {
+              navbar.classList.remove('scrolled');
+            }
+          }, { passive: true });
+        }
+
+        // Modal Close Events
+        dom.modalCloseBtn.addEventListener('click', closeModal);
+        dom.detailsModal.addEventListener('click', (e) => {
+          if (e.target === dom.detailsModal) closeModal();
+        });
+
+        // Compare Modal Close Events
+        dom.compareModalClose.addEventListener('click', closeCompareModal);
+        dom.compareModal.addEventListener('click', (e) => {
+          if (e.target === dom.compareModal) closeCompareModal();
+        });
+        dom.btnOpenCompare.addEventListener('click', openCompareModal);
+        dom.btnClearCompare.addEventListener('click', clearComparison);
+
+        // Keyboard ESC handler
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeModal();
+            closeCompareModal();
+            closeMobileDrawer();
+          }
+        });
+
+        // Live Cross-tab Theme Sync
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'aiClubProjectsTheme' || e.key === 'ai-club-theme' || e.key === 'aiClubHomeTheme') {
+            state.theme = e.newValue || 'dark';
+            applyTheme(state.theme);
+          }
+        });
+      }
+
+      /* ==========================================================================
+         FILTERS, SEARCH & SORT LOGIC
+         ========================================================================== */
+      function applyFiltersAndRender() {
+        let list = [...state.projects];
+
+        // 1. Category Filter
+        if (state.category !== "All") {
+          list = list.filter(p => p.category.toLowerCase() === state.category.toLowerCase());
+        }
+
+        // 2. Technology Filter
+        if (state.technology !== "All") {
+          list = list.filter(p => p.technologies.some(t => t.toLowerCase() === state.technology.toLowerCase()));
+        }
+
+        // 3. Search Filter
+        if (state.search) {
+          const q = state.search;
+          list = list.filter(p => {
+            const inTitle = p.title.toLowerCase().includes(q);
+            const inDesc = p.description.toLowerCase().includes(q) || p.shortDescription.toLowerCase().includes(q);
+            const inCategory = p.category.toLowerCase().includes(q);
+            const inTech = p.technologies.some(t => t.toLowerCase().includes(q));
+            const inTeam = p.team.some(m => m.name.toLowerCase().includes(q) || m.role.toLowerCase().includes(q));
+            return inTitle || inDesc || inCategory || inTech || inTeam;
+          });
+        }
+
+        // 4. Sorting
+        switch (state.sort) {
+          case 'featured':
+            list.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+            break;
+          case 'newest':
+            list.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+            break;
+          case 'oldest':
+            list.sort((a, b) => parseInt(a.year) - parseInt(b.year));
+            break;
+          case 'alpha-asc':
+            list.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case 'alpha-desc':
+            list.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+          case 'tech-count':
+            list.sort((a, b) => b.technologies.length - a.technologies.length);
+            break;
+        }
+
+        state.filteredProjects = list;
+        updateResultsCounter(list.length);
+        renderCards();
+      }
+
+      function updateResultsCounter(count) {
+        dom.resultsCount.innerHTML = `Showing <strong>${count}</strong> Project${count === 1 ? '' : 's'} Found`;
+      }
+
+      function resetFilters() {
+        state.search = '';
+        state.category = 'All';
+        state.technology = 'All';
+        state.sort = 'featured';
+        state.page = 1;
+
+        dom.search.value = '';
+        dom.clearSearch.style.display = 'none';
+        dom.techSelect.value = 'All';
+        dom.sortSelect.value = 'featured';
+
+        // Update Category Active Button
+        document.querySelectorAll('.ai-proj-filter-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.category === 'All');
+        });
+
+        applyFiltersAndRender();
+        showToast("Filters reset to default.");
+      }
+
+      /* ==========================================================================
+         RENDER FUNCTIONS
+         ========================================================================== */
+      function renderCategoryFilters() {
+        const categories = [
+          "All",
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Generative AI",
+          "Computer Vision",
+          "NLP",
+          "Data Science",
+          "Robotics",
+          "Web & AI",
+          "Automation"
+        ];
+
+        // Calculate dynamic counts
+        const counts = { "All": state.projects.length };
+        categories.forEach(c => {
+          if (c !== "All") {
+            counts[c] = state.projects.filter(p => p.category.toLowerCase() === c.toLowerCase()).length;
+          }
+        });
+
+        dom.categoryContainer.innerHTML = categories.map(cat => `
+          <button class="ai-proj-filter-btn ${cat === state.category ? 'active' : ''}" data-category="${cat}">
+            <span>${cat === 'All' ? 'All Projects' : cat}</span>
+            <span class="ai-proj-filter-count">${counts[cat] || 0}</span>
+          </button>
+        `).join('');
+
+        // Bind clicks
+        dom.categoryContainer.querySelectorAll('.ai-proj-filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            dom.categoryContainer.querySelectorAll('.ai-proj-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.category = btn.dataset.category;
+            state.page = 1;
+            applyFiltersAndRender();
+          });
+        });
+      }
+
+      function renderTechSelectOptions() {
+        const techSet = new Set();
+        state.projects.forEach(p => {
+          p.technologies.forEach(t => techSet.add(t));
+        });
+
+        const sortedTech = Array.from(techSet).sort();
+        dom.techSelect.innerHTML = `<option value="All">All Technologies</option>` +
+          sortedTech.map(t => `<option value="${t}">${t}</option>`).join('');
+      }
+
+      function renderFeaturedProjects() {
+        const featured = state.projects.filter(p => p.featured).slice(0, 3);
+        dom.featuredContainer.innerHTML = featured.map(p => createCardHtml(p, true)).join('');
+        bindCardInteractions(dom.featuredContainer);
+      }
+
+      function renderCards() {
+        const total = state.filteredProjects.length;
+
+        if (total === 0) {
+          dom.cardsGrid.style.display = 'none';
+          dom.emptyState.style.display = 'flex';
+          dom.paginationBox.style.display = 'none';
+          return;
+        }
+
+        dom.cardsGrid.style.display = 'grid';
+        dom.emptyState.style.display = 'none';
+
+        const displayedCount = state.page * state.itemsPerPage;
+        const visibleItems = state.filteredProjects.slice(0, displayedCount);
+
+        dom.cardsGrid.innerHTML = visibleItems.map(p => createCardHtml(p, false)).join('');
+        bindCardInteractions(dom.cardsGrid);
+
+        // Load More button visibility
+        if (displayedCount >= total) {
+          dom.paginationBox.style.display = 'none';
+        } else {
+          dom.paginationBox.style.display = 'flex';
+        }
+      }
+
+      function createCardHtml(p, isFeatured) {
+        const statusClass = `ai-proj-status-${p.status.toLowerCase()}`;
+        const checked = state.comparedIds.has(p.id) ? 'checked' : '';
+
+        return `
+          <div class="ai-proj-card ${isFeatured ? 'ai-proj-featured-card' : ''}" data-project-id="${p.id}">
+            <div class="ai-proj-card-img-box">
+              ${isFeatured ? `
+                <div class="ai-proj-featured-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <span>FEATURED</span>
+                </div>
+              ` : ''}
+              
+              <span class="ai-proj-card-status-badge ${statusClass}">
+                ${getStatusIcon(p.status)}
+                <span>${p.status}</span>
+              </span>
+
+              <span class="ai-proj-card-category-badge">${p.category}</span>
+
+              <img class="ai-proj-card-img" src="${p.image}" alt="${p.title}" loading="lazy"
+                onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'ai-proj-card-img-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><polygon points=\'12 2 2 7 12 12 22 7 12 2\'/><polyline points=\'2 17 12 22 22 17\'/><polyline points=\'2 12 12 17 22 12\'/></svg><span>${p.category}</span></div>';" />
+            </div>
+
+            <div class="ai-proj-card-body">
+              <h3 class="ai-proj-card-title">${p.title}</h3>
+              <p class="ai-proj-card-desc">${p.shortDescription}</p>
+
+              <div class="ai-proj-tech-tags">
+                ${p.technologies.slice(0, 4).map(t => `<span class="ai-proj-tech-tag">${t}</span>`).join('')}
+                ${p.technologies.length > 4 ? `<span class="ai-proj-tech-tag">+${p.technologies.length - 4}</span>` : ''}
+              </div>
+
+              <div class="ai-proj-card-team-info">
+                <span class="ai-proj-card-team-lead">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>${p.team[0] ? p.team[0].name : 'AI Club Lead'}</span>
+                </span>
+                <span>${p.year} &bull; ${p.team.length} Contributor${p.team.length === 1 ? '' : 's'}</span>
+              </div>
+            </div>
+
+            <div class="ai-proj-card-footer">
+              <button class="ai-proj-btn-view-details" data-action="view" data-id="${p.id}">
+                <span>View Details</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+
+              <div class="ai-proj-card-links">
+                <label class="ai-proj-compare-label" title="Compare this project">
+                  <input type="checkbox" class="ai-proj-compare-checkbox" data-id="${p.id}" ${checked} />
+                  <span>Compare</span>
+                </label>
+
+                ${p.github ? `
+                  <a href="${p.github}" target="_blank" rel="noopener" class="ai-proj-icon-link" title="GitHub Repository">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                  </a>
+                ` : `
+                  <button class="ai-proj-icon-link" onclick="AIClubProjectsApp.showToast('Repository link will be available soon.')" title="GitHub Repository">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                  </button>
+                `}
+
+                ${p.demo ? `
+                  <a href="${p.demo}" target="_blank" rel="noopener" class="ai-proj-icon-link" title="Live Demo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
+                ` : `
+                  <button class="ai-proj-icon-link" onclick="AIClubProjectsApp.showToast('Demo link will be available soon.')" title="Live Demo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function getStatusIcon(status) {
+        switch (status) {
+          case 'Completed':
+            return `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
+          case 'Ongoing':
+            return `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="8"/></svg>`;
+          case 'Prototype':
+            return `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg>`;
+          case 'Research':
+            return `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`;
+          default:
+            return `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/></svg>`;
+        }
+      }
+
+      function bindCardInteractions(container) {
+        // View Details button clicks
+        container.querySelectorAll('[data-action="view"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            openModal(id);
+          });
+        });
+
+        // Comparison Checkboxes
+        container.querySelectorAll('.ai-proj-compare-checkbox').forEach(cb => {
+          cb.addEventListener('change', (e) => {
+            const id = parseInt(e.target.dataset.id);
+            if (e.target.checked) {
+              if (state.comparedIds.size >= 3) {
+                e.target.checked = false;
+                showToast("You can compare a maximum of 3 projects.");
+                return;
+              }
+              state.comparedIds.add(id);
+            } else {
+              state.comparedIds.delete(id);
+            }
+            updateComparisonBar();
+          });
+        });
+
+        // 3D Tilt Effect on mousemove (desktop only)
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+          container.querySelectorAll('.ai-proj-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+              const rect = card.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              const rotateX = ((y - centerY) / centerY) * -5;
+              const rotateY = ((x - centerX) / centerX) * 5;
+              card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+              card.style.transform = '';
+            });
+          });
+        }
+      }
+
+      /* ==========================================================================
+         MODAL DETAILS VIEW
+         ========================================================================== */
+      function openModal(projectId) {
+        const p = state.projects.find(item => item.id === projectId);
+        if (!p) return;
+
+        // Image
+        const imgEl = document.getElementById('ai-proj-modal-img');
+        imgEl.src = p.image;
+        imgEl.alt = p.title;
+
+        // Meta
+        document.getElementById('ai-proj-modal-cat').textContent = p.category;
+        const statusEl = document.getElementById('ai-proj-modal-status');
+        statusEl.className = `ai-proj-card-status-badge ai-proj-status-${p.status.toLowerCase()}`;
+        statusEl.innerHTML = `${getStatusIcon(p.status)} <span>${p.status}</span>`;
+        document.getElementById('ai-proj-modal-year').textContent = p.year;
+
+        // Texts
+        document.getElementById('ai-proj-modal-title').textContent = p.title;
+        document.getElementById('ai-proj-modal-desc').textContent = p.description;
+        document.getElementById('ai-proj-modal-problem').textContent = p.problem;
+        document.getElementById('ai-proj-modal-solution').textContent = p.solution;
+        document.getElementById('ai-proj-modal-outcome').textContent = p.outcome;
+
+        // Features
+        const featuresEl = document.getElementById('ai-proj-modal-features');
+        featuresEl.innerHTML = p.features.map(f => `
+          <li class="ai-proj-modal-feature-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>${f}</span>
+          </li>
+        `).join('');
+
+        // Technologies Chips
+        const techEl = document.getElementById('ai-proj-modal-technologies');
+        techEl.innerHTML = p.technologies.map(t => `<span class="ai-proj-tech-tag" style="font-size: 0.8rem; padding: 4px 10px;">${t}</span>`).join('');
+
+        // Team
+        const teamEl = document.getElementById('ai-proj-modal-team');
+        teamEl.innerHTML = p.team.map(m => `
+          <div class="ai-proj-team-member-card">
+            <span class="ai-proj-member-name">${m.name}</span>
+            <span class="ai-proj-member-role">${m.role}</span>
+          </div>
+        `).join('');
+
+        // Timeline Step Highlight
+        const stages = ["Idea", "Research", "Development", "Testing", "Deployment"];
+        const currentStageIdx = stages.indexOf(p.timelineStage || "Development");
+        document.querySelectorAll('#ai-proj-modal-timeline .ai-proj-timeline-step').forEach((step, idx) => {
+          step.classList.remove('active', 'completed');
+          if (idx < currentStageIdx) step.classList.add('completed');
+          if (idx === currentStageIdx) step.classList.add('active');
+        });
+
+        // Action Buttons
+        const ghBtn = document.getElementById('ai-proj-modal-github-btn');
+        if (p.github) {
+          ghBtn.href = p.github;
+          ghBtn.style.display = 'inline-flex';
+        } else {
+          ghBtn.href = 'javascript:void(0);';
+          ghBtn.onclick = () => showToast('GitHub repository link will be released soon.');
+        }
+
+        const demoBtn = document.getElementById('ai-proj-modal-demo-btn');
+        if (p.demo) {
+          demoBtn.href = p.demo;
+          demoBtn.style.display = 'inline-flex';
+        } else {
+          demoBtn.href = 'javascript:void(0);';
+          demoBtn.onclick = () => showToast('Live demo deployment is in sandbox preparation.');
+        }
+
+        // Open
+        dom.detailsModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        dom.detailsModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      /* ==========================================================================
+         PROJECT COMPARISON
+         ========================================================================== */
+      function updateComparisonBar() {
+        const count = state.comparedIds.size;
+        dom.compareCount.textContent = count;
+
+        if (count > 0) {
+          dom.compareBar.classList.add('active');
+          const pillsHtml = Array.from(state.comparedIds).map(id => {
+            const p = state.projects.find(item => item.id === id);
+            return p ? `<span class="ai-proj-compare-pill">${p.title.split('-')[0]}</span>` : '';
+          }).join('');
+          dom.comparePreview.innerHTML = pillsHtml;
+        } else {
+          dom.compareBar.classList.remove('active');
+          dom.comparePreview.innerHTML = '';
+        }
+      }
+
+      function clearComparison() {
+        state.comparedIds.clear();
+        document.querySelectorAll('.ai-proj-compare-checkbox').forEach(cb => cb.checked = false);
+        updateComparisonBar();
+        showToast("Comparison list cleared.");
+      }
+
+      function openCompareModal() {
+        if (state.comparedIds.size === 0) return;
+        const selected = Array.from(state.comparedIds).map(id => state.projects.find(p => p.id === id)).filter(Boolean);
+
+        const headers = `
+          <tr>
+            <th>Attribute</th>
+            ${selected.map(p => `
+              <td style="font-weight: 700; color: var(--ai-proj-cyan);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <img src="${p.image}" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;" onerror="this.style.display='none'" />
+                  <span>${p.title}</span>
+                </div>
+              </td>
+            `).join('')}
+          </tr>
+        `;
+
+        const rows = [
+          { label: "Category", get: p => p.category },
+          { label: "Status", get: p => `<span class="ai-proj-card-status-badge ai-proj-status-${p.status.toLowerCase()}" style="position:static; display:inline-flex;">${p.status}</span>` },
+          { label: "Year", get: p => p.year },
+          { label: "Technologies", get: p => p.technologies.slice(0, 5).join(', ') },
+          { label: "Team Size", get: p => `${p.team.length} members` },
+          { label: "Lead Architect", get: p => p.team[0] ? p.team[0].name : "AI Club" },
+          { label: "Primary Objective", get: p => p.objective }
+        ];
+
+        const rowsHtml = rows.map(r => `
+          <tr>
+            <th>${r.label}</th>
+            ${selected.map(p => `<td>${r.get(p)}</td>`).join('')}
+          </tr>
+        `).join('');
+
+        dom.compareTable.innerHTML = headers + rowsHtml;
+        dom.compareModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeCompareModal() {
+        dom.compareModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      /* ==========================================================================
+         INTERACTIVE PARTICLES & BACKGROUND
+         ========================================================================== */
+      function initBackgroundParticles() {
+        const canvas = document.getElementById('ai-proj-bg-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const particleCount = Math.min(Math.floor(width / 24), 50);
+        const particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            radius: Math.random() * 2 + 1,
+            color: i % 2 === 0 ? 'rgba(0, 242, 254, ' : 'rgba(168, 85, 247, '
+          });
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+
+          // Connect particles within proximity
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < 130) {
+                const alpha = (1 - dist / 130) * 0.18;
+                ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+              }
+            }
+          }
+
+          // Update & draw particles
+          for (let p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            ctx.fillStyle = p.color + '0.7)';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      /* Cursor Ambient Glow Trail */
+      function initMouseGlow() {
+        const glow = document.getElementById('ai-proj-cursor-glow');
+        if (!glow) return;
+
+        let mouseX = -500, mouseY = -500;
+        let currentX = -500, currentY = -500;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        });
+
+        function follow() {
+          currentX += (mouseX - currentX) * 0.12;
+          currentY += (mouseY - currentY) * 0.12;
+          glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(follow);
+        }
+
+        follow();
+      }
+
+      /* Hero Visual Parallax */
+      function initHeroParallax() {
+        const visual = document.getElementById('ai-proj-hero-visual');
+        if (!visual || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+        window.addEventListener('mousemove', (e) => {
+          const cx = window.innerWidth / 2;
+          const cy = window.innerHeight / 2;
+          const dx = (e.clientX - cx) / cx;
+          const dy = (e.clientY - cy) / cy;
+
+          visual.style.transform = `perspective(1000px) rotateY(${dx * 8}deg) rotateX(${-dy * 8}deg)`;
+        });
+      }
+
+      /* Statistics Strip Animated Counters */
+      function initStatsCounters() {
+        const statItems = document.querySelectorAll('.ai-proj-stat-num');
+        if (!statItems.length) return;
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const target = parseInt(el.dataset.counter);
+              const suffix = el.dataset.suffix || '';
+              let current = 0;
+              const step = Math.max(1, Math.floor(target / 30));
+              const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                  el.textContent = `${target}${suffix}`;
+                  clearInterval(timer);
+                } else {
+                  el.textContent = `${current}${suffix}`;
+                }
+              }, 35);
+              obs.unobserve(el);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        statItems.forEach(item => observer.observe(item));
+      }
+
+      /* ==========================================================================
+         THEME TOGGLE
+         ========================================================================== */
+      function toggleTheme() {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(state.theme);
+        localStorage.setItem('aiClubProjectsTheme', state.theme);
+        localStorage.setItem('ai-club-theme', state.theme);
+        localStorage.setItem('aiClubHomeTheme', state.theme);
+        showToast(`Switched to ${state.theme.toUpperCase()} theme`);
+      }
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const icon = document.getElementById('achieve-theme-icon') || document.getElementById('ai-proj-theme-icon');
+        if (!icon) return;
+
+        if (theme === 'light') {
+          icon.innerHTML = `
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          `;
+        } else {
+          icon.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          `;
+        }
+      }
+
+      /* ==========================================================================
+         MOBILE DRAWER
+         ========================================================================== */
+      function toggleMobileDrawer() {
+        if (!dom.mobileDrawer) return;
+        const isActive = dom.mobileDrawer.classList.contains('active');
+        if (isActive) closeMobileDrawer();
+        else openMobileDrawer();
+      }
+
+      function openMobileDrawer() {
+        if (!dom.mobileDrawer) return;
+        dom.mobileDrawer.classList.add('active');
+        if (dom.drawerBackdrop) dom.drawerBackdrop.classList.add('active');
+        if (dom.hamburgerBtn) {
+          dom.hamburgerBtn.classList.add('open');
+          dom.hamburgerBtn.classList.add('active');
+          dom.hamburgerBtn.setAttribute('aria-expanded', 'true');
+        }
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileDrawer() {
+        if (!dom.mobileDrawer) return;
+        dom.mobileDrawer.classList.remove('active');
+        if (dom.drawerBackdrop) dom.drawerBackdrop.classList.remove('active');
+        if (dom.hamburgerBtn) {
+          dom.hamburgerBtn.classList.remove('open');
+          dom.hamburgerBtn.classList.remove('active');
+          dom.hamburgerBtn.setAttribute('aria-expanded', 'false');
+        }
+        document.body.style.overflow = '';
+      }
+
+      /* ==========================================================================
+         TOAST NOTIFICATION
+         ========================================================================== */
+      let toastTimer = null;
+      function showToast(message) {
+        if (!dom.toast || !dom.toastMsg) return;
+        dom.toastMsg.textContent = message;
+        dom.toast.classList.add('active');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          dom.toast.classList.remove('active');
+        }, 3200);
+      }
+
+      return {
+        init,
+        openModal,
+        closeModal,
+        openCompareModal,
+        closeCompareModal,
+        showToast
+      };
+    })();
+
+    // DOM Ready Initialization
+    document.addEventListener("DOMContentLoaded", () => {
+      AIClubProjectsApp.init();
+    });
+  </script>
+</body>
+</html>
