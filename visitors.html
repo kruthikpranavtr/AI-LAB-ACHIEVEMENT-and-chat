@@ -1,0 +1,4226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('aiClubVisitorsTheme') || localStorage.getItem('ai-club-theme') || localStorage.getItem('aiClubHomeTheme');
+        if (!saved) {
+          saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', saved);
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitors & Guest Archive • AI LAB | Sri Shakthi Institute of Engineering & Technology</title>
+  <meta name="description"
+    content="Official Visitor Archive of the AI Lab and AI Club at Sri Shakthi Institute of Engineering and Technology (SIET). Showcasing industry leaders, researchers, faculty, guest speakers, and collaborators.">
+  <meta name="keywords"
+    content="AI Lab Visitors, AI Club Guests, Guest Speakers, Industry Experts, Research Collaborations, SIET, Student Chapter, AI Conferences, Workshops">
+  <link rel="icon" type="image/png" href="assets/ai-lab-logo.png">
+  <link rel="apple-touch-icon" href="assets/ai-lab-logo.png">
+
+  <!-- Google Fonts: Outfit (Display), Plus Jakarta Sans (Body), JetBrains Mono (Code/Accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       AI LAB VISITORS PAGE - DESIGN SYSTEM & TOKENS
+       ========================================================================== */
+    :root {
+      /* Dark Theme (Default) */
+      --ai-vis-bg-body: #060913;
+      --ai-vis-bg-surface: #0a0f1d;
+      --ai-vis-bg-surface-elevated: #10172c;
+      --ai-vis-bg-card: rgba(16, 24, 44, 0.72);
+      --ai-vis-bg-card-hover: rgba(22, 33, 62, 0.92);
+      --ai-vis-bg-glass: rgba(10, 15, 29, 0.78);
+      --ai-vis-bg-glass-heavy: rgba(8, 12, 24, 0.95);
+
+      --ai-vis-border-subtle: rgba(255, 255, 255, 0.08);
+      --ai-vis-border-focus: rgba(0, 242, 254, 0.55);
+      --ai-vis-border-glow: rgba(99, 102, 241, 0.4);
+
+      --ai-vis-text-main: #f8fafc;
+      --ai-vis-text-muted: #94a3b8;
+      --ai-vis-text-dim: #64748b;
+
+      /* Cyber AI Neon Accents */
+      --ai-vis-cyan: #00f2fe;
+      --ai-vis-blue: #3b82f6;
+      --ai-vis-indigo: #6366f1;
+      --ai-vis-purple: #a855f7;
+      --ai-vis-pink: #ec4899;
+      --ai-vis-emerald: #10b981;
+      --ai-vis-amber: #f59e0b;
+      --ai-vis-rose: #f43f5e;
+
+      /* Gradients & Shadows */
+      --ai-vis-gradient-brand: linear-gradient(135deg, #00f2fe 0%, #3b82f6 50%, #8b5cf6 100%);
+      --ai-vis-gradient-gold: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      --ai-vis-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+      --ai-vis-gradient-glow: radial-gradient(circle, rgba(0, 242, 254, 0.16) 0%, rgba(168, 85, 247, 0.08) 45%, transparent 70%);
+
+      --ai-vis-shadow-card: 0 12px 36px -8px rgba(0, 0, 0, 0.65);
+      --ai-vis-shadow-glow: 0 0 30px rgba(0, 242, 254, 0.25);
+      --ai-vis-shadow-badge: 0 0 15px rgba(99, 102, 241, 0.35);
+
+      --ai-vis-radius-sm: 8px;
+      --ai-vis-radius-md: 14px;
+      --ai-vis-radius-lg: 20px;
+      --ai-vis-radius-xl: 28px;
+      --ai-vis-radius-full: 9999px;
+
+      --ai-vis-font-display: 'Outfit', sans-serif;
+      --ai-vis-font-body: 'Plus Jakarta Sans', sans-serif;
+      --ai-vis-font-mono: 'JetBrains Mono', monospace;
+
+      --ai-vis-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --ai-vis-transition-medium: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --ai-vis-transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Light Theme */
+    [data-theme="light"] {
+      --ai-vis-bg-body: #f8fafc;
+      --ai-vis-bg-surface: #f1f5f9;
+      --ai-vis-bg-surface-elevated: #e2e8f0;
+      --ai-vis-bg-card: rgba(255, 255, 255, 0.9);
+      --ai-vis-bg-card-hover: rgba(255, 255, 255, 0.98);
+      --ai-vis-bg-glass: rgba(255, 255, 255, 0.85);
+      --ai-vis-bg-glass-heavy: rgba(255, 255, 255, 0.96);
+
+      --ai-vis-border-subtle: rgba(148, 163, 184, 0.28);
+      --ai-vis-border-focus: rgba(2, 132, 199, 0.6);
+      --ai-vis-border-glow: rgba(99, 102, 241, 0.25);
+
+      --ai-vis-text-main: #0f172a;
+      --ai-vis-text-muted: #475569;
+      --ai-vis-text-dim: #64748b;
+
+      --ai-vis-cyan: #0284c7;
+      --ai-vis-blue: #2563eb;
+      --ai-vis-indigo: #4f46e5;
+      --ai-vis-purple: #7c3aed;
+      --ai-vis-pink: #db2777;
+      --ai-vis-emerald: #059669;
+      --ai-vis-amber: #d97706;
+      --ai-vis-rose: #e11d48;
+
+      --ai-vis-gradient-brand: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #7c3aed 100%);
+      --ai-vis-gradient-gold: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
+      --ai-vis-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.85) 100%);
+      --ai-vis-gradient-glow: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(124, 58, 237, 0.05) 50%, transparent 70%);
+
+      --ai-vis-shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+      --ai-vis-shadow-glow: 0 0 25px rgba(2, 132, 199, 0.15);
+      --ai-vis-shadow-badge: 0 0 12px rgba(79, 70, 229, 0.18);
+    }
+
+    /* Base Reset Scoped */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--ai-vis-bg-body);
+      color: var(--ai-vis-text-main);
+      font-family: var(--ai-vis-font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      transition: background-color var(--ai-vis-transition-medium), color var(--ai-vis-transition-medium);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fixed Canvas Background */
+    #ai-vis-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    [data-theme="light"] #ai-vis-bg-canvas {
+      opacity: 0.35;
+    }
+
+    /* Subtle Grid Overlay */
+    .ai-vis-grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image:
+        linear-gradient(to right, var(--ai-vis-border-subtle) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--ai-vis-border-subtle) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+      mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 80%);
+    }
+
+    /* Cursor Ambient Glow Follower */
+    .ai-vis-cursor-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.14) 0%, rgba(168, 85, 247, 0.06) 45%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: opacity 0.3s ease;
+      filter: blur(28px);
+    }
+
+    @media (hover: none) or (pointer: coarse) {
+      .ai-vis-cursor-glow {
+        display: none !important;
+      }
+    }
+
+    /* Page Wrapper */
+    #ai-visitors-page {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Container */
+    .ai-vis-container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    /* Typography & Utilities */
+    .ai-vis-gradient-text {
+      background: var(--ai-vis-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+
+    .ai-vis-gold-text {
+      background: var(--ai-vis-gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ==========================================================================
+       1. STICKY NAVIGATION BAR (UNIFIED ACROSS ALL PAGES)
+       ========================================================================== */
+    .ai-vis-navbar-wrapper {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--ai-vis-bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--ai-vis-border-subtle);
+      transition: background-color var(--ai-vis-transition-medium), border-color var(--ai-vis-transition-medium), box-shadow var(--ai-vis-transition-medium);
+    }
+
+    .ai-vis-navbar-wrapper.scrolled {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+      border-bottom-color: rgba(0, 242, 254, 0.2);
+    }
+
+    [data-theme="light"] .ai-vis-navbar-wrapper.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .ai-vis-nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+      gap: 16px;
+    }
+
+    /* Brand Logo */
+    .ai-vis-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .ai-vis-brand-logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 15, 29, 0.8);
+      border: 2px solid rgba(0, 242, 254, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.35);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform var(--ai-vis-transition-fast), border-color var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-brand:hover .ai-vis-brand-logo-icon {
+      transform: scale(1.08) rotate(3deg);
+      border-color: var(--ai-vis-cyan);
+      box-shadow: 0 0 24px rgba(0, 242, 254, 0.6), 0 0 40px rgba(99, 102, 241, 0.35);
+    }
+
+    .ai-vis-brand-logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      transition: filter var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-brand:hover .ai-vis-brand-logo-img {
+      filter: brightness(1.12);
+    }
+
+    .ai-vis-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-vis-brand-name {
+      background: var(--ai-vis-gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .ai-vis-brand-sub {
+      font-size: 0.65rem;
+      font-family: var(--ai-vis-font-mono);
+      color: var(--ai-vis-text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Desktop Navigation Links */
+    .ai-vis-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .ai-vis-nav-item {
+      position: relative;
+    }
+
+    .ai-vis-nav-link {
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ai-vis-text-muted);
+      border-radius: var(--ai-vis-radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      text-decoration: none;
+      transition: color var(--ai-vis-transition-fast), background-color var(--ai-vis-transition-fast), transform var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-nav-link:hover {
+      color: var(--ai-vis-text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] .ai-vis-nav-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .ai-vis-nav-link.active {
+      color: var(--ai-vis-cyan);
+      font-weight: 600;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-vis-nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 2px;
+      background: var(--ai-vis-cyan);
+      border-radius: var(--ai-vis-radius-full);
+      box-shadow: 0 0 8px var(--ai-vis-cyan);
+    }
+
+    /* Nav Dropdown for More Links */
+    .ai-vis-dropdown {
+      position: relative;
+    }
+
+    .ai-vis-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 12px;
+      min-width: 200px;
+      background: var(--ai-vis-bg-surface-elevated);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-md);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      padding: 8px;
+      list-style: none;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+
+    .ai-vis-dropdown:hover .ai-vis-dropdown-menu,
+    .ai-vis-dropdown:focus-within .ai-vis-dropdown-menu {
+      display: flex;
+    }
+
+    .ai-vis-dropdown-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--ai-vis-radius-sm);
+      text-decoration: none;
+      color: var(--ai-vis-text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-dropdown-link:hover {
+      color: var(--ai-vis-cyan);
+      background: rgba(0, 242, 254, 0.08);
+      transform: translateX(4px);
+    }
+
+    /* Right Nav Actions */
+    .ai-vis-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ai-vis-theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--ai-vis-radius-md);
+      background: var(--ai-vis-bg-card);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color var(--ai-vis-transition-fast), transform var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-theme-toggle:hover {
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .ai-vis-theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform var(--ai-vis-transition-medium);
+    }
+
+    .ai-vis-theme-toggle:active svg {
+      transform: rotate(45deg) scale(0.9);
+    }
+
+    .ai-vis-btn-join {
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--ai-vis-gradient-brand);
+      border-radius: var(--ai-vis-radius-md);
+      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.25);
+      transition: transform var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast), filter var(--ai-vis-transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .ai-vis-btn-join:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(0, 242, 254, 0.4);
+      filter: brightness(1.08);
+    }
+
+    .ai-vis-hamburger {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--ai-vis-radius-md);
+      background: var(--ai-vis-bg-card);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-main);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid var(--ai-vis-border-subtle);
+    }
+
+    .ai-vis-hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform var(--ai-vis-transition-fast), opacity var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .ai-vis-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .ai-vis-hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Drawer */
+    .ai-vis-mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 76px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 76px);
+      background: var(--ai-vis-bg-glass-heavy);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 24px;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+      z-index: 999;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      border-bottom: 1px solid var(--ai-vis-border-subtle);
+    }
+
+    .ai-vis-mobile-drawer.active {
+      transform: translateY(0);
+      opacity: 1;
+      display: flex;
+    }
+
+    .ai-vis-mobile-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ai-vis-mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: var(--ai-vis-radius-md);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ai-vis-text-main);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--ai-vis-border-subtle);
+      text-decoration: none;
+    }
+
+    .ai-vis-mobile-nav-link.active {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: var(--ai-vis-cyan);
+      color: var(--ai-vis-cyan);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       2. CINEMATIC HERO SECTION
+       ========================================================================== */
+    .ai-vis-hero {
+      padding: 60px 0 50px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .ai-vis-hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      border-radius: var(--ai-vis-radius-full);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: var(--ai-vis-cyan);
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.15);
+      margin-bottom: 22px;
+    }
+
+    .ai-vis-badge-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ai-vis-cyan);
+      box-shadow: 0 0 10px var(--ai-vis-cyan);
+      animation: aiVisPulse 2s infinite;
+    }
+
+    @keyframes aiVisPulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.4); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .ai-vis-hero-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .ai-vis-hero-desc {
+      font-size: clamp(1rem, 1.4vw, 1.18rem);
+      color: var(--ai-vis-text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 580px;
+    }
+
+    .ai-vis-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ai-vis-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 26px;
+      background: var(--ai-vis-gradient-brand);
+      color: #060913;
+      font-family: var(--ai-vis-font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: var(--ai-vis-radius-full);
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
+      transition: all var(--ai-vis-transition-fast);
+      border: none;
+      cursor: pointer;
+    }
+
+    .ai-vis-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 242, 254, 0.55);
+    }
+
+    .ai-vis-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 24px;
+      background: var(--ai-vis-bg-card);
+      color: var(--ai-vis-text-main);
+      font-family: var(--ai-vis-font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: var(--ai-vis-radius-full);
+      text-decoration: none;
+      border: 1px solid var(--ai-vis-border-subtle);
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-btn-secondary:hover {
+      background: var(--ai-vis-bg-card-hover);
+      border-color: var(--ai-vis-border-focus);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       HERO VISUAL: FUTURISTIC VISITOR ORBITAL NETWORK
+       ========================================================================== */
+    .ai-vis-hero-visual-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 480px;
+    }
+
+    .ai-vis-visual-container {
+      position: relative;
+      width: 440px;
+      height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Concentric Orbital Rings */
+    .ai-vis-orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 242, 254, 0.22);
+      pointer-events: none;
+    }
+
+    .ai-vis-ring-1 {
+      width: 250px;
+      height: 250px;
+      border-color: rgba(0, 242, 254, 0.35);
+      animation: aiVisRotate 35s linear infinite;
+    }
+
+    .ai-vis-ring-2 {
+      width: 370px;
+      height: 370px;
+      border-color: rgba(99, 102, 241, 0.28);
+      animation: aiVisRotateReverse 50s linear infinite;
+    }
+
+    .ai-vis-ring-3 {
+      width: 440px;
+      height: 440px;
+      border-color: rgba(168, 85, 247, 0.2);
+    }
+
+    @keyframes aiVisRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes aiVisRotateReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* Central AI Hub with Official Emblem */
+    .ai-vis-core-hub {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(0, 242, 254, 0.3) 0%, rgba(59, 130, 246, 0.22) 50%, rgba(6, 9, 19, 0.95) 85%);
+      border: 2.5px solid var(--ai-vis-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 50px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.35);
+      z-index: 10;
+      animation: aiVisCorePulse 3s ease-in-out infinite alternate;
+      overflow: hidden;
+      padding: 5px;
+      cursor: pointer;
+      transition: transform var(--ai-vis-transition-fast), box-shadow var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-core-hub:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 75px rgba(0, 242, 254, 0.85), inset 0 0 30px rgba(0, 242, 254, 0.55);
+    }
+
+    @keyframes aiVisCorePulse {
+      0% {
+        box-shadow: 0 0 35px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 65px rgba(0, 242, 254, 0.85), 0 0 95px rgba(99, 102, 241, 0.4), inset 0 0 28px rgba(0, 242, 254, 0.5);
+        border-color: #00f2fe;
+      }
+    }
+
+    .ai-vis-core-logo-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+      transition: transform var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-core-hub:hover .ai-vis-core-logo-img {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    /* Satellite Nodes around Hub */
+    .ai-vis-orbit-node {
+      position: absolute;
+      padding: 6px 12px;
+      border-radius: var(--ai-vis-radius-full);
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--ai-vis-border-glow);
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      z-index: 5;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-orbit-node:hover {
+      transform: scale(1.1);
+      border-color: var(--ai-vis-cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    }
+
+    .ai-vis-node-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ai-vis-cyan);
+      box-shadow: 0 0 6px var(--ai-vis-cyan);
+    }
+
+    .ai-vis-node-industry { top: 18px; left: 50%; transform: translateX(-50%); }
+    .ai-vis-node-research { top: 85px; right: -12px; }
+    .ai-vis-node-academia { bottom: 85px; right: -10px; }
+    .ai-vis-node-innovation { bottom: 15px; left: 50%; transform: translateX(-50%); }
+    .ai-vis-node-community { bottom: 85px; left: -14px; }
+    .ai-vis-node-students { top: 85px; left: -12px; }
+
+    /* Floating Visitor Preview Badges */
+    .ai-vis-float-card {
+      position: absolute;
+      padding: 10px 14px;
+      border-radius: var(--ai-vis-radius-md);
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+      animation: aiVisFloat 4s ease-in-out infinite alternate;
+    }
+
+    .ai-vis-float-card-1 {
+      top: 35px;
+      right: -30px;
+      animation-delay: 0s;
+    }
+
+    .ai-vis-float-card-2 {
+      bottom: 40px;
+      left: -35px;
+      animation-delay: -2s;
+    }
+
+    @keyframes aiVisFloat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .ai-vis-float-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--ai-vis-gradient-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #060913;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .ai-vis-float-title {
+      font-weight: 700;
+      color: var(--ai-vis-text-main);
+      line-height: 1.2;
+    }
+
+    .ai-vis-float-sub {
+      font-size: 0.7rem;
+      color: var(--ai-vis-cyan);
+    }
+
+    /* ==========================================================================
+       3. VISITOR STATISTICS COUNTER SECTION
+       ========================================================================== */
+    .ai-vis-stats-section {
+      padding: 30px 0 60px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .ai-vis-stat-card {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-lg);
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+    }
+
+    .ai-vis-stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--ai-vis-gradient-brand);
+      opacity: 0.8;
+    }
+
+    .ai-vis-stat-number {
+      font-family: var(--ai-vis-font-display);
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-stat-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ai-vis-text-main);
+      margin-bottom: 4px;
+    }
+
+    .ai-vis-stat-desc {
+      font-size: 0.75rem;
+      color: var(--ai-vis-text-dim);
+    }
+
+    /* ==========================================================================
+       4. FEATURED VISITOR SPOTLIGHT
+       ========================================================================== */
+    .ai-vis-featured-section {
+      padding: 40px 0 70px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-section-header {
+      margin-bottom: 36px;
+      text-align: left;
+    }
+
+    .ai-vis-section-header.center {
+      text-align: center;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 44px;
+    }
+
+    .ai-vis-section-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ai-vis-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .ai-vis-section-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ai-vis-text-main);
+    }
+
+    .ai-vis-section-desc {
+      color: var(--ai-vis-text-muted);
+      font-size: 1rem;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .ai-vis-featured-card {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      border-radius: var(--ai-vis-radius-xl);
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 35px rgba(0, 242, 254, 0.12);
+      transition: all var(--ai-vis-transition-medium);
+    }
+
+    .ai-vis-featured-card:hover {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 242, 254, 0.22);
+      border-color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-featured-portrait-box {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: var(--ai-vis-radius-lg);
+      overflow: hidden;
+      border: 2px solid rgba(0, 242, 254, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .ai-vis-featured-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--ai-vis-transition-smooth);
+    }
+
+    .ai-vis-featured-card:hover .ai-vis-featured-img {
+      transform: scale(1.04);
+    }
+
+    .ai-vis-featured-badge-pill {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--ai-vis-cyan);
+      color: var(--ai-vis-cyan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--ai-vis-font-mono);
+      padding: 4px 12px;
+      border-radius: var(--ai-vis-radius-full);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .ai-vis-featured-info {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ai-vis-featured-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ai-vis-category-pill {
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--ai-vis-radius-full);
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .ai-vis-date-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.75rem;
+      color: var(--ai-vis-text-dim);
+    }
+
+    .ai-vis-featured-name {
+      font-family: var(--ai-vis-font-display);
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      font-weight: 800;
+      color: var(--ai-vis-text-main);
+      line-height: 1.15;
+    }
+
+    .ai-vis-featured-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-featured-org {
+      font-size: 0.95rem;
+      color: var(--ai-vis-text-muted);
+      font-weight: 500;
+    }
+
+    .ai-vis-featured-desc {
+      font-size: 0.95rem;
+      color: var(--ai-vis-text-muted);
+      line-height: 1.65;
+    }
+
+    .ai-vis-contribution-box {
+      background: rgba(0, 242, 254, 0.05);
+      border-left: 3px solid var(--ai-vis-cyan);
+      padding: 14px 18px;
+      border-radius: 0 var(--ai-vis-radius-md) var(--ai-vis-radius-md) 0;
+      margin-top: 4px;
+    }
+
+    .ai-vis-contribution-label {
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ai-vis-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-vis-contribution-text {
+      font-size: 0.9rem;
+      color: var(--ai-vis-text-main);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .ai-vis-topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ai-vis-topic-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: var(--ai-vis-radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-muted);
+      font-family: var(--ai-vis-font-mono);
+    }
+
+    .ai-vis-featured-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    /* ==========================================================================
+       5. VISITOR EXPERIENCE SECTION ("Every Visit Creates an Opportunity")
+       ========================================================================== */
+    .ai-vis-experience-section {
+      padding: 60px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-exp-flow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 40px;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .ai-vis-exp-node {
+      flex: 1;
+      min-width: 150px;
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-lg);
+      padding: 24px 16px;
+      text-align: center;
+      position: relative;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-exp-node:hover {
+      transform: translateY(-4px);
+      border-color: var(--ai-vis-cyan);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-vis-exp-icon-box {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px auto;
+      border-radius: 50%;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-exp-node-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--ai-vis-text-main);
+    }
+
+    .ai-vis-exp-node-desc {
+      font-size: 0.8rem;
+      color: var(--ai-vis-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       6. VISITOR CATEGORIES ("People We Connect With")
+       ========================================================================== */
+    .ai-vis-categories-section {
+      padding: 60px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .ai-vis-category-card {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-lg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-category-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(0, 242, 254, 0.18);
+    }
+
+    .ai-vis-cat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-vis-cat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-cat-count-badge {
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--ai-vis-radius-full);
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-cat-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ai-vis-text-main);
+    }
+
+    .ai-vis-cat-desc {
+      font-size: 0.88rem;
+      color: var(--ai-vis-text-muted);
+      line-height: 1.55;
+    }
+
+    .ai-vis-cat-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ai-vis-cyan);
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    /* ==========================================================================
+       7. DIRECTORY, FILTERS, SEARCH & GRID
+       ========================================================================== */
+    .ai-vis-directory-section {
+      padding: 60px 0 90px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Search & Filter Controls Toolbar */
+    .ai-vis-controls-bar {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-xl);
+      padding: 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-vis-search-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .ai-vis-search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .ai-vis-search-icon {
+      position: absolute;
+      left: 16px;
+      width: 20px;
+      height: 20px;
+      color: var(--ai-vis-text-dim);
+      pointer-events: none;
+    }
+
+    .ai-vis-search-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 46px 0 48px;
+      background: var(--ai-vis-bg-surface-elevated);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-md);
+      color: var(--ai-vis-text-main);
+      font-family: var(--ai-vis-font-body);
+      font-size: 0.95rem;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-search-input:focus {
+      outline: none;
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-vis-search-clear {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--ai-vis-text-dim);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .ai-vis-select-box {
+      height: 50px;
+      padding: 0 18px;
+      background: var(--ai-vis-bg-surface-elevated);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-md);
+      color: var(--ai-vis-text-main);
+      font-family: var(--ai-vis-font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-width: 160px;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-select-box:focus {
+      outline: none;
+      border-color: var(--ai-vis-border-focus);
+    }
+
+    /* Category Filter Pills */
+    .ai-vis-filters-scroll {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+
+    .ai-vis-filter-btn {
+      padding: 8px 18px;
+      border-radius: var(--ai-vis-radius-full);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-muted);
+      font-family: var(--ai-vis-font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--ai-vis-transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-vis-filter-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--ai-vis-text-main);
+      border-color: rgba(0, 242, 254, 0.3);
+    }
+
+    .ai-vis-filter-btn.active {
+      background: rgba(0, 242, 254, 0.12);
+      border-color: var(--ai-vis-cyan);
+      color: var(--ai-vis-cyan);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+    }
+
+    /* Directory Status & Results Info */
+    .ai-vis-directory-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: var(--ai-vis-text-muted);
+    }
+
+    .ai-vis-count-highlight {
+      color: var(--ai-vis-cyan);
+      font-weight: 700;
+    }
+
+    /* Visitor Cards Grid */
+    .ai-vis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .ai-vis-card {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--ai-vis-shadow-card);
+      transition: all var(--ai-vis-transition-medium);
+    }
+
+    .ai-vis-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-vis-card-img-container {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+      background: var(--ai-vis-bg-surface-elevated);
+    }
+
+    .ai-vis-card-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--ai-vis-transition-smooth);
+    }
+
+    .ai-vis-card:hover .ai-vis-card-img {
+      transform: scale(1.06);
+    }
+
+    .ai-vis-card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      color: var(--ai-vis-cyan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--ai-vis-font-mono);
+      padding: 4px 12px;
+      border-radius: var(--ai-vis-radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ai-vis-card-date-badge {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-muted);
+      font-size: 0.72rem;
+      font-family: var(--ai-vis-font-mono);
+      padding: 4px 10px;
+      border-radius: var(--ai-vis-radius-full);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ai-vis-card-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 12px;
+    }
+
+    .ai-vis-card-name {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ai-vis-text-main);
+      line-height: 1.25;
+    }
+
+    .ai-vis-card-role {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-card-org {
+      font-size: 0.82rem;
+      color: var(--ai-vis-text-dim);
+      font-weight: 500;
+    }
+
+    .ai-vis-card-desc {
+      font-size: 0.86rem;
+      color: var(--ai-vis-text-muted);
+      line-height: 1.55;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .ai-vis-card-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--ai-vis-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-vis-card-btn {
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #060913;
+      background: var(--ai-vis-gradient-brand);
+      border-radius: var(--ai-vis-radius-full);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--ai-vis-transition-fast);
+      box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+    }
+
+    .ai-vis-card-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 242, 254, 0.45);
+    }
+
+    /* Empty State */
+    .ai-vis-empty-state {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--ai-vis-bg-card);
+      border: 1px dashed var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-xl);
+      margin: 20px 0;
+    }
+
+    .ai-vis-empty-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px auto;
+      color: var(--ai-vis-text-dim);
+    }
+
+    .ai-vis-empty-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .ai-vis-empty-desc {
+      color: var(--ai-vis-text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    /* Load More Button */
+    .ai-vis-load-more-box {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .ai-vis-load-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 32px;
+      background: var(--ai-vis-bg-card);
+      color: var(--ai-vis-text-main);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-full);
+      font-family: var(--ai-vis-font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-load-more-btn:hover {
+      border-color: var(--ai-vis-border-focus);
+      background: var(--ai-vis-bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 242, 254, 0.2);
+    }
+
+    /* ==========================================================================
+       8. CHRONOLOGICAL VISITOR JOURNEY TIMELINE
+       ========================================================================== */
+    .ai-vis-timeline-section {
+      padding: 60px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-timeline-wrapper {
+      position: relative;
+      margin-top: 40px;
+    }
+
+    .ai-vis-timeline-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .ai-vis-timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, #00f2fe, #3b82f6, #8b5cf6);
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .ai-vis-timeline-card {
+      background: var(--ai-vis-bg-card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-lg);
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-timeline-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+    }
+
+    .ai-vis-timeline-node-pin {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #060913;
+      border: 3px solid var(--ai-vis-cyan);
+      box-shadow: 0 0 12px var(--ai-vis-cyan);
+      margin-bottom: 20px;
+    }
+
+    .ai-vis-timeline-year {
+      font-family: var(--ai-vis-font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ai-vis-cyan);
+      margin-bottom: 6px;
+    }
+
+    .ai-vis-timeline-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .ai-vis-timeline-desc {
+      font-size: 0.84rem;
+      color: var(--ai-vis-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       9. PHOTO & MEMORY WALL GALLERY
+       ========================================================================== */
+    .ai-vis-gallery-section {
+      padding: 60px 0 90px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .ai-vis-gallery-item {
+      position: relative;
+      border-radius: var(--ai-vis-radius-lg);
+      overflow: hidden;
+      height: 270px;
+      background: var(--ai-vis-bg-card);
+      border: 1px solid var(--ai-vis-border-subtle);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: all var(--ai-vis-transition-medium);
+    }
+
+    .ai-vis-gallery-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--ai-vis-border-focus);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-vis-gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--ai-vis-transition-smooth);
+    }
+
+    .ai-vis-gallery-item:hover .ai-vis-gallery-img {
+      transform: scale(1.08);
+    }
+
+    .ai-vis-gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6, 9, 19, 0.95) 0%, rgba(6, 9, 19, 0.3) 60%, transparent 100%);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 6px;
+      opacity: 0.95;
+      transition: opacity var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-gallery-item:hover .ai-vis-gallery-overlay {
+      opacity: 1;
+    }
+
+    .ai-vis-gallery-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-family: var(--ai-vis-font-mono);
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-gallery-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    /* ==========================================================================
+       10. DETAILS MODAL & LIGHTBOX (GLASSMORPHISM)
+       ========================================================================== */
+    .ai-vis-modal-backdrop,
+    .ai-vis-lightbox-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 7, 16, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ai-vis-modal-backdrop.active,
+    .ai-vis-lightbox-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .ai-vis-modal {
+      background: var(--ai-vis-bg-surface-elevated);
+      border: 1px solid var(--ai-vis-border-focus);
+      border-radius: var(--ai-vis-radius-xl);
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(0, 242, 254, 0.25);
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      padding: 36px;
+    }
+
+    .ai-vis-modal-backdrop.active .ai-vis-modal {
+      transform: scale(1);
+    }
+
+    .ai-vis-modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--ai-vis-border-subtle);
+      color: var(--ai-vis-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--ai-vis-transition-fast);
+      z-index: 10;
+    }
+
+    .ai-vis-modal-close-btn:hover {
+      background: rgba(244, 63, 94, 0.2);
+      border-color: var(--ai-vis-rose);
+      color: var(--ai-vis-rose);
+      transform: rotate(90deg);
+    }
+
+    .ai-vis-modal-header {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ai-vis-border-subtle);
+    }
+
+    .ai-vis-modal-img {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--ai-vis-radius-lg);
+      object-fit: cover;
+      border: 2px solid var(--ai-vis-cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+      flex-shrink: 0;
+    }
+
+    .ai-vis-modal-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ai-vis-modal-name {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--ai-vis-text-main);
+    }
+
+    .ai-vis-modal-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ai-vis-cyan);
+    }
+
+    .ai-vis-modal-org {
+      font-size: 0.95rem;
+      color: var(--ai-vis-text-muted);
+    }
+
+    .ai-vis-modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-vis-modal-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .ai-vis-modal-stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--ai-vis-border-subtle);
+      border-radius: var(--ai-vis-radius-md);
+      padding: 14px 18px;
+    }
+
+    .ai-vis-modal-stat-label {
+      font-size: 0.72rem;
+      font-family: var(--ai-vis-font-mono);
+      color: var(--ai-vis-text-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .ai-vis-modal-stat-val {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ai-vis-text-main);
+    }
+
+    /* Lightbox Styles */
+    .ai-vis-lightbox-container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--ai-vis-bg-surface-elevated);
+      border: 1px solid var(--ai-vis-border-focus);
+      border-radius: var(--ai-vis-radius-xl);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(0, 242, 254, 0.3);
+    }
+
+    .ai-vis-lightbox-img-box {
+      width: 100%;
+      max-height: 520px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .ai-vis-lightbox-img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ai-vis-lightbox-caption-bar {
+      padding: 20px 24px;
+      background: var(--ai-vis-bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .ai-vis-lightbox-nav-btn {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(6, 9, 19, 0.85);
+      border: 1px solid var(--ai-vis-border-focus);
+      color: var(--ai-vis-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--ai-vis-transition-fast);
+      z-index: 5;
+    }
+
+    .ai-vis-lightbox-nav-btn:hover {
+      background: var(--ai-vis-cyan);
+      color: #060913;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .ai-vis-lightbox-prev { left: 16px; }
+    .ai-vis-lightbox-next { right: 16px; }
+
+    /* ==========================================================================
+       11. CONNECT & COLLABORATE CTA
+       ========================================================================== */
+    .ai-vis-cta-section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-cta-card {
+      background: radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.12) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(10, 15, 29, 0.95) 90%);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      border-radius: var(--ai-vis-radius-xl);
+      padding: 64px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 45px rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-vis-cta-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .ai-vis-cta-desc {
+      color: var(--ai-vis-text-muted);
+      font-size: 1.1rem;
+      max-width: 640px;
+      margin: 0 auto 36px auto;
+      line-height: 1.6;
+    }
+
+    .ai-vis-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       12. PROFESSIONAL FOOTER
+       ========================================================================== */
+    .ai-vis-footer {
+      background: var(--ai-vis-bg-surface-elevated);
+      border-top: 1px solid var(--ai-vis-border-subtle);
+      padding: 60px 0 30px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ai-vis-footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .ai-vis-footer-brand-desc {
+      color: var(--ai-vis-text-muted);
+      font-size: 0.9rem;
+      margin-top: 14px;
+      line-height: 1.6;
+      max-width: 340px;
+    }
+
+    .ai-vis-footer-col-title {
+      font-family: var(--ai-vis-font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ai-vis-text-main);
+      margin-bottom: 18px;
+      letter-spacing: 0.05em;
+    }
+
+    .ai-vis-footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-vis-footer-link {
+      color: var(--ai-vis-text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: all var(--ai-vis-transition-fast);
+    }
+
+    .ai-vis-footer-link:hover {
+      color: var(--ai-vis-cyan);
+      transform: translateX(4px);
+    }
+
+    .ai-vis-footer-bottom {
+      border-top: 1px solid var(--ai-vis-border-subtle);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ai-vis-text-dim);
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .ai-vis-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+      .ai-vis-hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .ai-vis-hero-actions {
+        justify-content: center;
+      }
+      .ai-vis-featured-card {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-featured-portrait-box {
+        height: 320px;
+      }
+      .ai-vis-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ai-vis-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ai-vis-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ai-vis-timeline-track {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ai-vis-timeline-track::before {
+        display: none;
+      }
+      .ai-vis-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ai-vis-footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .ai-vis-nav-links,
+      .ai-vis-btn-join {
+        display: none !important;
+      }
+      .ai-vis-hamburger {
+        display: flex !important;
+      }
+      .ai-vis-search-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .ai-vis-stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-categories-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-timeline-track {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-vis-visual-container {
+        width: 320px;
+        height: 320px;
+      }
+      .ai-vis-ring-1 { width: 190px; height: 190px; }
+      .ai-vis-ring-2 { width: 280px; height: 280px; }
+      .ai-vis-ring-3 { width: 330px; height: 330px; }
+      .ai-vis-float-card-1 { right: -10px; top: 10px; }
+      .ai-vis-float-card-2 { left: -10px; bottom: 10px; }
+      .ai-vis-featured-card { padding: 20px; }
+      .ai-vis-modal { padding: 24px; }
+      .ai-vis-modal-header { flex-direction: column; text-align: center; }
+      .ai-vis-modal-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Accessibility / Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Particle Network Canvas -->
+  <canvas id="ai-vis-bg-canvas" aria-hidden="true"></canvas>
+  <div class="ai-vis-grid-overlay" aria-hidden="true"></div>
+  <div class="ai-vis-cursor-glow" id="ai-vis-cursor-glow" aria-hidden="true"></div>
+
+  <div id="ai-visitors-page">
+
+    <!-- ==========================================================================
+         1. STICKY NAVIGATION BAR (MATCHING SITE DESIGN)
+         ========================================================================== -->
+    <header class="ai-vis-navbar-wrapper" id="ai-vis-navbar">
+      <div class="ai-vis-container">
+        <div class="ai-vis-nav-content">
+
+          <!-- Brand Logo & Title -->
+          <a href="index.html" class="ai-vis-brand" aria-label="AI Lab Home">
+            <div class="ai-vis-brand-logo-icon">
+              <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-vis-brand-logo-img" width="46" height="46"
+                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
+            </div>
+            <div class="ai-vis-brand-text">
+              <span class="ai-vis-brand-name">AI LAB</span>
+              <span class="ai-vis-brand-sub">STUDENT CHAPTER</span>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <nav aria-label="Main Navigation">
+            <ul class="ai-vis-nav-links">
+              <li class="ai-vis-nav-item"><a href="home.html" class="ai-vis-nav-link">Home</a></li>
+              <li class="ai-vis-nav-item"><a href="projects.html" class="ai-vis-nav-link">Projects</a></li>
+              <li class="ai-vis-nav-item"><a href="achievement.html" class="ai-vis-nav-link">Achievements</a></li>
+              <li class="ai-vis-nav-item"><a href="visitors.html" class="ai-vis-nav-link active" aria-current="page">Visitors</a></li>
+              <li class="ai-vis-nav-item"><a href="chat.html" class="ai-vis-nav-link">Chat</a></li>
+              
+              <!-- More Links Dropdown -->
+              <li class="ai-vis-nav-item ai-vis-dropdown">
+                <a href="#" class="ai-vis-nav-link" aria-haspopup="true" aria-expanded="false" onclick="event.preventDefault();">
+                  <span>More</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </a>
+                <ul class="ai-vis-dropdown-menu">
+                  <li><a href="hackathons.html" class="ai-vis-dropdown-link"><span>⚡</span> Hackathons</a></li>
+                  <li><a href="workshops.html" class="ai-vis-dropdown-link"><span>🛠️</span> Workshops</a></li>
+                  <li><a href="collaborations.html" class="ai-vis-dropdown-link"><span>🤝</span> Collaborations</a></li>
+                  <li><a href="events.html" class="ai-vis-dropdown-link"><span>📅</span> Events</a></li>
+                  <li><a href="team.html" class="ai-vis-dropdown-link"><span>👥</span> Team</a></li>
+                  <li><a href="contact.html" class="ai-vis-dropdown-link"><span>📬</span> Contact</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Right Side Actions -->
+          <div class="ai-vis-nav-actions">
+            <!-- Theme Toggle -->
+            <button class="ai-vis-theme-toggle" id="ai-vis-theme-toggle-btn" aria-label="Toggle dark/light theme">
+              <svg id="ai-vis-theme-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+
+            <!-- Join / Contact Button -->
+            <a href="contact.html" class="ai-vis-btn-join">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7.5" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+              <span>Join / Contact</span>
+            </a>
+
+            <!-- Mobile Hamburger -->
+            <button class="ai-vis-hamburger" id="ai-vis-hamburger-btn" aria-label="Toggle mobile drawer" aria-expanded="false">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="ai-vis-mobile-drawer" id="ai-vis-mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 4px 6px 16px 6px; border-bottom: 1px solid var(--ai-vis-border-subtle); margin-bottom: 8px;">
+        <div class="ai-vis-brand-logo-icon" style="width: 40px; height: 40px;">
+          <img src="assets/ai-lab-logo.png" alt="AI LAB" class="ai-vis-brand-logo-img" width="40" height="40" />
+        </div>
+        <div class="ai-vis-brand-text">
+          <span class="ai-vis-brand-name" style="font-size: 1.15rem;">AI LAB</span>
+          <span class="ai-vis-brand-sub">STUDENT CHAPTER</span>
+        </div>
+      </div>
+      <ul class="ai-vis-mobile-nav-list">
+        <li><a href="home.html" class="ai-vis-mobile-nav-link">Home</a></li>
+        <li><a href="projects.html" class="ai-vis-mobile-nav-link">Projects</a></li>
+        <li><a href="hackathons.html" class="ai-vis-mobile-nav-link">Hackathons</a></li>
+        <li><a href="workshops.html" class="ai-vis-mobile-nav-link">Workshops</a></li>
+        <li><a href="collaborations.html" class="ai-vis-mobile-nav-link">Collaborations</a></li>
+        <li><a href="events.html" class="ai-vis-mobile-nav-link">Events</a></li>
+        <li><a href="achievement.html" class="ai-vis-mobile-nav-link">Achievements</a></li>
+        <li><a href="visitors.html" class="ai-vis-mobile-nav-link active">Visitors (Active)</a></li>
+        <li><a href="team.html" class="ai-vis-mobile-nav-link">Team</a></li>
+        <li><a href="chat.html" class="ai-vis-mobile-nav-link">Chat</a></li>
+        <li><a href="contact.html" class="ai-vis-mobile-nav-link">Contact</a></li>
+      </ul>
+      <div style="margin-top: auto; padding-top: 16px;">
+        <a href="contact.html" class="ai-vis-btn-primary" style="width: 100%; justify-content: center;">
+          <span>Get in Touch With AI Club</span>
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <!-- ==========================================================================
+           2. CINEMATIC HERO SECTION
+           ========================================================================== -->
+      <section class="ai-vis-hero">
+        <div class="ai-vis-container">
+          <div class="ai-vis-hero-grid">
+
+            <!-- Hero Left Content -->
+            <div class="ai-vis-hero-content">
+              <div class="ai-vis-badge">
+                <span class="ai-vis-badge-pulse"></span>
+                <span>AI CLUB • VISITOR ARCHIVE</span>
+              </div>
+              <h1 class="ai-vis-hero-title">
+                People Who <span class="ai-vis-gradient-text">Inspired</span> Our AI Journey
+              </h1>
+              <p class="ai-vis-hero-desc">
+                Explore the guests, experts, educators, researchers, and collaborators who have connected with our AI Club and contributed to our learning journey.
+              </p>
+              <div class="ai-vis-hero-actions">
+                <a href="#explore-visitors" class="ai-vis-btn-primary">
+                  <span>Explore Visitors</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                </a>
+                <a href="team.html" class="ai-vis-btn-secondary">
+                  <span>Meet Our Team</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Hero Right Visual: Futuristic AI Hub & Interactive Orbital Network -->
+            <div class="ai-vis-hero-visual-wrapper">
+              <div class="ai-vis-visual-container" id="ai-vis-hero-visual">
+
+                <!-- Concentric dashed orbital rings -->
+                <div class="ai-vis-orbit-ring ai-vis-ring-1"></div>
+                <div class="ai-vis-orbit-ring ai-vis-ring-2"></div>
+                <div class="ai-vis-orbit-ring ai-vis-ring-3"></div>
+
+                <!-- Central AI Core Hub with Official AI Lab Logo -->
+                <div class="ai-vis-core-hub" title="AI Club Central Network Hub">
+                  <img src="assets/ai-lab-logo.png" alt="AI LAB Official Logo" class="ai-vis-core-logo-img"
+                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%2300f2fe\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'none\' stroke=\'%2300f2fe\' stroke-width=\'6\'/><text x=\'50\' y=\'58\' font-size=\'28\' font-weight=\'bold\' text-anchor=\'middle\' fill=\'%2300f2fe\'>AI</text></svg>'" />
+                </div>
+
+                <!-- Connected domain nodes -->
+                <div class="ai-vis-orbit-node ai-vis-node-industry">
+                  <span class="ai-vis-node-dot"></span>
+                  <span>INDUSTRY</span>
+                </div>
+                <div class="ai-vis-orbit-node ai-vis-node-research">
+                  <span class="ai-vis-node-dot" style="background:#a855f7; box-shadow:0 0 8px #a855f7;"></span>
+                  <span>RESEARCH</span>
+                </div>
+                <div class="ai-vis-orbit-node ai-vis-node-academia">
+                  <span class="ai-vis-node-dot" style="background:#3b82f6; box-shadow:0 0 8px #3b82f6;"></span>
+                  <span>ACADEMIA</span>
+                </div>
+                <div class="ai-vis-orbit-node ai-vis-node-innovation">
+                  <span class="ai-vis-node-dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span>
+                  <span>INNOVATION</span>
+                </div>
+                <div class="ai-vis-orbit-node ai-vis-node-community">
+                  <span class="ai-vis-node-dot" style="background:#f59e0b; box-shadow:0 0 8px #f59e0b;"></span>
+                  <span>COMMUNITY</span>
+                </div>
+                <div class="ai-vis-orbit-node ai-vis-node-students">
+                  <span class="ai-vis-node-dot" style="background:#ec4899; box-shadow:0 0 8px #ec4899;"></span>
+                  <span>STUDENTS</span>
+                </div>
+
+                <!-- Floating micro preview badges -->
+                <div class="ai-vis-float-card ai-vis-float-card-1">
+                  <div class="ai-vis-float-avatar">AS</div>
+                  <div>
+                    <div class="ai-vis-float-title">Dr. Arvind S.</div>
+                    <div class="ai-vis-float-sub">Quantum AI • Google</div>
+                  </div>
+                </div>
+
+                <div class="ai-vis-float-card ai-vis-float-card-2">
+                  <div class="ai-vis-float-avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">ER</div>
+                  <div>
+                    <div class="ai-vis-float-title">Elena Rostova</div>
+                    <div class="ai-vis-float-sub">Cloud Architecture • NVIDIA</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           3. ANIMATED VISITOR STATISTICS
+           ========================================================================== -->
+      <section class="ai-vis-stats-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-stats-grid" id="ai-vis-stats-grid">
+
+            <div class="ai-vis-stat-card">
+              <div class="ai-vis-stat-number" data-target="24">0+</div>
+              <div class="ai-vis-stat-label">Distinguished Visitors</div>
+              <div class="ai-vis-stat-desc">Tech leaders & researchers hosted</div>
+            </div>
+
+            <div class="ai-vis-stat-card">
+              <div class="ai-vis-stat-number" data-target="16">0+</div>
+              <div class="ai-vis-stat-label">Guest Sessions</div>
+              <div class="ai-vis-stat-desc">Masterclasses, keynotes & talks</div>
+            </div>
+
+            <div class="ai-vis-stat-card">
+              <div class="ai-vis-stat-number" data-target="12">0+</div>
+              <div class="ai-vis-stat-label">Industry Experts</div>
+              <div class="ai-vis-stat-desc">Global technology organizations</div>
+            </div>
+
+            <div class="ai-vis-stat-card">
+              <div class="ai-vis-stat-number" data-target="8">0+</div>
+              <div class="ai-vis-stat-label">Academic Collaborations</div>
+              <div class="ai-vis-stat-desc">Universities & research centers</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           4. FEATURED VISITOR SPOTLIGHT
+           ========================================================================== -->
+      <section class="ai-vis-featured-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header">
+            <span class="ai-vis-section-pill">★ SPOTLIGHT</span>
+            <h2 class="ai-vis-section-title">Featured Visitor</h2>
+          </div>
+
+          <div class="ai-vis-featured-card" id="ai-vis-featured-card">
+            <!-- Left Portrait -->
+            <div class="ai-vis-featured-portrait-box">
+              <span class="ai-vis-featured-badge-pill">Featured Guest</span>
+              <img id="ai-vis-featured-img" src="" alt="Featured Visitor" class="ai-vis-featured-img" />
+            </div>
+
+            <!-- Right Info -->
+            <div class="ai-vis-featured-info">
+              <div class="ai-vis-featured-meta-row">
+                <span class="ai-vis-category-pill" id="ai-vis-featured-cat">Research</span>
+                <span class="ai-vis-date-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span id="ai-vis-featured-date">February 18, 2026</span>
+                </span>
+              </div>
+
+              <div>
+                <h3 class="ai-vis-featured-name" id="ai-vis-featured-name">Dr. Arvind Swaminathan</h3>
+                <div class="ai-vis-featured-role" id="ai-vis-featured-role">Principal AI Research Scientist</div>
+                <div class="ai-vis-featured-org" id="ai-vis-featured-org">Google DeepMind • Quantum & Foundation Models</div>
+              </div>
+
+              <p class="ai-vis-featured-desc" id="ai-vis-featured-desc">
+                Leading quantum machine learning architectures and multimodal foundation model acceleration. Visited the AI Lab for an intensive session with student engineers.
+              </p>
+
+              <div class="ai-vis-contribution-box">
+                <div class="ai-vis-contribution-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  <span>Contribution & Interaction</span>
+                </div>
+                <div class="ai-vis-contribution-text" id="ai-vis-featured-contrib">
+                  "Delivered a landmark masterclass on state-space neural models and reviewed student-built autonomous edge perception pipelines in the AI Lab."
+                </div>
+              </div>
+
+              <div class="ai-vis-topics-list" id="ai-vis-featured-topics">
+                <!-- Injected via JS -->
+              </div>
+
+              <div class="ai-vis-featured-actions">
+                <button class="ai-vis-btn-primary" id="ai-vis-featured-btn">
+                  <span>View Profile & Visit Details</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           5. VISITOR EXPERIENCE SECTION ("Every Visit Creates an Opportunity")
+           ========================================================================== -->
+      <section class="ai-vis-experience-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header center">
+            <span class="ai-vis-section-pill">EXPERIENCE PIPELINE</span>
+            <h2 class="ai-vis-section-title">Every Visit Creates an Opportunity</h2>
+            <p class="ai-vis-section-desc">
+              Every interaction helps our students learn from different perspectives and connect classroom knowledge with real-world experience.
+            </p>
+          </div>
+
+          <div class="ai-vis-exp-flow">
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7.5" r="4"></circle>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">1. VISIT</h4>
+              <p class="ai-vis-exp-node-desc">Distinguished guests tour campus & our AI Lab facilities.</p>
+            </div>
+
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">2. CONNECT</h4>
+              <p class="ai-vis-exp-node-desc">Students and faculty build direct high-impact networks.</p>
+            </div>
+
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">3. SHARE</h4>
+              <p class="ai-vis-exp-node-desc">Industry insights, cutting-edge tech talks, and open Q&As.</p>
+            </div>
+
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">4. LEARN</h4>
+              <p class="ai-vis-exp-node-desc">Hands-on architecture reviews and best practices.</p>
+            </div>
+
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">5. INSPIRE</h4>
+              <p class="ai-vis-exp-node-desc">Students ignite ambitions for hackathons, research & startups.</p>
+            </div>
+
+            <div class="ai-vis-exp-node">
+              <div class="ai-vis-exp-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h4 class="ai-vis-exp-node-title">6. BUILD</h4>
+              <p class="ai-vis-exp-node-desc">Turn collaborative ideas into deployed production AI code.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           6. VISITOR CATEGORIES ("People We Connect With")
+           ========================================================================== -->
+      <section class="ai-vis-categories-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header">
+            <span class="ai-vis-section-pill">DIVERSE PERSPECTIVES</span>
+            <h2 class="ai-vis-section-title">People We Connect With</h2>
+            <p class="ai-vis-section-desc">
+              Click any category card to filter our complete directory below.
+            </p>
+          </div>
+
+          <div class="ai-vis-categories-grid">
+
+            <div class="ai-vis-category-card" data-category="Industry">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-industry">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">INDUSTRY</h3>
+              <p class="ai-vis-cat-desc">
+                Enterprise technology leads, cloud architects, and engineers from global AI companies.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Industry Guests</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="ai-vis-category-card" data-category="Academic">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-academic">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">ACADEMIA</h3>
+              <p class="ai-vis-cat-desc">
+                Distinguished professors, deans, and visiting educators sharing foundational mastery.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Academic Guests</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="ai-vis-category-card" data-category="Research">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 2v7.31"></path>
+                    <path d="M14 9.3V2"></path>
+                    <path d="M8.5 2h7"></path>
+                    <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path>
+                    <path d="M5.52 16h12.96"></path>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-research">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">RESEARCH</h3>
+              <p class="ai-vis-cat-desc">
+                Scientists pushing frontiers in foundation models, cognitive robotics, and AI ethics.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Researchers</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="ai-vis-category-card" data-category="Entrepreneur">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-entrepreneur">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">ENTREPRENEURS</h3>
+              <p class="ai-vis-cat-desc">
+                Startup founders and builders commercializing deep tech into real-world ventures.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Founders</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="ai-vis-category-card" data-category="Alumni">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-alumni">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">ALUMNI</h3>
+              <p class="ai-vis-cat-desc">
+                Former students and club members returning to mentor and guide the next generation.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Alumni</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="ai-vis-category-card" data-category="Community">
+              <div class="ai-vis-cat-top">
+                <div class="ai-vis-cat-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                </div>
+                <span class="ai-vis-cat-count-badge" id="ai-vis-cat-count-community">0</span>
+              </div>
+              <h3 class="ai-vis-cat-title">COMMUNITY</h3>
+              <p class="ai-vis-cat-desc">
+                Open-source maintainers, hackathon judges, and AI advocates expanding outreach.
+              </p>
+              <div class="ai-vis-cat-cta">
+                <span>Explore Community Leads</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           7. VISITOR SEARCH, FILTERS & DIRECTORY GRID
+           ========================================================================== -->
+      <section class="ai-vis-directory-section" id="explore-visitors">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header">
+            <span class="ai-vis-section-pill">INTERACTIVE ARCHIVE</span>
+            <h2 class="ai-vis-section-title">Explore Our Visitors</h2>
+            <p class="ai-vis-section-desc">
+              Filter by domain, search by organization or topic, and discover people who have shared knowledge with our AI Club.
+            </p>
+          </div>
+
+          <!-- Controls Toolbar -->
+          <div class="ai-vis-controls-bar">
+            <!-- Search & Dropdowns Row -->
+            <div class="ai-vis-search-row">
+              <div class="ai-vis-search-input-wrapper">
+                <svg class="ai-vis-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="ai-vis-search-input" class="ai-vis-search-input"
+                  placeholder="Search visitors, organizations, roles, topics..." aria-label="Search visitors" />
+                <button type="button" id="ai-vis-search-clear" class="ai-vis-search-clear" aria-label="Clear search">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Year Filter Dropdown (Dynamic) -->
+              <select id="ai-vis-year-select" class="ai-vis-select-box" aria-label="Filter by Year">
+                <option value="All">All Years</option>
+              </select>
+
+              <!-- Sorting Dropdown -->
+              <select id="ai-vis-sort-select" class="ai-vis-select-box" aria-label="Sort Visitors">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="az">Name (A – Z)</option>
+                <option value="za">Name (Z – A)</option>
+              </select>
+            </div>
+
+            <!-- Category Pills Filter Bar -->
+            <div class="ai-vis-filters-scroll" id="ai-vis-category-filters" role="tablist" aria-label="Visitor Category Filters">
+              <button class="ai-vis-filter-btn active" data-category="All" role="tab" aria-selected="true">All Visitors</button>
+              <button class="ai-vis-filter-btn" data-category="Industry" role="tab" aria-selected="false">Industry</button>
+              <button class="ai-vis-filter-btn" data-category="Academic" role="tab" aria-selected="false">Academic</button>
+              <button class="ai-vis-filter-btn" data-category="Research" role="tab" aria-selected="false">Research</button>
+              <button class="ai-vis-filter-btn" data-category="Faculty" role="tab" aria-selected="false">Faculty</button>
+              <button class="ai-vis-filter-btn" data-category="Alumni" role="tab" aria-selected="false">Alumni</button>
+              <button class="ai-vis-filter-btn" data-category="Entrepreneur" role="tab" aria-selected="false">Entrepreneur</button>
+              <button class="ai-vis-filter-btn" data-category="Guest Speaker" role="tab" aria-selected="false">Guest Speaker</button>
+              <button class="ai-vis-filter-btn" data-category="Collaborator" role="tab" aria-selected="false">Collaborator</button>
+              <button class="ai-vis-filter-btn" data-category="Special Guest" role="tab" aria-selected="false">Special Guest</button>
+            </div>
+          </div>
+
+          <!-- Directory Results Status -->
+          <div class="ai-vis-directory-status">
+            <div>
+              Showing <span class="ai-vis-count-highlight" id="ai-vis-visible-count">0</span> of <span class="ai-vis-count-highlight" id="ai-vis-total-count">0</span> visitors
+            </div>
+            <div id="ai-vis-active-filters-info"></div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="ai-vis-grid" id="ai-vis-cards-grid">
+            <!-- Cards injected via JavaScript -->
+          </div>
+
+          <!-- Empty Search State -->
+          <div class="ai-vis-empty-state" id="ai-vis-empty-state">
+            <svg class="ai-vis-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+            <h3 class="ai-vis-empty-title">No visitors found</h3>
+            <p class="ai-vis-empty-desc">Try another name, organization, category, or clear your search query.</p>
+            <button class="ai-vis-btn-secondary" id="ai-vis-clear-filters-btn">
+              <span>Clear All Filters</span>
+            </button>
+          </div>
+
+          <!-- Load More Button -->
+          <div class="ai-vis-load-more-box" id="ai-vis-load-more-box">
+            <button class="ai-vis-load-more-btn" id="ai-vis-load-more-btn">
+              <span>Load More Visitors</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           8. CHRONOLOGICAL VISITOR JOURNEY TIMELINE
+           ========================================================================== -->
+      <section class="ai-vis-timeline-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header center">
+            <span class="ai-vis-section-pill">TIMELINE</span>
+            <h2 class="ai-vis-section-title">Visitor Journey</h2>
+            <p class="ai-vis-section-desc">
+              Trace the evolution of guests and thought leaders who have enriched our AI research culture over time.
+            </p>
+          </div>
+
+          <div class="ai-vis-timeline-wrapper">
+            <div class="ai-vis-timeline-track" id="ai-vis-timeline-track">
+              <!-- Dynamically populated from JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           9. PHOTO & MEMORY WALL GALLERY
+           ========================================================================== -->
+      <section class="ai-vis-gallery-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-section-header">
+            <span class="ai-vis-section-pill">DIGITAL MEMORY WALL</span>
+            <h2 class="ai-vis-section-title">Moments From Our AI Lab</h2>
+            <p class="ai-vis-section-desc">
+              Visual snapshots celebrating interactive sessions, keynote addresses, and collaborative moments.
+            </p>
+          </div>
+
+          <div class="ai-vis-gallery-grid" id="ai-vis-gallery-grid">
+            <!-- Gallery Cards injected via JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           10. CONNECT & COLLABORATE CTA
+           ========================================================================== -->
+      <section class="ai-vis-cta-section">
+        <div class="ai-vis-container">
+          <div class="ai-vis-cta-card">
+            <h2 class="ai-vis-cta-title">Want to Connect With AI Club?</h2>
+            <p class="ai-vis-cta-desc">
+              Interested in visiting our AI Lab, sharing your expertise, delivering a guest talk, or collaborating with our student engineers?
+            </p>
+            <div class="ai-vis-cta-actions">
+              <a href="contact.html" class="ai-vis-btn-primary">
+                <span>Contact Us</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="collaborations.html" class="ai-vis-btn-secondary">
+                <span>Explore Collaborations</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================================================
+         11. PROFESSIONAL FOOTER
+         ========================================================================== -->
+    <footer class="ai-vis-footer">
+      <div class="ai-vis-container">
+        <div class="ai-vis-footer-grid">
+
+          <!-- Brand Column -->
+          <div>
+            <a href="index.html" class="ai-vis-brand" aria-label="AI Lab Home">
+              <div class="ai-vis-brand-logo-icon">
+                <img src="assets/ai-lab-logo.png" alt="AI LAB Logo" class="ai-vis-brand-logo-img" width="44" height="44" />
+              </div>
+              <div class="ai-vis-brand-text">
+                <span class="ai-vis-brand-name">AI LAB</span>
+                <span class="ai-vis-brand-sub">STUDENT CHAPTER</span>
+              </div>
+            </a>
+            <p class="ai-vis-footer-brand-desc">
+              Empowering student engineers, machine learning researchers, and innovators through open collaborative development and competitive excellence at Sri Shakthi Institute of Engineering and Technology.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="ai-vis-footer-col-title">Navigation</h4>
+            <ul class="ai-vis-footer-links">
+              <li><a href="home.html" class="ai-vis-footer-link">Home</a></li>
+              <li><a href="projects.html" class="ai-vis-footer-link">Projects</a></li>
+              <li><a href="achievement.html" class="ai-vis-footer-link">Achievements</a></li>
+              <li><a href="visitors.html" class="ai-vis-footer-link">Visitors</a></li>
+              <li><a href="chat.html" class="ai-vis-footer-link">Chatbot</a></li>
+            </ul>
+          </div>
+
+          <!-- Explore -->
+          <div>
+            <h4 class="ai-vis-footer-col-title">Explore</h4>
+            <ul class="ai-vis-footer-links">
+              <li><a href="hackathons.html" class="ai-vis-footer-link">Hackathons</a></li>
+              <li><a href="workshops.html" class="ai-vis-footer-link">Workshops</a></li>
+              <li><a href="collaborations.html" class="ai-vis-footer-link">Collaborations</a></li>
+              <li><a href="events.html" class="ai-vis-footer-link">Conducted Events</a></li>
+              <li><a href="team.html" class="ai-vis-footer-link">Staff & Team</a></li>
+            </ul>
+          </div>
+
+          <!-- Connect -->
+          <div>
+            <h4 class="ai-vis-footer-col-title">Connect</h4>
+            <ul class="ai-vis-footer-links">
+              <li><a href="https://github.com/kruthikpranavtr/AI-LAB-ACHIEVEMENT-and-chat" target="_blank" rel="noopener" class="ai-vis-footer-link">GitHub Repository</a></li>
+              <li><a href="https://www.linkedin.com/in/ai-lab-siet-1b1507419" target="_blank" rel="noopener" class="ai-vis-footer-link">LinkedIn Community</a></li>
+              <li><a href="https://instagram.com" target="_blank" rel="noopener" class="ai-vis-footer-link">Instagram Profile</a></li>
+              <li><a href="contact.html" class="ai-vis-footer-link">Contact & Membership</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="ai-vis-footer-bottom">
+          <span>&copy; 2026 AI Club / AI Lab • Sri Shakthi Institute of Engineering & Technology. All Rights Reserved.</span>
+          <span>Designed with Vanilla HTML, CSS & JavaScript.</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==========================================================================
+         12. VISITOR DETAILS MODAL (GLASSMORPHISM)
+         ========================================================================== -->
+    <div class="ai-vis-modal-backdrop" id="ai-vis-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="ai-vis-modal-name">
+      <div class="ai-vis-modal">
+        <button class="ai-vis-modal-close-btn" id="ai-vis-modal-close-btn" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="ai-vis-modal-header">
+          <img id="ai-vis-modal-img" src="" alt="Visitor Portrait" class="ai-vis-modal-img" />
+          <div class="ai-vis-modal-header-info">
+            <div style="display: flex; gap: 8px; margin-bottom: 4px;">
+              <span class="ai-vis-category-pill" id="ai-vis-modal-cat">Category</span>
+              <span class="ai-vis-date-pill" id="ai-vis-modal-date">Date</span>
+            </div>
+            <h3 class="ai-vis-modal-name" id="ai-vis-modal-name">Visitor Name</h3>
+            <div class="ai-vis-modal-role" id="ai-vis-modal-role">Visitor Role</div>
+            <div class="ai-vis-modal-org" id="ai-vis-modal-org">Organization</div>
+          </div>
+        </div>
+
+        <div class="ai-vis-modal-body">
+          <div class="ai-vis-modal-grid-2">
+            <div class="ai-vis-modal-stat-box">
+              <div class="ai-vis-modal-stat-label">Location / Venue</div>
+              <div class="ai-vis-modal-stat-val" id="ai-vis-modal-loc">AI Lab, SIET Campus</div>
+            </div>
+            <div class="ai-vis-modal-stat-box">
+              <div class="ai-vis-modal-stat-label">Session / Event</div>
+              <div class="ai-vis-modal-stat-val" id="ai-vis-modal-event">AI Research Interaction</div>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Key Topics Discussed</h4>
+            <div class="ai-vis-topics-list" id="ai-vis-modal-topics"></div>
+          </div>
+
+          <div class="ai-vis-contribution-box">
+            <div class="ai-vis-contribution-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>Contribution & Impact</span>
+            </div>
+            <div class="ai-vis-contribution-text" id="ai-vis-modal-contrib">Contribution description here.</div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px;">Biography & Overview</h4>
+            <p style="font-size: 0.9rem; color: var(--ai-vis-text-muted); line-height: 1.6;" id="ai-vis-modal-desc">Description text here.</p>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="ai-vis-btn-secondary" style="padding: 10px 20px; font-size: 0.85rem;" id="ai-vis-modal-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.8v8.37h-2.8V10.9M7.86 6.55a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z"/>
+              </svg>
+              <span>View Professional Profile</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         13. LIGHTBOX FOR GALLERY
+         ========================================================================== -->
+    <div class="ai-vis-lightbox-backdrop" id="ai-vis-lightbox-backdrop" role="dialog" aria-modal="true" aria-label="Image Lightbox">
+      <div class="ai-vis-lightbox-container">
+        <button class="ai-vis-modal-close-btn" id="ai-vis-lightbox-close-btn" aria-label="Close Lightbox">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <button class="ai-vis-lightbox-nav-btn ai-vis-lightbox-prev" id="ai-vis-lightbox-prev-btn" aria-label="Previous Image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <button class="ai-vis-lightbox-nav-btn ai-vis-lightbox-next" id="ai-vis-lightbox-next-btn" aria-label="Next Image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="ai-vis-lightbox-img-box">
+          <img id="ai-vis-lightbox-img" src="" alt="Gallery Image" class="ai-vis-lightbox-img" />
+        </div>
+
+        <div class="ai-vis-lightbox-caption-bar">
+          <div>
+            <h4 id="ai-vis-lightbox-title" style="font-family: var(--ai-vis-font-display); font-size: 1.1rem; font-weight: 700;">Moment Title</h4>
+            <div id="ai-vis-lightbox-sub" style="font-size: 0.8rem; color: var(--ai-vis-text-dim); margin-top: 2px;">Date & Session</div>
+          </div>
+          <span class="ai-vis-category-pill" id="ai-vis-lightbox-tag">Moments</span>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End #ai-visitors-page -->
+
+  <!-- ==========================================================================
+       14. VANILLA JAVASCRIPT APPLICATION ARCHITECTURE
+       ========================================================================== -->
+  <script>
+    /**
+     * AI Club Visitors Application (Strictly Isolated IIFE)
+     */
+    const AIClubVisitorsApp = (() => {
+
+      // SVG Avatar Generator Helper to guarantee no broken browser images
+      function createAvatarSvg(name, bgStart, bgEnd) {
+        const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${encodeURIComponent(bgStart)}"/><stop offset="100%" stop-color="${encodeURIComponent(bgEnd)}"/></linearGradient></defs><rect width="400" height="400" fill="url(%23g)"/><circle cx="200" cy="155" r="75" fill="rgba(255,255,255,0.18)"/><path d="M100 350 C100 260 300 260 300 350 Z" fill="rgba(255,255,255,0.18)"/><text x="200" y="215" font-family="Outfit, sans-serif" font-size="70" font-weight="bold" fill="%23ffffff" text-anchor="middle">${initials}</text></svg>`;
+      }
+
+      // SVG Gallery Placeholder Helper
+      function createGallerySvg(title, color1, color2) {
+        return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${encodeURIComponent(color1)}"/><stop offset="100%" stop-color="${encodeURIComponent(color2)}"/></linearGradient></defs><rect width="600" height="400" fill="url(%23g)"/><g fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"><circle cx="300" cy="200" r="140"/><circle cx="300" cy="200" r="80"/><line x1="160" y1="200" x2="440" y2="200"/><line x1="300" y1="60" x2="300" y2="340"/></g><circle cx="300" cy="200" r="16" fill="%2300f2fe"/><text x="300" y="320" font-family="Outfit, sans-serif" font-size="24" font-weight="bold" fill="%23ffffff" text-anchor="middle">${encodeURIComponent(title)}</text></svg>`;
+      }
+
+      /* ==========================================================================
+         VISITOR DATASET (12 RICH SAMPLE RECORDS READY TO BE EXPANDED)
+         ========================================================================== */
+      const visitors = [
+        {
+          id: 1,
+          name: "Dr. Arvind Swaminathan",
+          role: "Principal AI Research Scientist",
+          organization: "Google DeepMind • Quantum AI",
+          category: "Research",
+          date: "2026-02-18",
+          displayDate: "Feb 18, 2026",
+          year: "2026",
+          location: "AI Lab Research Auditorium, SIET",
+          image: createAvatarSvg("Dr. Arvind Swaminathan", "#00f2fe", "#1e1b4b"),
+          topics: ["Quantum Machine Learning", "State Space Models", "Edge LLM Acceleration"],
+          contribution: "Delivered a landmark masterclass on state-space neural models and reviewed student-built autonomous edge perception pipelines in the AI Lab.",
+          description: "Dr. Swaminathan is a recognized pioneer in tensor network architectures and hybrid quantum-classical neural networks. He engaged with our third and fourth-year AI club researchers during a full-day seminar.",
+          event: "Masterclass: Next-Gen Quantum Neural Frontiers",
+          featured: true
+        },
+        {
+          id: 2,
+          name: "Elena Rostova",
+          role: "VP of Cloud AI Architecture",
+          organization: "NVIDIA Enterprise Systems",
+          category: "Industry",
+          date: "2026-01-22",
+          displayDate: "Jan 22, 2026",
+          year: "2026",
+          location: "Neural Compute Center, Room 304",
+          image: createAvatarSvg("Elena Rostova", "#10b981", "#064e3b"),
+          topics: ["TensorRT-LLM", "Distributed Training", "CUDA Parallelism"],
+          contribution: "Mentored our hackathon finalist team on low-latency inference caching and distributed GPU cluster scaling.",
+          description: "Elena has architected hyperscale GPU infrastructure across North America and Europe. She visited the campus to evaluate our AI Lab's cluster compute setup and conducted an architectural audit.",
+          event: "GPU Infrastructure & Parallel Optimization Summit",
+          featured: false
+        },
+        {
+          id: 3,
+          name: "Prof. Marcus Thorne",
+          role: "Chair of Cognitive Robotics",
+          organization: "Stanford Robotics Institute",
+          category: "Academic",
+          date: "2025-11-14",
+          displayDate: "Nov 14, 2025",
+          year: "2025",
+          location: "Robotics & Embedded Systems Wing",
+          image: createAvatarSvg("Prof. Marcus Thorne", "#3b82f6", "#1e3a8a"),
+          topics: ["Embodied AI", "Bimanual Manipulation", "Sim-to-Real Transfer"],
+          contribution: "Guided our robotics sub-chapter in calibration algorithms for 6-DoF robotic arms using deep reinforcement learning.",
+          description: "Visiting academic scholar with over 80 published papers in IEEE Transactions on Robotics. He provided strategic guidance on student paper submissions for IROS and ICRA.",
+          event: "Guest Lecture: Embodied Intelligence in Autonomous Agents",
+          featured: false
+        },
+        {
+          id: 4,
+          name: "Siddharth Varma",
+          role: "Co-Founder & Chief Executive Officer",
+          organization: "NeuroPulse Health AI",
+          category: "Entrepreneur",
+          date: "2026-03-05",
+          displayDate: "Mar 05, 2026",
+          year: "2026",
+          location: "Innovation Hub Sandbox",
+          image: createAvatarSvg("Siddharth Varma", "#f59e0b", "#78350f"),
+          topics: ["Healthcare AI", "FDA Compliance", "Venture Seed Capital"],
+          contribution: "Conducted fireside pitch reviews for 4 student startup ideas emerging from our Generative AI incubator.",
+          description: "Former AI club member and founder of a Series A clinical diagnostic copilot backed by major Silicon Valley venture funds. He shared direct experience going from campus prototype to production hospital trials.",
+          event: "Fireside Chat: From Campus Hackathon to $10M Venture",
+          featured: false
+        },
+        {
+          id: 5,
+          name: "Dr. Ananya Sen",
+          role: "Staff Research Scientist",
+          organization: "MIT Media Lab & Open BioAI",
+          category: "Research",
+          date: "2025-09-10",
+          displayDate: "Sep 10, 2025",
+          year: "2025",
+          location: "AI Lab Main Floor",
+          image: createAvatarSvg("Dr. Ananya Sen", "#ec4899", "#831843"),
+          topics: ["Diffusion Models", "Generative Bio-Sequencing", "AI Ethics"],
+          contribution: "Demonstrated fine-tuning diffusion priors for synthetic biomedical imaging without patient privacy leakage.",
+          description: "Dr. Sen's research focuses on trustworthy machine learning and representation learning in bioinformatics. She conducted an interactive coding session using Hugging Face libraries.",
+          event: "Hands-on Workshop: Diffusion Models in Healthcare",
+          featured: false
+        },
+        {
+          id: 6,
+          name: "Karthik Sundaram",
+          role: "Senior Edge AI Specialist (Alumnus)",
+          organization: "Intel Edge AI Research Lab",
+          category: "Alumni",
+          date: "2025-08-19",
+          displayDate: "Aug 19, 2025",
+          year: "2025",
+          location: "Hardware Interop Wing",
+          image: createAvatarSvg("Karthik Sundaram", "#0284c7", "#0c4a6e"),
+          topics: ["OpenVINO", "Microcontroller Quantization", "NPU Kernels"],
+          contribution: "Donated 5 neural compute acceleration kits to the lab and mentored students on integer quantization (INT8/INT4).",
+          description: "SIET Alumnus (Class of 2021) now spearheading edge computer vision kernels. Regularly visits the club to conduct practical embedded deployment sprints.",
+          event: "Alumni Knowledge Exchange: Deep Learning on Microcontrollers",
+          featured: false
+        },
+        {
+          id: 7,
+          name: "Dr. Meera Nambiar",
+          role: "Associate Professor & CV Lab Head",
+          organization: "Indian Institute of Technology (IIT Madras)",
+          category: "Faculty",
+          date: "2025-07-02",
+          displayDate: "Jul 02, 2025",
+          year: "2025",
+          location: "Conference Hall A",
+          image: createAvatarSvg("Dr. Meera Nambiar", "#a855f7", "#4c1d95"),
+          topics: ["Vision Transformers", "Attention Mechanisms", "Object Tracking"],
+          contribution: "Evaluated our YOLOv10 edge model benchmark and advised on novel attention head pruning techniques.",
+          description: "Lead investigator in multimodal perception and aerial robotics. Visited as an external academic reviewer for student research publications.",
+          event: "Academic Colloquium: Vision Transformers vs. Modern ConvNets",
+          featured: false
+        },
+        {
+          id: 8,
+          name: "David Chen",
+          role: "Lead Autonomous Systems Engineer",
+          organization: "Tesla Autopilot & Vision Team",
+          category: "Guest Speaker",
+          date: "2025-04-12",
+          displayDate: "Apr 12, 2025",
+          year: "2025",
+          location: "Virtual & Lab Dual Broadcast",
+          image: createAvatarSvg("David Chen", "#ef4444", "#7f1d1d"),
+          topics: ["Occupancy Networks", "Camera-Only Depth", "Fleet Neural Replay"],
+          contribution: "Shared real-world failure cases in autonomous perception and how synthetic simulation bridges the long tail of edge scenarios.",
+          description: "A prominent speaker in computer vision conferences. Delivered a virtual keynote coupled with live hardware telemetry inspection for our lab members.",
+          event: "Keynote Address: Scaling Perception to Millions of Autonomous Vehicles",
+          featured: false
+        },
+        {
+          id: 9,
+          name: "Dr. Rajiv Menon",
+          role: "Director of AI Safety & Governance",
+          organization: "Alan Turing Institute",
+          category: "Special Guest",
+          date: "2025-02-28",
+          displayDate: "Feb 28, 2025",
+          year: "2025",
+          location: "Executive Seminar Hall",
+          image: createAvatarSvg("Dr. Rajiv Menon", "#6366f1", "#312e81"),
+          topics: ["Algorithmic Bias", "AI Alignment", "Red Teaming LLMs"],
+          contribution: "Authored an interactive red-teaming checklist adopted by our student chapter for all public-facing chatbots.",
+          description: "International thought leader on safety standards for foundation models. Visited during the National AI Safety symposium hosted at our institution.",
+          event: "Distinguished Lecture: Engineering Ethical & Trustworthy AI",
+          featured: false
+        },
+        {
+          id: 10,
+          name: "Sofia Al-Mansoor",
+          role: "Principal Robotics Control Architect",
+          organization: "Boston Dynamics Research",
+          category: "Collaborator",
+          date: "2024-11-20",
+          displayDate: "Nov 20, 2024",
+          year: "2024",
+          location: "Robotics Testing Course",
+          image: createAvatarSvg("Sofia Al-Mansoor", "#14b8a6", "#134e4a"),
+          topics: ["Quadruped Locomotion", "Model Predictive Control", "ROS 2"],
+          contribution: "Assisted student engineers in tuning trajectory planning algorithms for rough terrain traversal on our quadruped prototype.",
+          description: "Collaborative research partner working on open-source dynamic balance controllers for legged robotic systems.",
+          event: "Joint Lab Session: Dynamic Balance in Quadruped Robotics",
+          featured: false
+        },
+        {
+          id: 11,
+          name: "Vikramaditya Bose",
+          role: "Chief Data Scientist",
+          organization: "Snowflake AI Core",
+          category: "Industry",
+          date: "2024-09-15",
+          displayDate: "Sep 15, 2024",
+          year: "2024",
+          location: "Innovation Amphitheater",
+          image: createAvatarSvg("Vikramaditya Bose", "#0ea5e9", "#0369a1"),
+          topics: ["Enterprise RAG", "Vector Databases", "MLOps Pipelines"],
+          contribution: "Presented live benchmarks on hybrid sparse-dense vector retrieval and sponsored cloud credits for our student lab projects.",
+          description: "Veteran data science leader with over 18 years building production machine learning systems for Fortune 500 enterprises.",
+          event: "Technical Session: Modern Enterprise Retrieval-Augmented Generation",
+          featured: false
+        },
+        {
+          id: 12,
+          name: "Dr. Clara Dupont",
+          role: "Senior NLP Research Scientist",
+          organization: "Hugging Face Open Science",
+          category: "Research",
+          date: "2024-04-18",
+          displayDate: "Apr 18, 2024",
+          year: "2024",
+          location: "Neural Compute Lab 304",
+          image: createAvatarSvg("Dr. Clara Dupont", "#f97316", "#7c2d12"),
+          topics: ["Small Language Models", "LoRA / QLoRA", "Open Datasets"],
+          contribution: "Helped student researchers fine-tune 3B parameter open models for Indic language clinical query understanding.",
+          description: "Open-source champion contributor to transformers and PEFT libraries. Regularly supports collegiate research collectives with dataset curation.",
+          event: "Open Science Sprint: Efficient Fine-Tuning with LoRA & PEFT",
+          featured: false
+        }
+      ];
+
+      /* ==========================================================================
+         MOMENTS / GALLERY DATASET
+         ========================================================================== */
+      const galleryMoments = [
+        {
+          id: 1,
+          title: "Neural Robotics Hands-on Lab Session",
+          category: "Workshop",
+          date: "February 2026",
+          image: createGallerySvg("Neural Robotics Workshop", "#060913", "#00f2fe")
+        },
+        {
+          id: 2,
+          title: "Quantum AI & Foundation Models Masterclass",
+          category: "Guest Session",
+          date: "January 2026",
+          image: createGallerySvg("Quantum AI Masterclass", "#1e1b4b", "#6366f1")
+        },
+        {
+          id: 3,
+          title: "Edge Vision & Model Quantization Sprint",
+          category: "Tech Talk",
+          date: "November 2025",
+          image: createGallerySvg("Edge Vision Sprint", "#022c22", "#10b981")
+        },
+        {
+          id: 4,
+          title: "Autonomous Navigation Hardware Testing",
+          category: "Lab Demo",
+          date: "September 2025",
+          image: createGallerySvg("Autonomous Nav Demo", "#450a0a", "#ef4444")
+        },
+        {
+          id: 5,
+          title: "Industry Mentorship & Pitch Review Night",
+          category: "Summit",
+          date: "May 2025",
+          image: createGallerySvg("Mentorship Pitch Night", "#3b0764", "#a855f7")
+        },
+        {
+          id: 6,
+          title: "Open-Source Generative AI Hackathon Showcase",
+          category: "Hackathon",
+          date: "March 2024",
+          image: createGallerySvg("GenAI Hackathon Showcase", "#1e293b", "#0284c7")
+        }
+      ];
+
+      /* ==========================================================================
+         TIMELINE DATASET (CHRONOLOGICAL MILESTONES)
+         ========================================================================== */
+      const timelineMilestones = [
+        {
+          year: "2026",
+          title: "Quantum & Edge AI Leadership",
+          desc: "Hosted Google DeepMind & NVIDIA architects; expanded real-time sensor fusion & state-space neural models."
+        },
+        {
+          year: "2025",
+          title: "Autonomous Robotics & Safety",
+          desc: "Keynotes from Tesla, Stanford Robotics & Alan Turing Institute; introduced formal algorithmic safety audits."
+        },
+        {
+          year: "2024",
+          title: "Open-Source & LoRA Sprints",
+          desc: "Partnered with Hugging Face and Snowflake engineers for lightweight on-device language models."
+        },
+        {
+          year: "2023",
+          title: "AI Lab Inception & Student Chapter",
+          desc: "Inauguration of the dedicated AI compute infrastructure and initial industry guest lecture series."
+        }
+      ];
+
+      /* ==========================================================================
+         INTERNAL APPLICATION STATE
+         ========================================================================== */
+      const state = {
+        visitors: visitors,
+        filteredVisitors: [...visitors],
+        search: "",
+        category: "All",
+        year: "All",
+        sort: "newest",
+        visibleCount: 6,
+        currentLightboxIndex: 0
+      };
+
+      // Cached DOM Elements
+      const dom = {};
+
+      function cacheDom() {
+        dom.searchInput = document.getElementById('ai-vis-search-input');
+        dom.searchClear = document.getElementById('ai-vis-search-clear');
+        dom.yearSelect = document.getElementById('ai-vis-year-select');
+        dom.sortSelect = document.getElementById('ai-vis-sort-select');
+        dom.categoryFilters = document.getElementById('ai-vis-category-filters');
+        dom.cardsGrid = document.getElementById('ai-vis-cards-grid');
+        dom.emptyState = document.getElementById('ai-vis-empty-state');
+        dom.loadMoreBox = document.getElementById('ai-vis-load-more-box');
+        dom.loadMoreBtn = document.getElementById('ai-vis-load-more-btn');
+        dom.clearFiltersBtn = document.getElementById('ai-vis-clear-filters-btn');
+        dom.visibleCountSpan = document.getElementById('ai-vis-visible-count');
+        dom.totalCountSpan = document.getElementById('ai-vis-total-count');
+        dom.activeFiltersInfo = document.getElementById('ai-vis-active-filters-info');
+
+        // Modal Elements
+        dom.modalBackdrop = document.getElementById('ai-vis-modal-backdrop');
+        dom.modalCloseBtn = document.getElementById('ai-vis-modal-close-btn');
+        dom.modalImg = document.getElementById('ai-vis-modal-img');
+        dom.modalName = document.getElementById('ai-vis-modal-name');
+        dom.modalRole = document.getElementById('ai-vis-modal-role');
+        dom.modalOrg = document.getElementById('ai-vis-modal-org');
+        dom.modalCat = document.getElementById('ai-vis-modal-cat');
+        dom.modalDate = document.getElementById('ai-vis-modal-date');
+        dom.modalLoc = document.getElementById('ai-vis-modal-loc');
+        dom.modalEvent = document.getElementById('ai-vis-modal-event');
+        dom.modalTopics = document.getElementById('ai-vis-modal-topics');
+        dom.modalContrib = document.getElementById('ai-vis-modal-contrib');
+        dom.modalDesc = document.getElementById('ai-vis-modal-desc');
+
+        // Lightbox Elements
+        dom.lightboxBackdrop = document.getElementById('ai-vis-lightbox-backdrop');
+        dom.lightboxCloseBtn = document.getElementById('ai-vis-lightbox-close-btn');
+        dom.lightboxPrevBtn = document.getElementById('ai-vis-lightbox-prev-btn');
+        dom.lightboxNextBtn = document.getElementById('ai-vis-lightbox-next-btn');
+        dom.lightboxImg = document.getElementById('ai-vis-lightbox-img');
+        dom.lightboxTitle = document.getElementById('ai-vis-lightbox-title');
+        dom.lightboxSub = document.getElementById('ai-vis-lightbox-sub');
+        dom.lightboxTag = document.getElementById('ai-vis-lightbox-tag');
+
+        // Navigation & Theme
+        dom.themeToggleBtn = document.getElementById('ai-vis-theme-toggle-btn');
+        dom.themeIcon = document.getElementById('ai-vis-theme-icon');
+        dom.hamburgerBtn = document.getElementById('ai-vis-hamburger-btn');
+        dom.mobileDrawer = document.getElementById('ai-vis-mobile-drawer');
+        dom.navbar = document.getElementById('ai-vis-navbar');
+
+        // Hero Parallax & Cursor Glow
+        dom.heroVisual = document.getElementById('ai-vis-hero-visual');
+        dom.cursorGlow = document.getElementById('ai-vis-cursor-glow');
+        dom.bgCanvas = document.getElementById('ai-vis-bg-canvas');
+      }
+
+      /* ==========================================================================
+         RENDER METHODS
+         ========================================================================== */
+      function renderYearsDropdown() {
+        const years = Array.from(new Set(state.visitors.map(v => v.year))).sort((a, b) => b - a);
+        dom.yearSelect.innerHTML = `<option value="All">All Years</option>` +
+          years.map(y => `<option value="${y}">Year ${y}</option>`).join('');
+      }
+
+      function updateCategoryCounts() {
+        const categories = {
+          industry: state.visitors.filter(v => v.category === "Industry").length,
+          academic: state.visitors.filter(v => v.category === "Academic").length,
+          research: state.visitors.filter(v => v.category === "Research").length,
+          entrepreneur: state.visitors.filter(v => v.category === "Entrepreneur").length,
+          alumni: state.visitors.filter(v => v.category === "Alumni").length,
+          community: state.visitors.filter(v => v.category === "Community" || v.category === "Special Guest" || v.category === "Collaborator" || v.category === "Guest Speaker").length
+        };
+
+        const setIfExists = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = val;
+        };
+
+        setIfExists('ai-vis-cat-count-industry', categories.industry);
+        setIfExists('ai-vis-cat-count-academic', categories.academic);
+        setIfExists('ai-vis-cat-count-research', categories.research);
+        setIfExists('ai-vis-cat-count-entrepreneur', categories.entrepreneur);
+        setIfExists('ai-vis-cat-count-alumni', categories.alumni);
+        setIfExists('ai-vis-cat-count-community', categories.community);
+      }
+
+      function renderFeaturedVisitor() {
+        const featured = state.visitors.find(v => v.featured) || state.visitors[0];
+        if (!featured) return;
+
+        document.getElementById('ai-vis-featured-img').src = featured.image;
+        document.getElementById('ai-vis-featured-cat').textContent = featured.category;
+        document.getElementById('ai-vis-featured-date').textContent = featured.displayDate;
+        document.getElementById('ai-vis-featured-name').textContent = featured.name;
+        document.getElementById('ai-vis-featured-role').textContent = featured.role;
+        document.getElementById('ai-vis-featured-org').textContent = featured.organization;
+        document.getElementById('ai-vis-featured-desc').textContent = featured.description;
+        document.getElementById('ai-vis-featured-contrib').textContent = `"${featured.contribution}"`;
+
+        const topicsContainer = document.getElementById('ai-vis-featured-topics');
+        topicsContainer.innerHTML = featured.topics.map(t => `<span class="ai-vis-topic-tag">#${t}</span>`).join('');
+
+        document.getElementById('ai-vis-featured-btn').onclick = () => openModal(featured);
+      }
+
+      function filterAndSortVisitors() {
+        let list = [...state.visitors];
+
+        // 1. Category Filter
+        if (state.category !== "All") {
+          list = list.filter(v => v.category.toLowerCase() === state.category.toLowerCase());
+        }
+
+        // 2. Year Filter
+        if (state.year !== "All") {
+          list = list.filter(v => v.year === state.year);
+        }
+
+        // 3. Search Query Filter
+        if (state.search) {
+          const q = state.search;
+          list = list.filter(v =>
+            v.name.toLowerCase().includes(q) ||
+            v.role.toLowerCase().includes(q) ||
+            v.organization.toLowerCase().includes(q) ||
+            v.category.toLowerCase().includes(q) ||
+            v.description.toLowerCase().includes(q) ||
+            v.contribution.toLowerCase().includes(q) ||
+            v.event.toLowerCase().includes(q) ||
+            v.topics.some(t => t.toLowerCase().includes(q))
+          );
+        }
+
+        // 4. Sorting
+        if (state.sort === "newest") {
+          list.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else if (state.sort === "oldest") {
+          list.sort((a, b) => new Date(a.date) - new Date(b.date));
+        } else if (state.sort === "az") {
+          list.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (state.sort === "za") {
+          list.sort((a, b) => b.name.localeCompare(a.name));
+        }
+
+        state.filteredVisitors = list;
+        renderCards();
+      }
+
+      function renderCards() {
+        const total = state.filteredVisitors.length;
+        const visible = state.filteredVisitors.slice(0, state.visibleCount);
+
+        dom.visibleCountSpan.textContent = visible.length;
+        dom.totalCountSpan.textContent = total;
+
+        if (total === 0) {
+          dom.cardsGrid.innerHTML = '';
+          dom.cardsGrid.style.display = 'none';
+          dom.emptyState.style.display = 'block';
+          dom.loadMoreBox.style.display = 'none';
+          return;
+        }
+
+        dom.emptyState.style.display = 'none';
+        dom.cardsGrid.style.display = 'grid';
+
+        dom.cardsGrid.innerHTML = visible.map((v, idx) => `
+          <article class="ai-vis-card" data-id="${v.id}" style="animation: aiVisFadeUp 0.4s ease forwards ${idx * 0.05}s;">
+            <div class="ai-vis-card-img-container">
+              <span class="ai-vis-card-badge">${v.category}</span>
+              <img src="${v.image}" alt="${v.name}" class="ai-vis-card-img" loading="lazy" />
+              <div class="ai-vis-card-date-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                </svg>
+                <span>${v.displayDate}</span>
+              </div>
+            </div>
+            <div class="ai-vis-card-content">
+              <div>
+                <h3 class="ai-vis-card-name">${v.name}</h3>
+                <div class="ai-vis-card-role">${v.role}</div>
+                <div class="ai-vis-card-org">${v.organization}</div>
+              </div>
+              <p class="ai-vis-card-desc">${v.description}</p>
+              <div class="ai-vis-card-footer">
+                <span style="font-size:0.75rem; color:var(--ai-vis-text-dim); font-family:var(--ai-vis-font-mono);">
+                  ${v.topics.length} Key Topics
+                </span>
+                <button type="button" class="ai-vis-card-btn" onclick="AIClubVisitorsApp.openVisitorModalById(${v.id})">
+                  <span>View Details</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        // Handle Load More Button Visibility
+        if (visible.length >= total) {
+          dom.loadMoreBox.style.display = 'none';
+        } else {
+          dom.loadMoreBox.style.display = 'block';
+        }
+      }
+
+      function renderTimeline() {
+        const track = document.getElementById('ai-vis-timeline-track');
+        track.innerHTML = timelineMilestones.map(m => `
+          <div class="ai-vis-timeline-card">
+            <div class="ai-vis-timeline-node-pin"></div>
+            <div class="ai-vis-timeline-year">${m.year}</div>
+            <h4 class="ai-vis-timeline-title">${m.title}</h4>
+            <p class="ai-vis-timeline-desc">${m.desc}</p>
+          </div>
+        `).join('');
+      }
+
+      function renderGallery() {
+        const grid = document.getElementById('ai-vis-gallery-grid');
+        grid.innerHTML = galleryMoments.map((g, idx) => `
+          <div class="ai-vis-gallery-item" onclick="AIClubVisitorsApp.openLightbox(${idx})">
+            <img src="${g.image}" alt="${g.title}" class="ai-vis-gallery-img" loading="lazy" />
+            <div class="ai-vis-gallery-overlay">
+              <div class="ai-vis-gallery-meta">
+                <span>${g.category}</span>
+                <span>${g.date}</span>
+              </div>
+              <h4 class="ai-vis-gallery-title">${g.title}</h4>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      /* ==========================================================================
+         MODAL & LIGHTBOX HANDLERS
+         ========================================================================== */
+      function openModal(v) {
+        if (!v) return;
+        dom.modalImg.src = v.image;
+        dom.modalName.textContent = v.name;
+        dom.modalRole.textContent = v.role;
+        dom.modalOrg.textContent = v.organization;
+        dom.modalCat.textContent = v.category;
+        dom.modalDate.textContent = v.displayDate;
+        dom.modalLoc.textContent = v.location;
+        dom.modalEvent.textContent = v.event;
+        dom.modalContrib.textContent = `"${v.contribution}"`;
+        dom.modalDesc.textContent = v.description;
+
+        dom.modalTopics.innerHTML = v.topics.map(t => `<span class="ai-vis-topic-tag">#${t}</span>`).join('');
+
+        dom.modalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        dom.modalBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function openLightbox(index) {
+        state.currentLightboxIndex = index;
+        updateLightboxContent();
+        dom.lightboxBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        dom.lightboxBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function updateLightboxContent() {
+        const item = galleryMoments[state.currentLightboxIndex];
+        if (!item) return;
+        dom.lightboxImg.src = item.image;
+        dom.lightboxTitle.textContent = item.title;
+        dom.lightboxSub.textContent = `${item.date} • ${item.category}`;
+        dom.lightboxTag.textContent = item.category;
+      }
+
+      function nextLightbox() {
+        state.currentLightboxIndex = (state.currentLightboxIndex + 1) % galleryMoments.length;
+        updateLightboxContent();
+      }
+
+      function prevLightbox() {
+        state.currentLightboxIndex = (state.currentLightboxIndex - 1 + galleryMoments.length) % galleryMoments.length;
+        updateLightboxContent();
+      }
+
+      /* ==========================================================================
+         THEME TOGGLE & PERSISTENCE
+         ========================================================================== */
+      function initTheme() {
+        const saved = localStorage.getItem('aiClubVisitorsTheme') || localStorage.getItem('ai-club-theme') || 'dark';
+        applyTheme(saved);
+      }
+
+      function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      }
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('aiClubVisitorsTheme', theme);
+        localStorage.setItem('ai-club-theme', theme);
+        localStorage.setItem('aiClubHomeTheme', theme);
+
+        if (dom.themeIcon) {
+          if (theme === 'light') {
+            dom.themeIcon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+          } else {
+            dom.themeIcon.innerHTML = `
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            `;
+          }
+        }
+      }
+
+      /* ==========================================================================
+         BACKGROUND PARTICLE NETWORK CANVAS
+         ========================================================================== */
+      function initCanvasAnimation() {
+        const canvas = dom.bgCanvas;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = Math.min(Math.floor((width * height) / 22000), 55);
+
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45,
+            radius: Math.random() * 1.8 + 1,
+            alpha: Math.random() * 0.5 + 0.2
+          });
+        }
+
+        function resize() {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize, { passive: true });
+
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+
+          // Draw particles
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 242, 254, ${p.alpha})`;
+            ctx.fill();
+
+            // Connections
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dx = p.x - p2.x;
+              const dy = p.y - p2.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist < 130) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = `rgba(99, 102, 241, ${0.16 * (1 - dist / 130)})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+              }
+            }
+          }
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      /* ==========================================================================
+         INTERSECTION OBSERVER FOR STATS & SCROLL ANIMATIONS
+         ========================================================================== */
+      function initObservers() {
+        // Counter Animation
+        const statCards = document.querySelectorAll('.ai-vis-stat-number');
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const target = parseInt(el.getAttribute('data-target'), 10);
+              let count = 0;
+              const step = Math.max(1, Math.floor(target / 25));
+              const timer = setInterval(() => {
+                count += step;
+                if (count >= target) {
+                  el.textContent = `${target}+`;
+                  clearInterval(timer);
+                } else {
+                  el.textContent = `${count}+`;
+                }
+              }, 40);
+              obs.unobserve(el);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        statCards.forEach(c => counterObserver.observe(c));
+
+        // Sticky Navbar Scrolled State
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 20) {
+            dom.navbar.classList.add('scrolled');
+          } else {
+            dom.navbar.classList.remove('scrolled');
+          }
+        }, { passive: true });
+      }
+
+      /* ==========================================================================
+         EVENT LISTENERS & BINDINGS
+         ========================================================================== */
+      function bindEvents() {
+        // Live Instant Search
+        dom.searchInput.addEventListener('input', (e) => {
+          state.search = e.target.value.trim().toLowerCase();
+          dom.searchClear.style.display = state.search ? 'flex' : 'none';
+          state.visibleCount = 6;
+          filterAndSortVisitors();
+        });
+
+        dom.searchClear.addEventListener('click', () => {
+          dom.searchInput.value = '';
+          state.search = '';
+          dom.searchClear.style.display = 'none';
+          state.visibleCount = 6;
+          filterAndSortVisitors();
+          dom.searchInput.focus();
+        });
+
+        // Category Filter Buttons
+        dom.categoryFilters.addEventListener('click', (e) => {
+          const btn = e.target.closest('.ai-vis-filter-btn');
+          if (!btn) return;
+          dom.categoryFilters.querySelectorAll('.ai-vis-filter-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          state.category = btn.getAttribute('data-category');
+          state.visibleCount = 6;
+          filterAndSortVisitors();
+        });
+
+        // Category Cards in "People We Connect With" section
+        document.querySelectorAll('.ai-vis-category-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const cat = card.getAttribute('data-category');
+            if (!cat) return;
+            state.category = cat;
+            state.visibleCount = 6;
+
+            // Update pills
+            dom.categoryFilters.querySelectorAll('.ai-vis-filter-btn').forEach(b => {
+              const matches = b.getAttribute('data-category') === cat;
+              b.classList.toggle('active', matches);
+              b.setAttribute('aria-selected', matches ? 'true' : 'false');
+            });
+
+            filterAndSortVisitors();
+            document.getElementById('explore-visitors').scrollIntoView({ behavior: 'smooth' });
+          });
+        });
+
+        // Year Select
+        dom.yearSelect.addEventListener('change', (e) => {
+          state.year = e.target.value;
+          state.visibleCount = 6;
+          filterAndSortVisitors();
+        });
+
+        // Sort Select
+        dom.sortSelect.addEventListener('change', (e) => {
+          state.sort = e.target.value;
+          filterAndSortVisitors();
+        });
+
+        // Load More Button
+        dom.loadMoreBtn.addEventListener('click', () => {
+          state.visibleCount += 6;
+          renderCards();
+        });
+
+        // Reset Filters Button
+        dom.clearFiltersBtn.addEventListener('click', resetFilters);
+
+        // Modal Close Events
+        dom.modalCloseBtn.addEventListener('click', closeModal);
+        dom.modalBackdrop.addEventListener('click', (e) => {
+          if (e.target === dom.modalBackdrop) closeModal();
+        });
+
+        // Lightbox Close & Nav Events
+        dom.lightboxCloseBtn.addEventListener('click', closeLightbox);
+        dom.lightboxBackdrop.addEventListener('click', (e) => {
+          if (e.target === dom.lightboxBackdrop) closeLightbox();
+        });
+        dom.lightboxPrevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          prevLightbox();
+        });
+        dom.lightboxNextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          nextLightbox();
+        });
+
+        // Keyboard Accessibility (ESC, Left, Right)
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeModal();
+            closeLightbox();
+            closeMobileDrawer();
+          } else if (e.key === 'ArrowLeft' && dom.lightboxBackdrop.classList.contains('active')) {
+            prevLightbox();
+          } else if (e.key === 'ArrowRight' && dom.lightboxBackdrop.classList.contains('active')) {
+            nextLightbox();
+          }
+        });
+
+        // Mobile Hamburger & Drawer
+        dom.hamburgerBtn.addEventListener('click', toggleMobileDrawer);
+        dom.mobileDrawer.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', closeMobileDrawer);
+        });
+
+        // Theme Toggle
+        dom.themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // Live Cross-tab Theme Sync
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'aiClubVisitorsTheme' || e.key === 'ai-club-theme' || e.key === 'aiClubHomeTheme') {
+            applyTheme(e.newValue || 'dark');
+          }
+        });
+
+        // Mouse Parallax on Hero Visual & Ambient Cursor Follower
+        window.addEventListener('mousemove', (e) => {
+          if (dom.cursorGlow) {
+            dom.cursorGlow.style.left = `${e.clientX}px`;
+            dom.cursorGlow.style.top = `${e.clientY}px`;
+          }
+
+          if (dom.heroVisual && window.innerWidth > 992) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 16;
+            const y = (e.clientY / window.innerHeight - 0.5) * 16;
+            dom.heroVisual.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          }
+        }, { passive: true });
+      }
+
+      function resetFilters() {
+        state.search = '';
+        state.category = 'All';
+        state.year = 'All';
+        state.sort = 'newest';
+        state.visibleCount = 6;
+
+        dom.searchInput.value = '';
+        dom.searchClear.style.display = 'none';
+        dom.yearSelect.value = 'All';
+        dom.sortSelect.value = 'newest';
+
+        dom.categoryFilters.querySelectorAll('.ai-vis-filter-btn').forEach(b => {
+          const isAll = b.getAttribute('data-category') === 'All';
+          b.classList.toggle('active', isAll);
+          b.setAttribute('aria-selected', isAll ? 'true' : 'false');
+        });
+
+        filterAndSortVisitors();
+      }
+
+      function toggleMobileDrawer() {
+        const isOpen = dom.hamburgerBtn.classList.toggle('open');
+        dom.mobileDrawer.classList.toggle('active', isOpen);
+        dom.hamburgerBtn.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      function closeMobileDrawer() {
+        dom.hamburgerBtn.classList.remove('open');
+        dom.mobileDrawer.classList.remove('active');
+        dom.hamburgerBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      /* ==========================================================================
+         PUBLIC INIT
+         ========================================================================== */
+      function init() {
+        cacheDom();
+        initTheme();
+        renderYearsDropdown();
+        updateCategoryCounts();
+        renderFeaturedVisitor();
+        filterAndSortVisitors();
+        renderTimeline();
+        renderGallery();
+        initCanvasAnimation();
+        initObservers();
+        bindEvents();
+      }
+
+      return {
+        init,
+        openVisitorModalById: (id) => {
+          const v = state.visitors.find(item => item.id === id);
+          if (v) openModal(v);
+        },
+        openLightbox
+      };
+
+    })();
+
+    // Initialize once DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      AIClubVisitorsApp.init();
+    });
+  </script>
+</body>
+
+</html>
