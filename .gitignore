@@ -5,3 +5,12 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Node.js & Dependencies
+node_modules/
+server/node_modules/
+
+# Environment Variables & Secrets
+.env
+server/.env
+*.env.local

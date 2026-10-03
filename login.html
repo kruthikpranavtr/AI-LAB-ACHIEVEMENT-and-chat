@@ -2197,7 +2197,15 @@
       /* ==========================================================================
          LOGIN SUBMISSION HANDLER
          ========================================================================== */
-      function handleLoginSubmit(e) {
+      /* ==========================================================================
+         API CONFIGURATION
+         ========================================================================== */
+      const API_BASE_URL = 'http://localhost:5000/api/v1/auth';
+
+      /* ==========================================================================
+         LOGIN SUBMISSION HANDLER (REAL BACKEND INTEGRATION)
+         ========================================================================== */
+      async function handleLoginSubmit(e) {
         e.preventDefault();
         if (state.isLoading) return;
 
@@ -2227,31 +2235,78 @@
 
         if (hasError) return;
 
-        // Simulate Loading and Demo Success
+        // Start Loading State
         state.isLoading = true;
         dom.loginSubmitBtn.classList.add('loading');
 
         // Remember Email if requested
         saveRememberedEmail(email, dom.loginRemember.checked);
 
-        setTimeout(() => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password: pwd }),
+          });
+
+          const resData = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            // Error response from server
+            state.isLoading = false;
+            dom.loginSubmitBtn.classList.remove('loading');
+
+            const errorMessage = resData.message || 'Invalid email or password.';
+            setFieldError(dom.loginPassword, dom.loginPasswordError, true, errorMessage);
+            showToast(`✗ ${errorMessage}`);
+            return;
+          }
+
+          // Successful Login
+          const { token, user } = resData.data;
+
+          // Store authentication token and user data in localStorage
+          if (token) {
+            localStorage.setItem('ai_club_token', token);
+          }
+          if (user) {
+            localStorage.setItem('ai_club_user', JSON.stringify(user));
+          }
+
+          // Show Success Animation UI
           dom.loginSubmitBtn.classList.remove('loading');
           dom.loginSubmitBtn.style.display = 'none';
           dom.loginSuccess.classList.add('visible');
 
-          showToast('✓ Demo Login Validated! Redirecting...');
+          showToast(`✓ Welcome back, ${user ? user.name : 'Member'}! Redirecting...`);
 
-          // Redirect to home.html after demo animation
+          // Redirect to home.html after success animation
           setTimeout(() => {
             window.location.href = 'home.html';
-          }, 1800);
-        }, 900);
+          }, 1500);
+
+        } catch (networkError) {
+          console.error('[Login Network Error]:', networkError);
+          state.isLoading = false;
+          dom.loginSubmitBtn.classList.remove('loading');
+
+          setFieldError(dom.loginEmail, dom.loginEmailError, true, 'Backend server unreachable');
+          showToast(`✗ Connection Error: Server not reachable at localhost:5000`);
+
+          openModal({
+            title: 'Backend Connection Notice',
+            body: 'Could not connect to http://localhost:5000. Please start the backend server:\n\n1. Open terminal in the "server" directory\n2. Run: npm start (or npm run dev)\n3. Ensure MongoDB is running or MONGODB_URI is set in server/.env',
+            buttonText: 'UNDERSTOOD'
+          });
+        }
       }
 
       /* ==========================================================================
-         REGISTER SUBMISSION HANDLER
+         REGISTER SUBMISSION HANDLER (REAL BACKEND INTEGRATION)
          ========================================================================== */
-      function handleRegisterSubmit(e) {
+      async function handleRegisterSubmit(e) {
         e.preventDefault();
         if (state.isLoading) return;
 
@@ -2279,9 +2334,12 @@
           setFieldError(dom.regEmail, dom.regEmailError, false);
         }
 
-        // Password
+        // Password (minimum 8 characters)
         if (!pwd) {
           setFieldError(dom.regPassword, dom.regPasswordError, true, 'Password is required.');
+          hasError = true;
+        } else if (pwd.length < 8) {
+          setFieldError(dom.regPassword, dom.regPasswordError, true, 'Password must be at least 8 characters.');
           hasError = true;
         } else {
           setFieldError(dom.regPassword, dom.regPasswordError, false);
@@ -2308,22 +2366,68 @@
         state.isLoading = true;
         dom.regSubmitBtn.classList.add('loading');
 
-        setTimeout(() => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              password: pwd,
+            }),
+          });
+
+          const resData = await response.json().catch(() => ({}));
+
           state.isLoading = false;
           dom.regSubmitBtn.classList.remove('loading');
 
+          if (!response.ok) {
+            const errorMsg = resData.message || 'Registration failed. Please check your details.';
+            if (response.status === 409) {
+              setFieldError(dom.regEmail, dom.regEmailError, true, errorMsg);
+            } else {
+              setFieldError(dom.regPassword, dom.regPasswordError, true, errorMsg);
+            }
+            showToast(`✗ ${errorMsg}`);
+            return;
+          }
+
+          // Registration Succeeded
+          showToast(`✓ Account created successfully for ${name}!`);
+
           openModal({
-            title: 'Account Creation (Demo)',
-            body: `Hello ${name}! In this frontend demonstration, accounts are not stored in any external database. You can return to the login screen and explore the portal interface.`,
-            buttonText: 'GO TO LOGIN',
+            title: 'Registration Successful! 🎉',
+            body: `Welcome to the AI Club, ${name}! Your account has been securely created in our database. Please sign in with your credentials to access your member portal.`,
+            buttonText: 'SIGN IN NOW',
             onAction: () => {
               closeModal();
               switchView('login');
               dom.loginEmail.value = email;
+              dom.loginPassword.value = '';
               dom.loginPassword.focus();
-            }
+            },
           });
-        }, 800);
+
+          // Reset registration form
+          dom.formRegister.reset();
+          updateStrengthMeter('');
+
+        } catch (networkError) {
+          console.error('[Register Network Error]:', networkError);
+          state.isLoading = false;
+          dom.regSubmitBtn.classList.remove('loading');
+
+          showToast(`✗ Connection Error: Server not reachable at localhost:5000`);
+
+          openModal({
+            title: 'Backend Connection Notice',
+            body: 'Could not connect to http://localhost:5000. Please start the backend server:\n\n1. Open terminal in the "server" directory\n2. Run: npm start (or npm run dev)\n3. Ensure MongoDB is running or MONGODB_URI is set in server/.env',
+            buttonText: 'UNDERSTOOD'
+          });
+        }
       }
 
       /* ==========================================================================
