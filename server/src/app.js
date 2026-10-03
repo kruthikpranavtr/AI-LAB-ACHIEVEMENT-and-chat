@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 
 const app = express();
 
@@ -50,6 +51,9 @@ app.use('/api/v1/auth', authRoutes);
 
 // 6. Contact API Routes
 app.use('/api/v1/contact', contactRoutes);
+
+// 7. Projects API Routes
+app.use('/api/v1/projects', projectRoutes);
 
 // 7. 404 Not Found Handler
 app.use((req, res) => {

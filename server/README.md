@@ -402,22 +402,125 @@ Receives inquiries submitted through the Quick Contact form on `home.html`.
   - `email` (String, required, trimmed, lowercase, valid email)
   - `interest` (String, required, trimmed, max 100 chars)
   - `message` (String, required, trimmed, 5-3000 chars)
-  - `status` (Enum: `['new', 'read', 'replied', 'archived']`, default: `'new'`)
-  - `createdAt` & `updatedAt` (Timestamps automatically managed by Mongoose)
+  
+---
 
-### 2. Testing Contact API via cURL:
+## Projects API & Database Architecture
 
-#### Valid Contact Submission:
+Production-grade endpoints serving live database records to `projects.html`:
+- **GET `/api/v1/projects`**: Public project search, filter by category/tech/status/year/featured, sorting, and pagination.
+- **GET `/api/v1/projects/:id`**: Single project retrieval by numeric `id` or MongoDB `_id`.
+- **POST `/api/v1/projects`**: Admin-only project creation (`authMiddleware` + `adminMiddleware`).
+- **PUT `/api/v1/projects/:id`**: Admin-only project update (`authMiddleware` + `adminMiddleware`).
+- **DELETE `/api/v1/projects/:id`**: Admin-only project deletion (`authMiddleware` + `adminMiddleware`).
+
+---
+
+### Project Data Model (`src/models/Project.js`)
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `id` | Number | Unique sequential numeric identifier matching legacy frontend references. |
+| `title` | String | Project initiative title (Required). |
+| `category` | String | Primary domain (AI, ML, Generative AI, Robotics, Computer Vision, etc.) (Required). |
+| `status` | String | Lifecycle state (Completed, Ongoing, Prototype, Research) (Required). |
+| `year` | Number | Creation or deployment year (e.g., 2026, 2025) (Required). |
+| `featured` | Boolean | Highlight badge flag for home/featured showcase (Default: `false`). |
+| `shortDescription` | String | Card summary text (Required). |
+| `description` | String | Comprehensive engineering and operational overview. |
+| `problem` | String | Problem statement addressing academic or industry friction. |
+| `objective` | String | Target engineering and research deliverables. |
+| `solution` | String | Architectural design and methodology implemented. |
+| `features` | [String] | Array of technical features and specifications. |
+| `technologies` | [String] | Technical stack chips (e.g., `["PyTorch", "ROS2", "YOLOv10"]`). |
+| `team` | Array | Contributor objects `[{ name: "...", role: "..." }]` or strings. |
+| `image` | String | Public asset URL / Unsplash image path. |
+| `github` | String | GitHub repository URL. |
+| `demo` | String | Deployed interactive sandbox or live demo URL. |
+| `timelineStage` | String | Stage enum (`Idea`, `Research`, `Development`, `Testing`, `Deployment`). |
+| `outcome` | String | Benchmark metrics, efficiency gains, or deployment records. |
+| `createdAt` | Date | Managed automatically by Mongoose timestamps. |
+| `updatedAt` | Date | Managed automatically by Mongoose timestamps. |
+
+---
+
+### Seeding Initial Projects into MongoDB
+
+To populate MongoDB with the 15 authentic projects extracted directly from `projects.html`:
+
 ```powershell
-curl -X POST http://localhost:5000/api/v1/contact `
-  -H "Content-Type: application/json" `
-  -d '{"name":"Alex Johnson","email":"alex@example.com","interest":"Hackathons","message":"Looking forward to collaborating with AI Lab!"}'
+npm run seed
 ```
 
-#### Test Missing Field Rejection (400 Bad Request):
+#### Safe & Idempotent:
+- Upserts records matching by `id` or `title`.
+- Does **not** wipe out newly added projects or create duplicate cards.
+- Automatically provisions the default system administrator (`admin@ai-lab.siet.ac.in`) if no admin user is present.
+
+---
+
+### Creating an Admin User
+
+1. **Option A (Automatic)**: Run `npm run seed` which provisions:
+   - Email: `admin@ai-lab.siet.ac.in`
+   - Password: `AdminPassword123!`
+   - Role: `admin`
+
+2. **Option B (Manual via Registration + MongoDB)**:
+   - Register a normal account via `POST /api/v1/auth/register`.
+   - In MongoDB Compass, mongosh, or Atlas UI, update the user document:
+     ```javascript
+     db.users.updateOne({ email: "your.email@siet.ac.in" }, { $set: { role: "admin" } });
+     ```
+
+---
+
+### Project Endpoints & Testing via cURL
+
+#### 1. Public Project Listing with Filters & Search:
 ```powershell
-curl -X POST http://localhost:5000/api/v1/contact `
-  -H "Content-Type: application/json" `
-  -d '{"email":"alex@example.com","interest":"Hackathons","message":"Missing name field test"}'
+curl -X GET "http://localhost:5000/api/v1/projects?category=Computer+Vision&sort=newest&limit=6"
 ```
+
+#### 2. Search by Keyword (Case-Insensitive):
+```powershell
+curl -X GET "http://localhost:5000/api/v1/projects?search=robot"
+```
+
+#### 3. Single Project by ID:
+```powershell
+curl -X GET http://localhost:5000/api/v1/projects/1
+```
+
+#### 4. Admin Create Project (Requires Admin JWT):
+```powershell
+curl -X POST http://localhost:5000/api/v1/projects `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer <ADMIN_JWT_TOKEN>" `
+  -d '{
+    "title": "QuantumNet Hybrid Optimizer",
+    "category": "Artificial Intelligence",
+    "status": "Ongoing",
+    "year": 2026,
+    "featured": true,
+    "shortDescription": "Variational quantum circuits integrated with classical deep learning.",
+    "technologies": ["Qiskit", "PyTorch", "Pennylane"],
+    "team": [{"name": "Aravind K.", "role": "Lead Researcher"}]
+  }'
+```
+
+#### 5. Admin Update Project:
+```powershell
+curl -X PUT http://localhost:5000/api/v1/projects/1 `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer <ADMIN_JWT_TOKEN>" `
+  -d '{"featured": true, "status": "Completed"}'
+```
+
+#### 6. Admin Delete Project:
+```powershell
+curl -X DELETE http://localhost:5000/api/v1/projects/1 `
+  -H "Authorization: Bearer <ADMIN_JWT_TOKEN>"
+```
+
 

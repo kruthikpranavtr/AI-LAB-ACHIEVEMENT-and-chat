@@ -1,0 +1,636 @@
+[
+  {
+    "id": 1,
+    "title": "NeuroVision-Surveillance",
+    "category": "Computer Vision",
+    "status": "Completed",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Edge-computed real-time campus safety and anomaly detection utilizing YOLOv10 and spatial temporal transformers.",
+    "description": "NeuroVision-Surveillance is an edge AI monitoring platform developed to provide sub-second incident detection across campus corridors and laboratories. It analyzes live RTSP streams to identify safety hazards, unauthorized laboratory access, and crowd bottlenecks without storing identifying biometric records.",
+    "problem": "Standard CCTV networks generate vast streams of passive footage requiring human review, causing critical safety delays and privacy oversights.",
+    "objective": "Build a zero-latency, on-premises computer vision pipeline capable of detecting anomalies with over 95% accuracy while guaranteeing privacy through edge processing.",
+    "solution": "Integrated quantized YOLOv10 with DeepSORT spatial tracking and temporal graph convolution networks running on NVIDIA Jetson Orin edge modules.",
+    "features": [
+      "Sub-25ms inference latency on multi-camera streams",
+      "Dynamic edge-side privacy masking and blur filters",
+      "Automated telemetry alerts dispatched via secure WebSockets",
+      "Zero cloud-dependency ensuring total data privacy"
+    ],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "OpenCV",
+      "YOLOv10",
+      "TensorRT",
+      "FastAPI",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Kruthik Pranav T. R.",
+        "role": "Lead Architect"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "CV Engineer"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Edge Systems"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Deployed across 8 pilot lab facilities with 98.4% anomaly recall rate and zero cloud transmission bandwidth."
+  },
+  {
+    "id": 2,
+    "title": "MedPulse-GenAI Co-Pilot",
+    "category": "Generative AI",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Multimodal clinical note synthesis and diagnostic co-pilot for healthcare triage powered by fine-tuned Bio-LLMs.",
+    "description": "MedPulse-GenAI assists healthcare practitioners by structuring physician-patient dialogues into standardized FHIR clinical summaries. It extracts medical entities, suggests differential diagnoses from laboratory panels, and cross-references PubMed knowledge graphs with source-grounded citations.",
+    "problem": "Doctors spend up to 40% of their day documenting consultations and cross-referencing pharmacological guidelines across disparate EHR systems.",
+    "objective": "Design a privacy-compliant clinical transcription and diagnostic assistant with hallucination mitigation and verified medical source retrieval.",
+    "solution": "Combined Whisper-large speech transcription, LoRA fine-tuned LLaMA-3 medical adapters, and Neo4j medical ontology RAG pipelines with semantic guardrails.",
+    "features": [
+      "Real-time medical jargon phonetic parsing in noisy clinics",
+      "Automatic HL7 and FHIR structured JSON note export",
+      "Contraindication and drug-interaction automated check",
+      "Strict citation transparency with verified medical reference links"
+    ],
+    "technologies": [
+      "Python",
+      "LLM",
+      "Transformers",
+      "LangChain",
+      "PyTorch",
+      "Neo4j",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "AI Research Lead"
+      },
+      {
+        "name": "Prithic P.",
+        "role": "NLP Specialist"
+      },
+      {
+        "name": "Nishanth K. R.",
+        "role": "Full-Stack AI"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Testing",
+    "outcome": "Reduced documentation turnaround time by 62% in institutional simulation trials with 0% unverified citations."
+  },
+  {
+    "id": 3,
+    "title": "Autonomous-Rover-SLAM",
+    "category": "Robotics",
+    "status": "Completed",
+    "year": "2026",
+    "featured": true,
+    "shortDescription": "Autonomous indoor/outdoor mobile robot featuring 3D LiDAR SLAM, dynamic path-planning, and obstacle avoidance.",
+    "description": "An autonomous mobile ground rover capable of mapping unknown GPS-denied environments in real time. Designed for search-and-rescue reconnaissance, the platform navigates rough terrain using sensor fusion between 3D LiDAR, stereo cameras, and IMU filters running ROS2 Humble.",
+    "problem": "Disaster reconnaissance requires traversing structurally compromised buildings where GPS signals fail and obstacles are dynamically shifting.",
+    "objective": "Engineer an autonomous rover that generates metric 3D point-cloud maps and calculates traversable trajectory splines without human teleoperation.",
+    "solution": "Implemented FAST-LIO2 LiDAR odometry with TEB local planner and deep reinforcement learning navigation policies on an omnidirectional 4WD chassis.",
+    "features": [
+      "Sub-centimeter 3D spatial mapping in zero-visibility conditions",
+      "Dynamic obstacle avoidance reacting in under 40 milliseconds",
+      "Modular payload bay supporting gas sensors and thermal cameras",
+      "Encrypted long-range telemetry link over 5.8 GHz mesh WiFi"
+    ],
+    "technologies": [
+      "ROS",
+      "Python",
+      "C++",
+      "LiDAR",
+      "OpenCV",
+      "PyTorch",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Robotics Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Embedded Systems"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Control Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Demonstrated complete autonomy across 500m unmapped multi-story obstacle courses with zero collision instances."
+  },
+  {
+    "id": 4,
+    "title": "OmniAgent-MCP Orchestrator",
+    "category": "Artificial Intelligence",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Multi-agent autonomous framework utilizing Model Context Protocol (MCP) for complex software development pipelines.",
+    "description": "OmniAgent-MCP connects distributed AI reasoning agents to real development environments. Agents collaborate to break down feature requests into architecture blueprints, unit test suites, and continuous deployment workflows while maintaining human-in-the-loop checkpoints.",
+    "problem": "Single LLM invocations fail at long-horizon multi-step reasoning, frequently losing context or hallucinating tool invocations.",
+    "objective": "Build a deterministic multi-agent state machine that coordinates specialized subagents for code generation, auditing, and verification.",
+    "solution": "Constructed an MCP server mesh with hierarchical supervisor-worker architectures and AST-based syntax verification sandboxes.",
+    "features": [
+      "Standardized Model Context Protocol tool calling architecture",
+      "Deterministic DAG execution with automated error recovery",
+      "Sandboxed Docker execution environments for generated code",
+      "Granular token cost and latency telemetry dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "Docker",
+      "LLM",
+      "LangChain",
+      "JavaScript"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "Agentic Systems Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Core Developer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Accelerated internal repository scaffolding by 4.5x with a 94.2% test-pass rate on first compilation."
+  },
+  {
+    "id": 5,
+    "title": "BioGenome-Predictor",
+    "category": "Machine Learning",
+    "status": "Research",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Deep transformer architecture modeling non-coding genomic sequence mutations and functional disease pathogenicity.",
+    "description": "BioGenome-Predictor analyzes human chromosomal variants to evaluate transcriptional disruption. The model maps single nucleotide polymorphisms to gene expression variances across 54 human tissue phenotypes using Ensembl and GTEx benchmark repositories.",
+    "problem": "Over 90% of disease-associated genetic variations reside in non-coding regions where functional interpretation has historically required exhaustive wet-lab assays.",
+    "objective": "Train an attention-based sequence model to score nucleotide mutation impacts with clinical pathogenicity confidence bounds.",
+    "solution": "Trained bidirectional transformer models on 128k base-pair genomic windows using evolutionary conservation embeddings and chromatin accessibility tracks.",
+    "features": [
+      "128k base-pair sequence context attention window",
+      "Cross-tissue chromatin accessibility prediction matrix",
+      "Standardized ClinVar benchmark compatibility",
+      "Open-access CLI tool for variant effect scoring"
+    ],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "Machine Learning",
+      "Transformers",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Prithic P.",
+        "role": "BioML Researcher"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "Data Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Research",
+    "outcome": "Achieved 0.91 AUROC on benchmark non-coding pathogenic variant sets, exceeding baseline regression approaches."
+  },
+  {
+    "id": 6,
+    "title": "CodeSense-LLM Security Auditor",
+    "category": "Generative AI",
+    "status": "Prototype",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Self-hosted local code analysis engine detecting zero-day vulnerabilities and memory safety flaws via semantic ASTs.",
+    "description": "CodeSense-LLM pairs deep semantic language embeddings with static control-flow graphs. It detects subtle race conditions, buffer overflows, and unauthorized credential exposure in Pull Requests without sending proprietary code to commercial cloud APIs.",
+    "problem": "Commercial AI code auditors require transmitting sensitive corporate or research IP to external cloud providers.",
+    "objective": "Provide an on-premise, air-gapped code auditor that identifies OWASP Top 10 vulnerabilities with low false positive rates.",
+    "solution": "Fine-tuned CodeLlama models paired with Tree-sitter abstract syntax tree parsers and semgrep security rule engines.",
+    "features": [
+      "100% offline air-gapped execution on local consumer GPUs",
+      "Direct GitHub Actions and GitLab CI/CD integration",
+      "Interactive diff generation with safe refactored patches",
+      "Coverage across C++, Rust, Python, Go, and JavaScript"
+    ],
+    "technologies": [
+      "Python",
+      "LLM",
+      "Transformers",
+      "Docker",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nishanth K. R.",
+        "role": "Security Lead"
+      },
+      {
+        "name": "Nitish R. G.",
+        "role": "Model Optimization"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Testing",
+    "outcome": "Successfully audited 35 student open-source repositories and flagged 14 verified security flaws prior to release."
+  },
+  {
+    "id": 7,
+    "title": "AgriDrone-CropHealth",
+    "category": "Computer Vision",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Multispectral aerial drone vision analyzing NDVI vegetation indices, soil hydration, and crop pest infestation.",
+    "description": "An aerial agricultural analytics solution combining autonomous drone flight planning with multispectral imagery parsing. It produces high-resolution thermal and NDVI vegetation heatmaps to empower farmers with precision fertilizer and irrigation guidance.",
+    "problem": "Late detection of crop blight and irrigation stress causes extensive agricultural yield reduction across regional farming cooperatives.",
+    "objective": "Build an automated drone imaging pipeline providing actionable crop health reports within two hours of flight completion.",
+    "solution": "Built custom photogrammetry stitching paired with semantic segmentation U-Nets to classify early-stage foliar diseases.",
+    "features": [
+      "Normalized Difference Vegetation Index (NDVI) mapping",
+      "Pest and weed clustering with sub-centimeter ground resolution",
+      "Offline edge stitching capability on solar-powered ground stations",
+      "Mobile-friendly field summary dashboard for local farmers"
+    ],
+    "technologies": [
+      "Python",
+      "OpenCV",
+      "PyTorch",
+      "FastAPI",
+      "Computer Vision"
+    ],
+    "team": [
+      {
+        "name": "Mithunesh K.",
+        "role": "Hardware & Vision"
+      },
+      {
+        "name": "Padmanabhan S.",
+        "role": "Analytics"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Field-tested on 40 acres of regional farmlands, identifying nitrogen deficiencies 12 days before visible foliage yellowing."
+  },
+  {
+    "id": 8,
+    "title": "AeroVoice-NLP Assistant",
+    "category": "NLP",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Low-resource multi-dialect speech recognition and voice guidance system for aviation navigation training.",
+    "description": "AeroVoice is a robust acoustic speech recognition interface engineered for flight simulators. It interprets high-speed radio phraseology and noisy cockpit chatter across non-native English dialects with strict aeronautical phonetic compliance.",
+    "problem": "Standard commercial speech engines fail on regional accents and rapid aviation abbreviations in high-noise cockpit environments.",
+    "objective": "Achieve below 6% Word Error Rate (WER) on standard ICAO radio communications under 20dB ambient engine acoustic noise.",
+    "solution": "Fine-tuned Conformer-CTC acoustic architectures augmented with dynamic SNR cockpit noise simulation and aeronautical n-gram language models.",
+    "features": [
+      "Standard ICAO aviation phraseology validation",
+      "Real-time audio stream transcription under 180ms latency",
+      "Custom noise suppression filter mimicking aircraft headsets",
+      "Cross-platform C++ runtime wrapper with zero external dependencies"
+    ],
+    "technologies": [
+      "Python",
+      "NLP",
+      "PyTorch",
+      "Transformers",
+      "C++"
+    ],
+    "team": [
+      {
+        "name": "Prithic P.",
+        "role": "Speech Systems Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Audio Pipeline"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Attained a 4.8% WER in institutional flight training simulators, surpassing commercial speech APIs by 22%."
+  },
+  {
+    "id": 9,
+    "title": "FinRisk-Analytics Engine",
+    "category": "Data Science",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Real-time high-frequency transaction stream scoring and algorithmic fraud ring detection using temporal graph neural nets.",
+    "description": "FinRisk-Analytics continuously scans millions of simulated financial transactions to detect synthetic identity fraud and laundering cycles. By viewing transaction topologies as dynamic bipartite graphs, it pinpoints coordinated fraud rings in sub-second time windows.",
+    "problem": "Rule-based fraud engines struggle to detect distributed laundering schemes where transactions are sliced into micro-amounts across hundreds of shell accounts.",
+    "objective": "Build a streaming graph neural network pipeline that flags circular laundering and mule networks in under 50 milliseconds.",
+    "solution": "Architected streaming Kafka pipelines feeding PyTorch Geometric Temporal models with real-time Neo4j cypher graph queries.",
+    "features": [
+      "Sub-50ms transaction fraud scoring at 50,000 TPS",
+      "Dynamic community detection identifying money mule rings",
+      "Explainable AI feature attribution for regulatory audit compliance",
+      "Real-time interactive graph visualization dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "Machine Learning",
+      "Data Science",
+      "PyTorch",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Data Architect"
+      },
+      {
+        "name": "Nishanth K. R.",
+        "role": "Graph Modeler"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Detected 99.1% of simulated circular transaction rings with an ultra-low 0.04% false positive rate."
+  },
+  {
+    "id": 10,
+    "title": "AutoDoc-Summarizer",
+    "category": "NLP",
+    "status": "Prototype",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Intelligent legal and technical contract parsing platform extracting critical indemnities, deadlines, and liability risks.",
+    "description": "AutoDoc-Summarizer digests 100+ page legal agreements, technical tenders, and enterprise leases. It identifies non-standard indemnification clauses, ambiguous force-majeure provisions, and statutory compliance mismatches within seconds.",
+    "problem": "Small startups and academic labs often enter complex vendor contracts without full legal visibility on liability traps.",
+    "objective": "Engineer an automated contract reviewer that highlights anomalous clauses and summarizes risk exposures in plain English.",
+    "solution": "Integrated hierarchical attention networks with LegalBERT embeddings and vector similarity retrieval against statutory regulatory bodies.",
+    "features": [
+      "Clause-by-clause automated risk stratification (Red/Yellow/Green)",
+      "Plain English layperson translation of legal jargon",
+      "Exportable redline contract revisions with recommended phrasing",
+      "Side-by-side contract comparison view"
+    ],
+    "technologies": [
+      "Python",
+      "NLP",
+      "Transformers",
+      "FastAPI",
+      "JavaScript"
+    ],
+    "team": [
+      {
+        "name": "Nitish R. G.",
+        "role": "NLP Lead"
+      },
+      {
+        "name": "Prithic P.",
+        "role": "Evaluation Engineer"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Benchmarked on 200 public commercial contracts, achieving 93% clause classification accuracy."
+  },
+  {
+    "id": 11,
+    "title": "SmartGrid-Forecaster",
+    "category": "Machine Learning",
+    "status": "Research",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Renewable solar and wind generation load forecasting using spatiotemporal graph neural networks and weather telemetry.",
+    "description": "SmartGrid-Forecaster models renewable power intermittency across campus microgrids. By fusing meteorological satellite data with historical inverter sensor metrics, it predicts grid load spikes up to 48 hours in advance, optimizing battery storage discharging.",
+    "problem": "High solar and wind variability leads to expensive peak grid strain and battery storage degradation when loads are improperly scheduled.",
+    "objective": "Deliver hour-ahead and day-ahead renewable power generation predictions with under 3.5% Mean Absolute Percentage Error (MAPE).",
+    "solution": "Formulated a spatial-temporal graph neural network (ST-GNN) capturing geographic solar irradiance correlation across clustered sensor nodes.",
+    "features": [
+      "48-hour forward rolling load and irradiance forecast",
+      "Automated battery reserve optimization dispatcher",
+      "Extreme weather degradation alert module",
+      "Interactive Grafana-based campus telemetry portal"
+    ],
+    "technologies": [
+      "Python",
+      "Machine Learning",
+      "PyTorch",
+      "Data Science",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan S.",
+        "role": "Lead Researcher"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "IoT Integration"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Research",
+    "outcome": "Reduced campus simulation battery cycle degradation by 18% while maintaining a 3.1% 24-hour load forecasting MAPE."
+  },
+  {
+    "id": 12,
+    "title": "CyberSentinel-AI Engine",
+    "category": "Automation",
+    "status": "Ongoing",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Zero-day network intrusion prevention and packet anomaly detection utilizing unsupervised autoencoders and eBPF.",
+    "description": "CyberSentinel-AI monitors campus lab subnets for zero-day intrusions and port reconnaissance attacks. Running directly in Linux kernel space via eBPF filters, the AI detects malicious lateral movement in microsecond timescales without bottlenecking network throughput.",
+    "problem": "Traditional signature-based firewalls fail to stop novel zero-day attacks and polymorphic ransomware payload delivery.",
+    "objective": "Build an unsupervised network anomaly detection system capable of filtering 10 Gbps traffic with zero packet loss.",
+    "solution": "Coupled kernel-level eBPF telemetry with lightweight variational autoencoders trained on normal campus traffic baselines.",
+    "features": [
+      "eBPF kernel-level low-overhead packet inspection",
+      "Unsupervised detection of novel DDoS and exfiltration anomalies",
+      "Automated dynamic iptables firewall rule synthesis",
+      "Centralized incident triage dashboard"
+    ],
+    "technologies": [
+      "Python",
+      "Automation",
+      "Machine Learning",
+      "Docker",
+      "FastAPI"
+    ],
+    "team": [
+      {
+        "name": "Nishanth K. R.",
+        "role": "Security Engineer"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Infrastructure"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Monitored 150+ academic lab workstations with zero latency penalty and successfully thwarted simulated red-team intrusions."
+  },
+  {
+    "id": 13,
+    "title": "WebMind-RAG Enterprise",
+    "category": "Web & AI",
+    "status": "Completed",
+    "year": "2026",
+    "featured": false,
+    "shortDescription": "Contextual enterprise knowledge retrieval and question-answering system with hybrid dense-sparse vector indexing.",
+    "description": "WebMind-RAG is a full-stack enterprise search platform allowing students and faculty to converse with academic curricula, lab manuals, and research preprints. It features hybrid BM25 and dense embedding reranking to provide strictly cited responses.",
+    "problem": "University knowledge is fragmented across PDF handbooks, Google Drives, and legacy portal silos, making answers difficult to locate.",
+    "objective": "Provide an intuitive ChatGPT-like web interface grounded on institutional knowledge with 100% source verifiable citations.",
+    "solution": "Constructed hybrid Qdrant vector databases with Cohere reranking models and an ultra-responsive responsive web frontend.",
+    "features": [
+      "Hybrid dense-sparse vector retrieval with cross-encoder reranking",
+      "Instant PDF and DOCX automated parsing and semantic chunking",
+      "Interactive page-level document citation preview modal",
+      "Role-based access control protecting confidential department notes"
+    ],
+    "technologies": [
+      "Web & AI",
+      "Python",
+      "JavaScript",
+      "FastAPI",
+      "LLM",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Kruthik Pranav T. R.",
+        "role": "Full-Stack Architect"
+      },
+      {
+        "name": "Nitish R. G.",
+        "role": "RAG Specialist"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "https://github.com/Siva9664/AI_Club",
+    "timelineStage": "Deployment",
+    "outcome": "Indexed over 1,400 technical documents and delivered sub-second accurate answers for over 500 active campus queries."
+  },
+  {
+    "id": 14,
+    "title": "Swarm-Bot-Collab",
+    "category": "Robotics",
+    "status": "Prototype",
+    "year": "2025",
+    "featured": false,
+    "shortDescription": "Decentralized multi-agent robot swarm communication protocol for coordinated search-and-mapping tasks.",
+    "description": "A swarm robotics protocol enabling multiple micro-rovers to map large areas collaboratively without a central master node. If any individual rover fails or loses communication, the remaining units dynamically reallocate exploration sectors through consensus algorithms.",
+    "problem": "Centralized multi-robot systems suffer single points of failure and cannot scale past a few units in radio-inhibited ruins.",
+    "objective": "Create a peer-to-peer decentralized exploration protocol where 5+ rovers collaboratively explore an arena 3x faster than a single unit.",
+    "solution": "Combined Voronoi frontier partition algorithms with peer-to-peer UWB ranging and gossip-based map merge consensus.",
+    "features": [
+      "Decentralized peer-to-peer gossip map synchronization",
+      "Resilient self-healing mesh communication",
+      "Dynamic frontier exploration partition without central server",
+      "Hardware-in-the-loop simulator testbed"
+    ],
+    "technologies": [
+      "Robotics",
+      "Python",
+      "C++",
+      "ROS",
+      "OpenCV"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan Suresh Babu",
+        "role": "Swarm Architect"
+      },
+      {
+        "name": "Mithunesh K.",
+        "role": "Hardware Lead"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Development",
+    "outcome": "Achieved a 280% increase in mapping velocity in 5-rover testbed trials with full resilience to 40% node loss."
+  },
+  {
+    "id": 15,
+    "title": "EcoSense-IoT Industrial Monitor",
+    "category": "Automation",
+    "status": "Archived",
+    "year": "2024",
+    "featured": false,
+    "shortDescription": "Automated smart environmental telemetry node recording particulate matter, VOCs, and greenhouse gas metrics.",
+    "description": "An early foundational IoT research project by the AI Club exploring environmental air quality telemetry. Solar-powered sensor nodes collected PM2.5, carbon concentrations, and humidity across campus zones to analyze microclimate trends.",
+    "problem": "Campus laboratories needed continuous logging of volatile organic compounds to ensure ventilation regulatory compliance.",
+    "objective": "Build self-contained, solar-powered environmental monitor nodes transmitting encrypted sensor streams to a central ledger.",
+    "solution": "Combined ESP32 microcontrollers with optical particulate sensors and an MQTT time-series database dashboard.",
+    "features": [
+      "Solar battery power management lasting 45 continuous rain days",
+      "LoRaWAN long-range telemetry transmission up to 5km",
+      "Threshold buzzer and automated email alerts for safety officers",
+      "Historical time-series analytics and trend regression"
+    ],
+    "technologies": [
+      "Automation",
+      "Python",
+      "Data Science",
+      "Docker"
+    ],
+    "team": [
+      {
+        "name": "Padmanabhan S.",
+        "role": "Hardware Lead"
+      },
+      {
+        "name": "Kruthik Pranav",
+        "role": "Firmware & Cloud"
+      }
+    ],
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    "github": "https://github.com/Siva9664/AI_Club",
+    "demo": "",
+    "timelineStage": "Deployment",
+    "outcome": "Logged over 1.2 million continuous sensor data points across 18 months of reliable deployment."
+  }
+]
